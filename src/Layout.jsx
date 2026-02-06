@@ -27,8 +27,10 @@ export default function Layout({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-void text-signal-white font-inter">
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+        
         :root {
-          /* FlashFusion Brand Colors */
+          /* FlashFusion Brand Colors (Official v1.0) */
           --flash-purple: #A855F7;
           --fusion-pink: #F472B6;
           --void-black: #0F0618;
@@ -40,6 +42,15 @@ export default function Layout({ children, currentPageName }) {
           --neon-mint: #2DD4BF;
           --ember-red: #FB7185;
           --solar-amber: #FBBF24;
+          
+          /* Neutral Colors */
+          --slate-200: #E5E7EB;
+          --slate-400: #9CA3AF;
+          --slate-700: #374151;
+          
+          /* Typography */
+          --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          --font-display: 'Space Grotesk', var(--font-primary);
           
           /* Spacing Scale */
           --spacing-xs: 0.25rem;
@@ -58,10 +69,12 @@ export default function Layout({ children, currentPageName }) {
           --radius-2xl: 1.5rem;
           --radius-full: 9999px;
           
-          /* Transitions */
-          --transition-fast: 150ms cubic-bezier(0.16, 1, 0.3, 1);
-          --transition-base: 300ms cubic-bezier(0.16, 1, 0.3, 1);
-          --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+          /* Motion (Official FlashFusion Spec) */
+          --duration-fast: 180ms;
+          --easing: cubic-bezier(0.16, 1, 0.3, 1);
+          --transition-fast: var(--duration-fast) var(--easing);
+          --transition-base: 300ms var(--easing);
+          --transition-slow: 500ms var(--easing);
         }
         
         * {
@@ -71,12 +84,17 @@ export default function Layout({ children, currentPageName }) {
         }
         
         body {
-          font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          font-family: var(--font-primary);
           background-color: var(--void-black);
           color: var(--signal-white);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Display Font for Heroes and Section Headers */
+        h1, h2, .font-display {
+          font-family: var(--font-display);
         }
         
         .bg-void { background-color: var(--void-black); }
@@ -87,7 +105,8 @@ export default function Layout({ children, currentPageName }) {
         .border-flash-purple { border-color: var(--flash-purple); }
         .border-fusion-pink { border-color: var(--fusion-pink); }
         
-        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-inter { font-family: var(--font-primary); }
+        .font-display { font-family: var(--font-display); }
         
         /* Button Styles */
         .btn-primary {
