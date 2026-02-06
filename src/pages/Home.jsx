@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
+import { usePersonalization } from '../components/PersonalizationEngine';
+import DynamicFAQ from '../components/DynamicFAQ';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -16,14 +18,28 @@ import {
 export default function Home() {
   const [activeSection, setActiveSection] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { userProfile, trackPageVisit, trackInterest, getRecommendations } = usePersonalization();
+  const [recommendations, setRecommendations] = useState(null);
 
   useEffect(() => {
+    trackPageVisit('Home');
+    
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const loadRecommendations = async () => {
+      if (userProfile.visitedPages.length > 1) {
+        const recs = await getRecommendations();
+        setRecommendations(recs);
+      }
+    };
+    loadRecommendations();
+  }, [userProfile.visitedPages.length]);
 
   const scrollToSection = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
@@ -321,6 +337,39 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Personalized Recommendations */}
+      {recommendations && (
+        <section className="py-16 px-6 bg-gradient-to-r from-flash-purple/10 to-fusion-pink/10 border-y border-flash-purple/30">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-block px-4 py-1 bg-flash-purple/20 border border-flash-purple/30 rounded-full text-sm font-semibold text-flash-purple mb-4">
+              Recommended for You
+            </div>
+            <h2 className="text-3xl font-bold mb-4">{recommendations.headline}</h2>
+            <p className="text-lg text-signal-white/80 mb-6">
+              Based on your interests in <strong className="text-fusion-pink">{recommendations.contentEmphasis}</strong>
+            </p>
+            <div className="flex gap-4 justify-center">
+              <Link
+                to={createPageUrl(`CaseStudy${recommendations.recommendedCaseStudy}`)}
+                className="px-6 py-3 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold hover:shadow-glow transition-all"
+              >
+                View Relevant Case Study
+              </Link>
+              <Link
+                to={createPageUrl('Services')}
+                onClick={() => trackInterest(recommendations.servicesFocus)}
+                className="px-6 py-3 bg-void border-2 border-flash-purple rounded-full font-semibold hover:bg-flash-purple/10 transition-all"
+              >
+                Explore {recommendations.servicesFocus}
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Dynamic FAQ */}
+      <DynamicFAQ />
 
       {/* Services Teaser */}
       <section className="py-24 px-6 bg-void">

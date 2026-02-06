@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
+import { usePersonalization } from '../components/PersonalizationEngine';
 import { Database, TrendingUp, FileText, Users, DollarSign, Zap } from 'lucide-react';
 
 export default function CaseStudies() {
+  const { trackPageVisit, trackInterest } = usePersonalization();
+
+  useEffect(() => {
+    trackPageVisit('CaseStudies');
+  }, []);
   const caseStudies = [
     {
       icon: Database,
@@ -151,6 +157,7 @@ export default function CaseStudies() {
                 <Link
                   key={i}
                   to={createPageUrl(`CaseStudy${i + 1}`)}
+                  onClick={() => trackInterest(study.category)}
                   className="block p-8 md:p-12 bg-void rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 cursor-pointer"
                 >
                   <div className="grid md:grid-cols-3 gap-8">

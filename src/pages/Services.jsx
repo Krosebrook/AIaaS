@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
+import { usePersonalization } from '../components/PersonalizationEngine';
 import { Shield, Zap, Users, Lock, Server, Code } from 'lucide-react';
 
 export default function Services() {
+  const { trackPageVisit, trackInterest } = usePersonalization();
+
+  useEffect(() => {
+    trackPageVisit('Services');
+  }, []);
   const services = [
     {
       icon: Shield,
@@ -103,6 +109,7 @@ export default function Services() {
                 <div 
                   key={i}
                   className="p-8 bg-void rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 group"
+                  onClick={() => trackInterest(service.title)}
                 >
                   <div className="mb-6">
                     <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center mb-4">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
+import LiveChat from './components/LiveChat';
 import { Menu, X } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
@@ -301,6 +302,9 @@ export default function Layout({ children, currentPageName }) {
       <main id="main-content" className="pt-16" role="main">
         {children}
       </main>
+
+      {/* Live Chat */}
+      <LiveChat />
 
       {/* Footer */}
       <footer className="bg-carbon-night border-t border-flash-purple/30 py-12 px-6" role="contentinfo">
