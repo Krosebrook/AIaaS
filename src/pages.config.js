@@ -53,6 +53,12 @@ import Contact from './pages/Contact';
 import CaseStudies from './pages/CaseStudies';
 import Workshops from './pages/Workshops';
 import About from './pages/About';
+import CaseStudy1 from './pages/CaseStudy1';
+import CaseStudy2 from './pages/CaseStudy2';
+import CaseStudy3 from './pages/CaseStudy3';
+import CaseStudy4 from './pages/CaseStudy4';
+import CaseStudy5 from './pages/CaseStudy5';
+import CaseStudy6 from './pages/CaseStudy6';
 import __Layout from './Layout.jsx';
 
 
@@ -63,6 +69,12 @@ export const PAGES = {
     "CaseStudies": CaseStudies,
     "Workshops": Workshops,
     "About": About,
+    "CaseStudy1": CaseStudy1,
+    "CaseStudy2": CaseStudy2,
+    "CaseStudy3": CaseStudy3,
+    "CaseStudy4": CaseStudy4,
+    "CaseStudy5": CaseStudy5,
+    "CaseStudy6": CaseStudy6,
 }
 
 export const pagesConfig = {

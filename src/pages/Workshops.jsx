@@ -130,7 +130,7 @@ export default function Workshops() {
                         <div className="text-sm text-signal-white/60 mb-2">Starting at</div>
                         <div className="text-4xl font-bold text-flash-purple mb-4">{workshop.price}</div>
                         <Link
-                          to={createPageUrl('Contact')}
+                          to={`${createPageUrl('Contact')}?workshop=${encodeURIComponent(workshop.title)}&price=${encodeURIComponent(workshop.price)}`}
                           className="block px-6 py-3 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold hover:shadow-glow transition-all duration-300"
                         >
                           Book Workshop

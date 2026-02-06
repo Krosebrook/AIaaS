@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '../utils';
 import { Database, TrendingUp, FileText, Users, DollarSign, Zap } from 'lucide-react';
 
 export default function CaseStudies() {
@@ -141,9 +143,10 @@ export default function CaseStudies() {
             {caseStudies.map((study, i) => {
               const Icon = study.icon;
               return (
-                <div 
+                <Link
                   key={i}
-                  className="p-8 md:p-12 bg-void rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300"
+                  to={createPageUrl(`CaseStudy${i + 1}`)}
+                  className="block p-8 md:p-12 bg-void rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 cursor-pointer"
                 >
                   <div className="grid md:grid-cols-3 gap-8">
                     {/* Main Content */}
@@ -205,7 +208,7 @@ export default function CaseStudies() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

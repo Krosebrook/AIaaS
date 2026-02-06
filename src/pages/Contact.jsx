@@ -10,6 +10,19 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
 
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const workshop = urlParams.get('workshop');
+    const price = urlParams.get('price');
+    
+    if (workshop) {
+      setFormData(prev => ({
+        ...prev,
+        message: `I'm interested in the ${workshop} workshop (${price || 'pricing inquiry'}). Please provide more information about availability and next steps.`
+      }));
+    }
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);

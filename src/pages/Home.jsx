@@ -338,6 +338,63 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Client Testimonials */}
+      <section className="py-24 px-6 bg-void">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-flash-purple to-fusion-pink bg-clip-text text-transparent">
+            CLIENT FEEDBACK
+          </h2>
+          <p className="text-xl text-center mb-16 text-signal-white/90">
+            Real feedback from real deployments
+          </p>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                quote: "INTinc helped us cut through the noise, making AI approachable and impactful. Their workshops and expert support leveled up our AI capabilities, adding value for us and our clients.",
+                author: "Sarah Johnson",
+                title: "CTO, TechVentures Inc.",
+                company: "TechVentures"
+              },
+              {
+                quote: "Their engineering team developed AI tools that produced instant ROI and saved us hours. On top of that, they taught us how to maintain and build our own AI solutions.",
+                author: "Michael Chen",
+                title: "VP Operations, DataFlow Systems",
+                company: "DataFlow"
+              },
+              {
+                quote: "Within months of their AI enablement program, most of our team is using AI regularly and reporting an average time savings of 10 hours per week.",
+                author: "Jennifer Martinez",
+                title: "Director of Innovation, HealthTech Solutions",
+                company: "HealthTech"
+              }
+            ].map((testimonial, i) => (
+              <div 
+                key={i}
+                className="p-8 bg-carbon-night rounded-2xl border border-flash-purple/30 flex flex-col"
+              >
+                <div className="mb-6 flex-grow">
+                  <div className="text-fusion-pink text-5xl mb-4 leading-none">"</div>
+                  <p className="text-signal-white/90 italic">{testimonial.quote}</p>
+                  <div className="text-fusion-pink text-5xl text-right leading-none">"</div>
+                </div>
+                <div className="border-t border-flash-purple/30 pt-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center font-bold text-sm">
+                      {testimonial.author.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <div>
+                      <div className="font-semibold">{testimonial.author}</div>
+                      <div className="text-sm text-signal-white/60">{testimonial.title}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Case Studies Preview */}
       <section className="py-24 px-6 bg-carbon-night">
         <div className="max-w-6xl mx-auto">
@@ -356,8 +413,9 @@ export default function Home() {
               { title: 'Smart AR Collections', category: 'Accounts Receivable', saved: '75% time reduction' },
               { title: 'Enterprise AI Training', category: 'Org-Wide Enablement', saved: '10 hours per person weekly' },
             ].map((study, i) => (
-              <div 
+              <Link
                 key={i}
+                to={createPageUrl(`CaseStudy${i + 1}`)}
                 className="p-6 bg-void rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 group cursor-pointer"
               >
                 <div className="text-sm text-fusion-pink mb-2">{study.category}</div>
@@ -366,7 +424,7 @@ export default function Home() {
                 </h3>
                 <div className="text-sm text-signal-white/60 mb-4">{study.saved}</div>
                 <div className="text-flash-purple font-semibold text-sm">LEARN MORE →</div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
