@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import SEOMetadata from '../components/SEOMetadata';
 import { Shield, Target, Users, Award } from 'lucide-react';
 
 export default function About() {
