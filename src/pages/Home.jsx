@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import SEOMetadata from '../components/SEOMetadata';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -34,6 +35,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-void text-signal-white">
+      <SEOMetadata 
+        pageName="Home" 
+        content="Enterprise AI implementation with MSP discipline. Discover opportunities, harden infrastructure, ship production systems. Workshops, consulting, and custom AI solutions."
+      />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 hero-gradient opacity-30"></div>

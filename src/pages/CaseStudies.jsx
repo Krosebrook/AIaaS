@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import SEOMetadata from '../components/SEOMetadata';
 import { Database, TrendingUp, FileText, Users, DollarSign, Zap } from 'lucide-react';
 
 export default function CaseStudies() {
@@ -123,6 +124,10 @@ export default function CaseStudies() {
 
   return (
     <div className="min-h-screen bg-void text-signal-white">
+      <SEOMetadata 
+        pageName="Case Studies" 
+        content="Real AI deployments with measurable ROI: knowledge management, prospecting automation, marketing intelligence, documentation, AR collections, and enterprise training programs."
+      />
       {/* Hero */}
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-flash-purple/20 via-transparent to-fusion-pink/20"></div>

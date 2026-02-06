@@ -6,6 +6,10 @@ import { Shield, Target, Users, Award } from 'lucide-react';
 export default function About() {
   return (
     <div className="min-h-screen bg-void text-signal-white">
+      <SEOMetadata 
+        pageName="About" 
+        content="MSP discipline meets AI expertise. Security-first approach, measurable outcomes, knowledge transfer, production-ready solutions. Discover, harden, ship methodology."
+      />
       {/* Hero */}
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-flash-purple/20 via-transparent to-fusion-pink/20"></div>

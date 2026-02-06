@@ -80,6 +80,48 @@ export default function CaseStudy5() {
         </div>
       </section>
 
+      <section className="py-24 px-6 bg-void">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-flash-purple">The Transformation</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-ember-red rounded-full text-sm font-semibold">BEFORE</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-ember-red/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-ember-red/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">💰</div>
+                    <div className="text-sm text-signal-white/60">Manual AR chaos</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Overwhelming manual follow-ups</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Inconsistent messaging</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Slow payment cycles</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Customer frustration</span></li>
+                </ul>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-neon-mint rounded-full text-sm font-semibold">AFTER</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-neon-mint/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-neon-mint/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <div className="text-sm text-signal-white/60">Smart automation</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>75% task automation</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Personalized communications</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>40% faster payments</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Improved relationships</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto space-y-16">
           <div>

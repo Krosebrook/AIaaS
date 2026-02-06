@@ -80,6 +80,48 @@ export default function CaseStudy3() {
         </div>
       </section>
 
+      <section className="py-24 px-6 bg-void">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-flash-purple">The Transformation</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-ember-red rounded-full text-sm font-semibold">BEFORE</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-ember-red/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-ember-red/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">📈</div>
+                    <div className="text-sm text-signal-white/60">Manual spreadsheet chaos</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>150 hours weekly on reports</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Days-old performance data</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Inconsistent reporting formats</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>No time for analysis</span></li>
+                </ul>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-neon-mint rounded-full text-sm font-semibold">AFTER</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-neon-mint/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-neon-mint/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">⚡</div>
+                    <div className="text-sm text-signal-white/60">Automated intelligence</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>7,800 hours saved annually</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Real-time dashboards</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Automated anomaly detection</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Proactive optimization</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto space-y-16">
           <div>

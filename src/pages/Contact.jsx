@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, MessageSquare, Send } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
+import SEOMetadata from '../components/SEOMetadata';
+import { Mail, MessageSquare, Send, Loader2 } from 'lucide-react';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -9,6 +11,8 @@ export default function Contact() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+  const [inquiryCategory, setInquiryCategory] = useState(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   React.useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -23,13 +27,55 @@ export default function Contact() {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setFormData({ name: '', email: '', company: '', message: '' });
-      setSubmitted(false);
-    }, 3000);
+    setIsAnalyzing(true);
+    
+    try {
+      // AI categorizes the inquiry
+      const categorization = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze this contact form inquiry and categorize it. Also generate a personalized auto-response.
+
+Message: "${formData.message}"
+Name: ${formData.name}
+
+Categorize as ONE of:
+- "Workshop Interest" (wants training/workshops)
+- "General Inquiry" (questions, information requests)
+- "Partnership" (business collaboration, partnerships)
+- "Technical Consultation" (needs AI implementation help)
+- "Case Study Request" (wants to learn about specific projects)
+
+Also provide a brief, friendly auto-response message acknowledging their specific inquiry type.`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            category: { type: "string" },
+            response: { type: "string" }
+          }
+        }
+      });
+
+      setInquiryCategory(categorization);
+      setSubmitted(true);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setFormData({ name: '', email: '', company: '', message: '' });
+        setSubmitted(false);
+        setInquiryCategory(null);
+      }, 5000);
+      
+    } catch (error) {
+      console.error('Error categorizing inquiry:', error);
+      setSubmitted(true);
+      setTimeout(() => {
+        setFormData({ name: '', email: '', company: '', message: '' });
+        setSubmitted(false);
+      }, 3000);
+    } finally {
+      setIsAnalyzing(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -41,6 +87,10 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-void text-signal-white">
+      <SEOMetadata 
+        pageName="Contact" 
+        content="Get in touch with INTinc Technology for AI implementation, workshops, consulting. Free security assessment. Quick response within 24 hours."
+      />
       {/* Hero */}
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-flash-purple/20 via-transparent to-fusion-pink/20"></div>
@@ -164,12 +214,33 @@ export default function Contact() {
                   ></textarea>
                 </div>
 
+                {submitted && inquiryCategory && (
+                  <div className="p-4 bg-neon-mint/10 border border-neon-mint/30 rounded-lg mb-4">
+                    <div className="flex items-start gap-3">
+                      <div className="text-neon-mint text-lg">✓</div>
+                      <div>
+                        <div className="font-semibold text-neon-mint mb-1">
+                          {inquiryCategory.category}
+                        </div>
+                        <div className="text-sm text-signal-white/80">
+                          {inquiryCategory.response}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <button
                   type="submit"
-                  disabled={submitted}
+                  disabled={submitted || isAnalyzing}
                   className="w-full px-6 py-4 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-lg font-semibold hover:shadow-glow transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {submitted ? (
+                  {isAnalyzing ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Analyzing...
+                    </>
+                  ) : submitted ? (
                     'Message Sent!'
                   ) : (
                     <>

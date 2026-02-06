@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import SEOMetadata from '../components/SEOMetadata';
 import { Shield, Zap, Users, Lock, Server, Code } from 'lucide-react';
 
 export default function Services() {
@@ -75,6 +76,10 @@ export default function Services() {
 
   return (
     <div className="min-h-screen bg-void text-signal-white">
+      <SEOMetadata 
+        pageName="Services" 
+        content="Security-first AI architecture, rapid prototyping, custom engineering, enablement training, infrastructure management, and governance. Flexible engagement models from $15K."
+      />
       {/* Hero */}
       <section className="relative py-24 px-6 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-flash-purple/20 via-transparent to-fusion-pink/20"></div>

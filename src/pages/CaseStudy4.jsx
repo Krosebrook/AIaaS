@@ -80,6 +80,48 @@ export default function CaseStudy4() {
         </div>
       </section>
 
+      <section className="py-24 px-6 bg-void">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-12 text-flash-purple">The Transformation</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-ember-red rounded-full text-sm font-semibold">BEFORE</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-ember-red/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-ember-red/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">🗣️</div>
+                    <div className="text-sm text-signal-white/60">Knowledge trapped in meetings</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>No systematic documentation</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Knowledge in people's heads</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>High turnover risk</span></li>
+                  <li className="flex items-start gap-2 text-ember-red"><span className="mt-1">✗</span><span>Long onboarding times</span></li>
+                </ul>
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -top-4 left-6 px-4 py-1 bg-neon-mint rounded-full text-sm font-semibold">AFTER</div>
+              <div className="p-8 bg-carbon-night rounded-2xl border-2 border-neon-mint/50 h-full">
+                <div className="aspect-video bg-gradient-to-br from-neon-mint/20 to-void rounded-lg mb-6 flex items-center justify-center">
+                  <div className="text-center p-6">
+                    <div className="text-6xl mb-4">📝</div>
+                    <div className="text-sm text-signal-white/60">Automated documentation</div>
+                  </div>
+                </div>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>700+ SOPs created</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Searchable knowledge base</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>Zero knowledge loss</span></li>
+                  <li className="flex items-start gap-2 text-neon-mint"><span className="mt-1">✓</span><span>60% faster onboarding</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto space-y-16">
           <div>
