@@ -1,0 +1,23 @@
+import React from 'react';
+
+const ChatWidget = ({
+  botName = '',
+  initialMessage = ''
+}) => {
+  return (
+    <>
+      <div id="chatbase-message-bubbles" style={{position: 'fixed', bottom: '85px', borderRadius: '10px', fontFamily: 'sans-serif', fontSize: '16px', lineHeight: 'normal', zIndex: '2147483644', pointerEvents: 'auto', cursor: 'pointer', flexDirection: 'column', gap: '50px', maxWidth: '70vw', display: 'block', right: '1rem', left: 'unset'}}><div style={{position: 'absolute', top: '-7px', right: '-7px', fontWeight: 'bold', display: 'none', justifyContent: 'center', alignItems: 'center', zIndex: '2147483643', pointerEvents: 'auto', width: '22px', height: '22px', borderRadius: '50%', textAlign: 'center', fontSize: '12px', cursor: 'pointer', backgroundColor: 'rgb(224, 224, 224)', color: 'black', boxShadow: 'rgba(150, 150, 150, 0.15) 0px 6px 24px 0px, rgba(150, 150, 150, 0.15) 0px 0px 0px 1px'}}>✕</div><div style={{display: 'flex', justifyContent: 'flex-end'}}><div style={{backgroundColor: 'white', color: 'black', boxShadow: 'rgba(150, 150, 150, 0.2) 0px 10px 30px 0px, rgba(150, 150, 150, 0.2) 0px 0px 0px 1px', borderRadius: '10px', padding: '20px', margin: '8px', fontSize: '14px', opacity: '1', transform: 'scale(1)', transition: 'opacity 0.5s, transform 0.5s'}}>Hi! I'm Ava, a chatbot for HQ's website. What can I help you with?</div></div></div>
+<button aria-label="chat-button" id="chatbase-bubble-button" style={{position: 'fixed', border: '0px', bottom: '1rem', right: '1rem', width: '55px', height: '55px', borderRadius: '27.5px', backgroundColor: 'rgb(0, 0, 0)', boxShadow: 'rgba(0, 0, 0, 0.2) 0px 4px 8px 0px', cursor: 'pointer', zIndex: '2147483645', pointerEvents: 'auto', transition: '0.2s ease-in-out', left: 'unset'}} type="button"><div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', zIndex: '2147483646'}}><svg fill="none" height="55" viewBox="0 0 1120 1120" width="55" xmlns="http://www.w3.org/2000/svg">
+  <path clipRule="evenodd" d="M252 434C252 372.144 302.144 322 364 322H770C831.856 322 882 372.144 882 434V614.459L804.595 585.816C802.551 585.06 800.94 583.449 800.184 581.405L763.003 480.924C760.597 474.424 751.403 474.424 748.997 480.924L711.816 581.405C711.06 583.449 709.449 585.06 707.405 585.816L606.924 622.997C600.424 625.403 600.424 634.597 606.924 637.003L707.405 674.184C709.449 674.94 711.06 676.551 711.816 678.595L740.459 756H629.927C629.648 756.476 629.337 756.945 628.993 757.404L578.197 825.082C572.597 832.543 561.403 832.543 555.803 825.082L505.007 757.404C504.663 756.945 504.352 756.476 504.073 756H364C302.144 756 252 705.856 252 644V434ZM633.501 471.462C632.299 468.212 627.701 468.212 626.499 471.462L619.252 491.046C618.874 492.068 618.068 492.874 617.046 493.252L597.462 500.499C594.212 501.701 594.212 506.299 597.462 507.501L617.046 514.748C618.068 515.126 618.874 515.932 619.252 516.954L626.499 536.538C627.701 539.788 632.299 539.788 633.501 536.538L640.748 516.954C641.126 515.932 641.932 515.126 642.954 514.748L662.538 507.501C665.788 506.299 665.788 501.701 662.538 500.499L642.954 493.252C641.932 492.874 641.126 492.068 640.748 491.046L633.501 471.462Z" fill="white" fillRule="evenodd"></path>
+  <path d="M771.545 755.99C832.175 755.17 881.17 706.175 881.99 645.545L804.595 674.184C802.551 674.94 800.94 676.551 800.184 678.595L771.545 755.99Z" fill="white"></path>
+  </svg>            
+  </div></button>
+<div id="chatbase-bubble-window" style={{border: 'none', position: 'fixed', flexDirection: 'column', justifyContent: 'space-between', bottom: '5rem', right: '1rem', width: '406px', height: '85dvh', maxHeight: '824px', borderRadius: '1.25rem', display: 'none', zIndex: '2147483646', pointerEvents: 'auto', overflow: 'hidden', backgroundColor: 'white', left: 'unset', top: 'unset'}}><div style={{display: 'flex', justifyContent: 'center', height: '100%', width: '100%', alignItems: 'center', position: 'absolute'}}><svg style={{width: '24px', height: '24px'}} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    
+    <circle className="chatbase-spinner" cx="12" cy="12" fill="none" r="10" stroke="black" strokeLinecap="round" strokeWidth="2.5"></circle>
+  </svg></div><div allow="microphone" data-original-tag="iframe" style={{height: '100%', width: '100%', border: 'none', display: 'flex', visibility: 'hidden', position: 'absolute'}} title='AI Virtual Assistant "Ava"'></div></div>
+    </>
+  );
+};
+
+export default ChatWidget;
