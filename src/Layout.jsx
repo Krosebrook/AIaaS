@@ -160,8 +160,33 @@ export default function Layout({ children, currentPageName }) {
         
         /* Focus Styles for Accessibility */
         *:focus-visible {
-          outline: 2px solid var(--flash-purple);
-          outline-offset: 2px;
+          outline: 3px solid var(--flash-purple);
+          outline-offset: 3px;
+          border-radius: 4px;
+        }
+
+        /* Screen reader only utility */
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border-width: 0;
+        }
+
+        .sr-only.focus\:not-sr-only:focus {
+          position: static;
+          width: auto;
+          height: auto;
+          padding: inherit;
+          margin: inherit;
+          overflow: visible;
+          clip: auto;
+          white-space: normal;
         }
         
         a {
@@ -174,17 +199,26 @@ export default function Layout({ children, currentPageName }) {
         }
       `}</style>
 
+      {/* Skip to main content link for keyboard navigation */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-flash-purple focus:text-signal-white focus:rounded-lg"
+      >
+        Skip to main content
+      </a>
+
       {/* Header */}
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled ? 'bg-void/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
         }`}
+        role="banner"
       >
-        <nav className="max-w-7xl mx-auto px-6 py-4">
+        <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center font-bold text-xl">
+            <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc Technology home">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center font-bold text-xl" aria-hidden="true">
                 INT
               </div>
               <span className="text-xl font-bold">INTinc Technology</span>
@@ -264,12 +298,12 @@ export default function Layout({ children, currentPageName }) {
       </header>
 
       {/* Main Content */}
-      <main className="pt-16">
+      <main id="main-content" className="pt-16" role="main">
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="bg-carbon-night border-t border-flash-purple/30 py-12 px-6">
+      <footer className="bg-carbon-night border-t border-flash-purple/30 py-12 px-6" role="contentinfo">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>

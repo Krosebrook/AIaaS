@@ -65,17 +65,19 @@ export default function Home() {
         <button 
           onClick={() => scrollToSection('process')}
           className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce"
+          aria-label="Scroll down to process section"
         >
-          <ChevronDown className="w-8 h-8 text-flash-purple" />
+          <ChevronDown className="w-8 h-8 text-flash-purple" aria-hidden="true" />
         </button>
       </section>
 
       {/* Process Overview */}
-      <section id="process" className="py-24 px-6 bg-carbon-night">
+      <section id="process" className="py-24 px-6 bg-carbon-night" aria-labelledby="process-heading">
         <div className="max-w-6xl mx-auto text-center">
+          <h2 id="process-heading" className="sr-only">Our Three-Step Process</h2>
           <div className="flex justify-center items-center gap-8 mb-16 flex-wrap">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-flash-purple/20 border-2 border-flash-purple flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-flash-purple/20 border-2 border-flash-purple flex items-center justify-center" aria-hidden="true">
                 <span className="text-2xl font-bold text-flash-purple">1</span>
               </div>
               <span className="text-xl font-semibold">Discover.</span>

@@ -153,13 +153,14 @@ Also provide a brief, friendly auto-response message acknowledging their specifi
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Full Name *
+                    Full Name <span aria-label="required">*</span>
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     required
+                    aria-required="true"
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-void border border-flash-purple/30 rounded-lg focus:outline-none focus:border-flash-purple transition-colors text-signal-white"
@@ -169,18 +170,21 @@ Also provide a brief, friendly auto-response message acknowledging their specifi
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email Address *
+                    Email Address <span aria-label="required">*</span>
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     required
+                    aria-required="true"
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 bg-void border border-flash-purple/30 rounded-lg focus:outline-none focus:border-flash-purple transition-colors text-signal-white"
                     placeholder="john@company.com"
+                    aria-describedby="email-hint"
                   />
+                  <span id="email-hint" className="sr-only">Enter a valid email address</span>
                 </div>
 
                 <div>
@@ -200,24 +204,31 @@ Also provide a brief, friendly auto-response message acknowledging their specifi
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Message *
+                    Message <span aria-label="required">*</span>
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     required
+                    aria-required="true"
                     value={formData.message}
                     onChange={handleChange}
                     rows="5"
                     className="w-full px-4 py-3 bg-void border border-flash-purple/30 rounded-lg focus:outline-none focus:border-flash-purple transition-colors text-signal-white resize-none"
                     placeholder="Tell us about your AI challenges and goals..."
+                    aria-describedby="message-hint"
                   ></textarea>
+                  <span id="message-hint" className="sr-only">Describe your inquiry in detail</span>
                 </div>
 
                 {submitted && inquiryCategory && (
-                  <div className="p-4 bg-neon-mint/10 border border-neon-mint/30 rounded-lg mb-4">
+                  <div 
+                    className="p-4 bg-neon-mint/10 border border-neon-mint/30 rounded-lg mb-4" 
+                    role="status"
+                    aria-live="polite"
+                  >
                     <div className="flex items-start gap-3">
-                      <div className="text-neon-mint text-lg">✓</div>
+                      <div className="text-neon-mint text-lg" aria-hidden="true">✓</div>
                       <div>
                         <div className="font-semibold text-neon-mint mb-1">
                           {inquiryCategory.category}
@@ -234,17 +245,18 @@ Also provide a brief, friendly auto-response message acknowledging their specifi
                   type="submit"
                   disabled={submitted || isAnalyzing}
                   className="w-full px-6 py-4 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-lg font-semibold hover:shadow-glow transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label={isAnalyzing ? 'Analyzing your message' : submitted ? 'Message sent successfully' : 'Send your message'}
                 >
                   {isAnalyzing ? (
                     <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <Loader2 className="w-5 h-5 animate-spin" aria-hidden="true" />
                       Analyzing...
                     </>
                   ) : submitted ? (
                     'Message Sent!'
                   ) : (
                     <>
-                      <Send className="w-5 h-5" />
+                      <Send className="w-5 h-5" aria-hidden="true" />
                       Send Message
                     </>
                   )}

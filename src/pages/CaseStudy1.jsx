@@ -42,8 +42,9 @@ export default function CaseStudy1() {
           <Link 
             to={createPageUrl('CaseStudies')}
             className="inline-flex items-center gap-2 text-flash-purple hover:text-fusion-pink transition-colors mb-6"
+            aria-label="Back to case studies overview"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5" aria-hidden="true" />
             Back to Case Studies
           </Link>
           <div className="flex items-center gap-4 mb-4">
@@ -88,17 +89,17 @@ export default function CaseStudy1() {
       </section>
 
       {/* Before/After Visualization */}
-      <section className="py-24 px-6 bg-void">
+      <section className="py-24 px-6 bg-void" aria-labelledby="transformation-heading">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12 text-flash-purple">The Transformation</h2>
+          <h2 id="transformation-heading" className="text-3xl font-bold text-center mb-12 text-flash-purple">The Transformation</h2>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Before */}
             <div className="relative">
               <div className="absolute -top-4 left-6 px-4 py-1 bg-ember-red rounded-full text-sm font-semibold">BEFORE</div>
               <div className="p-8 bg-carbon-night rounded-2xl border-2 border-ember-red/50 h-full">
-                <div className="aspect-video bg-gradient-to-br from-ember-red/20 to-void rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                <div className="aspect-video bg-gradient-to-br from-ember-red/20 to-void rounded-lg mb-6 flex items-center justify-center overflow-hidden" role="img" aria-label="Before state: Knowledge scattered across systems">
                   <div className="text-center p-6">
-                    <div className="text-6xl mb-4">📚</div>
+                    <div className="text-6xl mb-4" aria-hidden="true">📚</div>
                     <div className="text-sm text-signal-white/60">Knowledge scattered across systems</div>
                   </div>
                 </div>
@@ -127,9 +128,9 @@ export default function CaseStudy1() {
             <div className="relative">
               <div className="absolute -top-4 left-6 px-4 py-1 bg-neon-mint rounded-full text-sm font-semibold">AFTER</div>
               <div className="p-8 bg-carbon-night rounded-2xl border-2 border-neon-mint/50 h-full">
-                <div className="aspect-video bg-gradient-to-br from-neon-mint/20 to-void rounded-lg mb-6 flex items-center justify-center overflow-hidden">
+                <div className="aspect-video bg-gradient-to-br from-neon-mint/20 to-void rounded-lg mb-6 flex items-center justify-center overflow-hidden" role="img" aria-label="After state: AI-powered instant access">
                   <div className="text-center p-6">
-                    <div className="text-6xl mb-4">🎯</div>
+                    <div className="text-6xl mb-4" aria-hidden="true">🎯</div>
                     <div className="text-sm text-signal-white/60">AI-powered instant access</div>
                   </div>
                 </div>
