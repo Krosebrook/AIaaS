@@ -1,0 +1,2952 @@
+@import url(/assets/other/fonts_googleapis_com_css2_3e6ebac2);
+@import url(/assets/other/fonts_googleapis_com_css2_9afefe41);
+
+/* Basic Reset & Global */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #000000;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #40E0D0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+	font-size: 1.1rem;
+    transition: all 0.3s;
+    width: auto;
+    margin-top: 20px;
+    align-self: flex-start;
+}
+
+.logo {
+    height: 80px;
+	display: block;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.btn:hover {
+    background-color: #30C0B0;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(64, 224, 208, 0.2);
+}
+
+.section-title, .section-titlewhite {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+	margin-top: 0px;
+    color: #000000;
+    position: relative;
+}
+
+.section-title::after, .section-titlewhite::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    margin: 10px auto 0;
+}
+
+.section-title::after {
+    background-color: #40E0D0;
+}
+
+.section-titlewhite::after {
+    background-color: #ffffff;
+}
+
+#reality-check .section-title::after {
+    background-color: #000000;
+}
+
+/* Ensure "Who We Are" section is centered */
+#services .container {
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#services .card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: stretch; /* Ensure all cards have the same height */
+}
+
+/* Flexbox only for the cards within the "Who We Are" section */
+#services .container .card-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+#services .section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000000;
+    position: relative;
+}
+
+#services .section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #40E0D0;
+    margin: 10px auto 0;
+}
+
+/* General Card Styling (applies to #services, #key-trends, and #beliefs) */
+#services .card {
+    position: relative;
+    flex: 1 1 calc(33.33% - 30px); /* Allows flexibility in card width */
+	min-width: 380px;
+    box-sizing: border-box;
+    padding: 30px; /* Consistent 30px padding on all sides */
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 100%; /* Allow the card to take full available width */
+    min-height: auto; /* Allow the height to adjust based on content */
+	border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#key-trends .card {
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+	height: auto;
+	min-width: 250px;
+}
+
+#beliefs .card {
+    flex: 1 1 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+	height: auto;
+	min-width: 250px;
+}
+
+.card h3 {
+    font-size: 1.8rem;
+    color: #40E0D0;
+    margin-bottom: 20px;
+	margin-top: 0px;
+}
+
+.card h4 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Ensure the paragraph text aligns at the top */
+.card p {
+    flex-grow: 1; /* Ensure paragraph takes up available space */
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0px;
+}
+
+/* Adjust text centering inside cards */
+.card h3, .card p {
+    text-align: left; /* Ensure text inside cards aligns left */
+}
+
+/* Button Styling inside the card */
+.card .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #40E0D0;  /* Turquoise background */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s;
+    align-self: flex-start;
+    margin-top: auto;  /* Push the button to the bottom */
+}
+
+/* Hover effects */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%; /* Ensure each card takes full width */
+        padding: 15px; /* Reduce padding for small screens */
+        margin-bottom: 20px;
+        box-sizing: border-box;
+    }
+
+    .card h3 {
+        font-size: 1.5rem; /* Adjust heading size for small screens */
+    }
+
+    .card p {
+        font-size: 0.9rem; /* Adjust paragraph font size */
+    }
+}
+
+.solution-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+	background-color: #000000;
+	color: #ffffff;
+    padding: 30px;
+	font-size: 1.2rem;
+	border: 3px solid #40E0D0;
+    border-radius: 10px;
+    transition: all 0.3s;
+    min-height: 400px;
+	min-width: 250px;
+	box-sizing: border-box;
+}
+
+.solution-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(64, 224, 208, 0.2);
+}
+
+.solution-title {
+    font-size: 1.8rem;
+    color: #40E0D0;
+    margin-bottom: 5px;
+	margin-top: 0px;
+}
+
+.tag-container {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.solution-tag {
+    display: inline-block;
+    min-width: 110px;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.solution-tag:hover {
+    background-color: #40E0D0; /* Change background to teal on hover */
+    color: #fff; /* Change text color to white on hover */
+}
+
+.solution-card p {
+    margin-top: 15px;
+    flex-grow: 1;
+}
+
+.solution-card .btn {
+    margin-top: 20px;
+    align-self: flex-start;
+}
+
+/* Main Image Styles */
+/* 
+
+Note: Removed for the new dots functionality.
+
+#home {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('Home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+	background-attachment: fixed;
+    padding: 20px;
+    overflow: hidden;
+    width: 100vw;
+    box-sizing: border-box;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+*/
+
+.home-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: #fff;
+    max-width: 1200px; /* Maximum width of the box */
+    width: 100%; /* Make the box responsive */
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    margin-left: 20px; /* Ensure content is centered */
+	margin-right: 20px;
+	margin-top: 80px;
+    box-sizing: border-box; /* Include padding within the width */
+}
+
+/* Key Trends Background */
+/*
+
+Note: Removed for the new dots functionality.
+
+#key-trends {
+    background-image: url('Home.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: transparent;
+}
+*/
+
+/* Apply to both #home and #key-trends */
+#home::before, #key-trends::before {
+    content: '';
+    position: absolute; /* Make it cover the entire section */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6); /* 60% transparent white */
+    z-index: 1; /* Place it behind the content */
+}
+
+/* Ensure content is on top of the overlay */
+#home, #key-trends {
+    position: relative; /* Needed for the ::before element to work */
+    z-index: 2; /* Ensure content sits above the overlay */
+}
+
+/* Ensure content wrapper for Key Trends is above the overlay */
+.content-wrapper {
+    position: relative;
+    z-index: 3; /* Ensure it's above the ::before overlay */
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow on the body */
+}
+
+body {
+    box-sizing: border-box;
+}
+
+/* Headline styling */
+.home-content h1 {
+    font-size: 3.5rem;  /* Large heading size */
+    margin-bottom: 20px;
+    color: #ffffff; /* Ensures heading text is white */
+}
+
+/* Subtext styling */
+.home-content .subtext {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #ffffff; /* Keeps subtext white */
+}
+
+/* Highlight text styling */
+.home-content .highlight {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #40E0D0; /* Turquoise color for emphasis */
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+/* Responsive Styles */
+
+/* Medium Screens */
+@media (max-width: 1024px) {
+    .home-content {
+        padding: 30px;
+    }
+
+    .home-content h1 {
+        font-size: 3rem; /* Scale down heading */
+    }
+
+    .home-content .subtext {
+        font-size: 1.2rem; /* Scale down subtext */
+    }
+
+    .home-content .highlight {
+        font-size: 1.8rem; /* Slightly smaller highlight text */
+    }
+}
+
+/* Small Screens */
+@media (max-width: 768px) {
+    #home {
+        padding: 10px;
+    }
+
+    .home-content {
+        padding: 20px;
+    }
+
+    .home-content h1 {
+        font-size: 2.5rem; /* Smaller heading for mobile */
+    }
+
+    .home-content .subtext {
+        font-size: 1.1rem;
+    }
+
+    .home-content .highlight {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 10px 20px; /* Smaller button */
+        font-size: 1rem;
+    }
+}
+
+/* Styling for Extra Small Screens (Below 480px) */
+@media (max-width: 480px) {
+    
+    /* Ensure text scales down properly in the #home section */
+    .home-content h1 {
+        font-size: 2rem; /* Reduce font size for the heading */
+    }
+
+    .home-content .subtext {
+        font-size: 1rem; /* Scale down subtext */
+    }
+
+    .home-content .highlight {
+        font-size: 1.2rem; /* Adjust highlight text */
+    }
+
+    .btn {
+        padding: 8px 16px; /* Adjust button size */
+        font-size: 0.9rem; /* Adjust button text size */
+    }
+
+    /* Keep the rest of the code intact */
+    .vertical-line {
+        display: none;
+    }
+
+    .social-icons-header {
+        display: none !important;
+    }
+
+    .social-icons-mobile {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .social-icons-mobile a {
+        margin: 0 10px;
+    }
+
+    .social-icons-mobile img {
+        height: 25px;
+        width: 25px;
+    }
+
+    #mobile-menu {
+        padding-bottom: 10px;
+    }
+}
+
+/* Ensure the social icons stay in the header for screens wider than 480px */
+@media (min-width: 481px) {
+    .social-icons-header {
+        display: flex !important; /* Restore the social icons for wider screens */
+    }
+
+    .social-icons-mobile {
+        display: none !important; /* Hide the icons inside the hamburger for wider screens */
+    }
+}
+
+/* Navbar Styles */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.vertical-line {
+    border-left: 3px solid #40E0D0;
+    height: 60px;
+    margin: 0 20px;
+}
+
+.social-icons-header {
+    display: flex; /* This ensures the icons are aligned in a row */
+    align-items: center; /* Aligns the icons vertically in the middle */
+}
+
+.social-icons-header a img {
+    height: 25px;
+    width: 25px;
+    display: block; /* Keep this to ensure images are displayed inline */
+    margin-right: 15px; /* Optional: Adds spacing between the icons */
+}
+
+.social-icons-header a:hover {
+    transform: scale(1.1);
+}
+
+.navbar-location {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Ensures navbar is on the far right */
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: #000000;
+    margin-left: 20px;
+	font-size: 1.1rem;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.navbar-link:hover {
+    color: #40E0D0;
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background-color: #40E0D0;
+    z-index: 1001;
+    width: 0%;
+    transition: width 0.3s;
+}
+
+/* Header Styles */
+#main-header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#main-header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Spacing between the left and right sections */
+}
+
+/* Accordion Styles */
+.accordion {
+    cursor: pointer;
+    padding: 18px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.5rem;
+    transition: background-color 0.4s ease;
+    color: #40E0D0;
+    background-color: #000000;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.accordion.active, .accordion:hover {
+    background-color: #444;
+}
+
+.accordion:after {
+    content: '\002B';
+    color: #40E0D0;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.accordion.active:after {
+    content: "\2212";
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: #000;
+    color: #fff;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    border: 1px solid #40E0D0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.panel-content {
+    padding: 20px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #40E0D0;
+    color: #000;
+    padding: 40px 0;
+    text-align: center;
+}
+
+footer img {
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+.social-icons-footer {
+    display: flex; /* This ensures the icons are aligned in a row */
+	justify-content: center; /* This will horizontally center the icons */
+    align-items: center; /* Aligns the icons vertically in the middle */
+}
+
+.social-icons-footer a img {
+    height: 25px;
+    width: 25px;
+    display: block; /* Keep this to ensure images are displayed inline */
+    margin-right: 15px; /* Optional: Adds spacing between the icons */
+}
+
+.social-icons-footer a:hover {
+    transform: scale(1.1);
+}
+
+footer p {
+    margin: 10px 0;
+}
+
+footer p.small {
+    font-size: 0.8rem;
+    margin-top: 20px;
+}
+
+/* Logo Carousel Styles */
+.logo-carousel {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+}
+
+.logo-slide-track {
+    display: flex;
+    animation: scroll 40s linear infinite; /* Speed of the logo track */
+    width: calc(240px * 34); /* Width plus margin right. Need to update in 3 places (1 of 3) logo width times logos x2 */
+}
+
+.logo-slide {
+    width: 220px; /* Need to update in 3 places (2 of 3) logo width times logos x2 */
+    height:120px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.logo-slide img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.logo-slide:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+/* Keyframes for Scrolling Logos */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-240px * 17)); /* Width plus margin right. Need to update in 3 places (3 of 3) logo width times number of unique logos */
+    }
+}
+
+/* Hamburger Menu Styles */
+.hamburger-menu {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.hamburger-menu span {
+    width: 25px;
+    height: 3px;
+    background-color: #000000;
+    margin: 4px 0;
+    transition: 0.3s;
+}
+
+/* Mobile Menu Styles */
+.mobile-nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 80px;
+    right: 0;  /* Align the menu to the right */
+    width: 50%; /* Make the menu a portion of the screen width */
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.mobile-nav-link {
+    text-decoration: none;
+    color: #000000;
+    padding: 10px 20px;
+    text-align: right; /* Align text to the right */
+    border-bottom: 1px solid #ccc;
+}
+
+.mobile-nav-link:last-child {
+    border-bottom: none;
+}
+
+.mobile-nav-link:hover {
+    color: #40E0D0;
+}
+
+/* Media Query for Screens 1024px and below */
+@media (max-width: 1100px) {
+    .navbar-location {
+        display: none; /* Hide the desktop menu */
+    }
+
+    .hamburger-menu {
+        display: flex; /* Show hamburger icon */
+    }
+
+    #main-header.menu-open .mobile-nav {
+        display: flex;
+    }
+}
+
+/* Solutions Page Container */
+#solutions {
+	padding: 100px 0px 60px 0px;
+}
+
+/* Section Title for Solutions Page */
+.sol-section-title {
+    text-align: center;
+    font-size: 2.5rem;
+	margin-top: 30px;
+    margin-bottom: 50px;
+    color: #000000;
+}
+
+/* Teal line under the title */
+.sol-section-title::after {
+    background-color: #40E0D0;
+    width: 50px;
+    height: 3px;
+    content: '';
+    display: block;
+    margin: 10px auto 0;
+}
+
+
+/* Update the .sol-container class */
+.sol-container {
+    max-width: 100%;  /* Change from 1200px to 100% */
+    margin: 0 auto;
+    padding: 0 20px;  /* Add some horizontal padding */
+    box-sizing: border-box;
+}
+
+/* Add a new class for content width control */
+.content-width-limiter {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Centering the paragraphs directly under the title */
+.content-width-limiter > p {
+    text-align: center;
+}
+
+/* Accordion Button: Default state (collapsed) */
+.sol-accordion {
+    background-color: #000000;
+    color: #40E0D0;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%; /* Full width for accordion buttons */
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 1.8rem;
+    font-weight: bold;
+    display: flex; /* Flexbox for centering */
+    justify-content: space-between; /* Space between text and icon */
+    align-items: center; /* Vertical centering */
+    transition: background-color 0.4s ease, color 0.4s ease;
+    border-radius: 10px;
+    margin-bottom: 15px; /* Space between buttons when collapsed */
+}
+
+/* Expanded state: Teal background, black font, minus sign */
+.sol-accordion.active {
+    background-color: #40E0D0;
+    color: #000;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 0; /* No space between expanded button and content */
+}
+
+/* Plus sign default */
+.sol-accordion::after {
+    content: '\002B'; /* Plus sign */
+    color: #40E0D0;
+    font-weight: bold;
+}
+
+/* Minus sign when expanded */
+.sol-accordion.active::after {
+    content: "\2212"; /* Minus sign */
+    color: #000;
+}
+
+/* Make sure the accordion icon stays vertically centered */
+.sol-accordion,
+.sol-accordion::after {
+    display: flex;
+    align-items: center; /* Center the icon vertically */
+}
+
+/* Accordion Panel: Initially collapsed */
+.sol-panel {
+    padding: 0 20px;
+    background-color: #000000; /* Background color */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    border-radius: 0 0 10px 10px;
+    margin: 0;
+}
+
+/* Expanded panel */
+.sol-panel.open {
+    padding: 20px;
+    max-height: none; /* Dynamic height */
+    background-color: #222;
+    margin-bottom: 20px;
+    overflow: visible;
+}
+
+/* Solutions Panel Content */
+.sol-content {
+    display: flex;
+    flex-wrap: wrap; /* Ensure columns wrap on smaller screens */
+    gap: 20px;
+    width: 100%; /* Ensure content takes full width inside panel */
+    box-sizing: border-box;
+}
+
+/* Columns inside the Solution Content */
+.sol-column {
+    flex: 1;
+    min-width: 300px; /* Ensure minimum width, but allow wrapping */
+    box-sizing: border-box; /* Include padding and border in width/height calculations */
+}
+
+/* Subtitle for each section inside the panel */
+.sol-subtitle {
+    font-size: 1.5rem;  /* Match font size */
+    font-weight: bold;  /* Match font weight */
+    margin: 15px 0 20px;
+    display: flex;
+    align-items: center;
+    color: #40E0D0; /* Keep the teal color */
+}
+
+/* Paragraph text inside the panels, aligned to the left */
+.sol-text {
+    text-align: left !important;  /* Force left alignment */
+    color: #fff; /* Retain white color */
+	font-size: 1.2rem;
+    line-height: 1.6; /* Add line spacing for better readability */
+    margin-bottom: 20px;
+}
+
+/* Tags inside the panels */
+.sol-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+	font-size: 1.2rem;
+}
+
+/* Individual tags inside the panels */
+.sol-tag {
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: bold; /* Maintain boldness */
+}
+
+/* Hover effect for the solution tags */
+.sol-tag:hover {
+    background-color: #40E0D0; /* Change background to teal on hover */
+    color: #fff; /* Change text color to white on hover */
+}
+
+.sol-list {
+    list-style-type: none;
+    padding-left: 0;
+	font-size: 1.2rem;
+    color: #fff;
+}
+
+.sol-list-container {
+    padding: 20px;
+    background-color: #000000; /* Restore section background */
+    border-radius: 10px;
+    margin-top: 15px;
+    box-sizing: border-box;
+}
+
+.sol-list li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+/* Checkmark bullet for the lists */
+.sol-list li::before {
+    content: "\2713";
+    color: #40E0D0;
+    position: absolute;
+    left: 0;
+}
+
+/* New styles for the right column in solutions */
+.sol-panel .sol-content {
+    display: flex;
+    gap: 30px;
+}
+
+.sol-panel .sol-column:last-child {
+    background: #000000;
+    color: #ffffff;
+    padding: 10px 30px 10px 30px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border: 1px solid #40E0D0;
+    flex: 1;
+}
+
+/* Adjust text color for better readability */
+.sol-panel .sol-column:last-child .sol-subtitle,
+.sol-panel .sol-column:last-child .sol-list {
+    color: #fff;
+}
+
+/* Maintain the teal color for subtitles */
+.sol-panel .sol-column:last-child .sol-subtitle {
+    color: #40E0D0;
+}
+
+/* Adjust the list container background */
+.sol-panel .sol-column:last-child .sol-list-container {
+    background-color: transparent;
+    padding: 0;
+}
+
+/* Hover effect (optional) */
+.sol-panel .sol-column:last-child:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(64, 224, 208, 0.2);
+}
+
+#ideas {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 80px 0px 60px 0px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+#ideas p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+}
+
+#ideas .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+#ideas .btn:hover {
+    background-color: #40E0D0; /* Darker turquoise on hover */
+	color: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(64, 224, 208, 0.2);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .sol-panel.open {
+        max-height: none; /* Allow dynamic height on smaller screens */
+        padding: 20px;
+    }
+
+    .sol-list-container {
+        padding: 20px; /* Ensure padding on smaller screens */
+    }
+}
+@media (max-width: 460px) {
+    .sol-container {
+        padding: 15px; /* Further reduce padding for very small screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .floating-contact-button {
+        display: none; /* Hide on mobile devices */
+    }
+}
+
+/* Bios Page Styles */
+#bios {
+    padding-top: 0; /* Remove any top padding */
+	padding-bottom: 10px;
+    margin-top: 0; /* Remove any top margin */
+    background-color: #40E0D0;
+}
+
+#bios .container {
+    padding-top: 130px; /* Adjust this value as needed */
+}
+
+#bios .section-title {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #000000;
+    position: relative;
+}
+
+#bios .section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    margin: 10px auto 0;
+    background-color: #FFFFFF;
+}
+
+#bios .section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #000000;
+    margin-bottom: 30px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Specific style for the main description text */
+#bios .about-us-description {
+    color: #000000;
+    font-weight: 400;
+	font-size: 1.5rem;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 50px; /* Add bottom margin for spacing before founder cards */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    text-align: center; /* Center the text */
+}
+
+#bios .main-description {
+    text-align: center;
+    font-size: 1.5rem; /* Increased font size */
+    color: #000000;
+    line-height: 1.6;
+    margin-bottom: 50px;
+    max-width: 1000px; /* Increased max-width for better readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.founders-container {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.founder-profile {
+    display: flex;
+	flex-direction: row;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.founder-profile:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.founder-image-container {
+    width: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.founder-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.founder-profile:hover .founder-image {
+    filter: grayscale(0%);
+}
+
+.founder-details {
+    flex: 1;
+    padding: 10px 30px 10px 30px;
+}
+
+.founder-name {
+	font-size: 2.5rem;
+	color: #000000;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: inline-flex;      /* critical: puts text & icon on one flex row */
+	align-items: center; 
+	flex-wrap: wrap;
+}
+
+.founder-name-text {
+	white-space: nowrap;
+	margin-right: 0px;
+}
+
+.founder-name a {
+	justify-content: left;
+	text-decoration: none;
+}
+
+.founder-name a img {
+	width: 35px;
+	height: 35px;
+	flex-shrink: 0;
+	margin-bottom: 10px;
+	transition: opacity 0.3s ease;
+	vertical-align: middle; /* optional; not strictly needed once using flex */
+}
+
+.founder-name a:hover img {
+    opacity: 0.8;
+	transform: scale(1.1);
+}
+
+.founder-title {
+    font-size: 1.5rem;
+	font-weight: bold;
+    color: #40E0D0;
+    margin-bottom: 20px;
+	margin-top: 0px;
+}
+
+.founder-bio p {
+    font-size: 1.2rem;
+    color: #000000; /* Changed to black */
+    line-height: 1.6;
+	margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+#join-team {
+    background-color: #000000;
+    color: #ffffff;
+    padding: 80px 0px 60px 0px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+#join-team p {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+}
+
+#join-team .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #ffffff;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+#join-team .btn:hover {
+    background-color: #40E0D0; /* Darker turquoise on hover */
+	color: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(64, 224, 208, 0.2);
+}
+
+/* Transparency page styles */
+#commitments {
+    background-color: #000; /* Black background */
+    padding: 130px 0px 0px 0px; /* Adjust padding to match the design */
+    color: #ffffff; /* White font color */
+}
+
+#commitments .section-titlewhite {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 50px; /* Reduced margin */
+    color: #40E0D0; /* Set text to green */
+    position: relative;
+}
+
+#commitments .section-titlewhite::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    margin: 10px auto 30px; /* Increased bottom margin to 30px */
+    background-color: #ffffff; /* White line */
+}
+
+#commitments .commitment-updates {
+    font-size: 1.1rem;
+    text-align: center;
+	margin-bottom: 0px;
+    color: #ffffff; /* White font */
+}
+
+.overview-title {
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#commitments .overview-description {
+    font-size: 1.1rem; /* Adjusted font size */
+    line-height: 1.6; /* Match line height of other pages */
+    text-align: center;
+    max-width: 1200px;
+    margin-bottom: 0px; /* Decreased space between paragraphs */
+    color: #ffffff;
+}
+
+/* Force 2×2 inside .card, then stack on small screens */
+.card .impact-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 20px;
+}
+
+/* Neutralize legacy row-of-4 styles that may be on .impact-item */
+.card .impact-grid .impact-item {
+  width: auto !important;
+  max-width: none !important;
+  flex: initial !important;
+  display: block;
+}
+
+/* Stack vertically on small screens */
+@media (max-width: 768px) {
+  .card .impact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+#transparency-page .transparency-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.2); /* 20% transparent white */
+    z-index: 1; /* Place it behind the content */
+}
+
+#transparency-page .card {
+    flex: 0 0 100%;  /* Take up full width */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 30px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.7);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    margin-bottom: 0px;  /* Add space between stacked cards */
+}
+
+.contact-form-container {
+	max-width: 660px;
+	position: relative;
+    padding: 0px 0px 0px 0px; /* Less padding at the bottom */
+	left: 50%; /* Shift container to the right */
+    transform: translateX(-50%); /* Center the container */
+}
+
+/* Ensure the form itself stands out against the black background */
+.contact-form {
+    background-color: #fff; /* Keep the form's background white */
+    padding: 30px;
+
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for contrast */
+}
+
+.contact-form .form-group {
+    margin-bottom: 20px;
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    color: #000000;
+	font-family: inherit; /* Inherit the font from the parent element */
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: #40E0D0;
+	border-width: 2px;
+}
+
+.contact-form button {
+    display: block;
+	margin: 20px auto 0; /* Centers the button and adds some space above it */
+    padding: 12px 24px;
+    background-color: #40E0D0;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+	font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+textarea {
+    resize: vertical;
+    max-width: 100%; /* Ensure the textarea does not exceed the width of its parent */
+	min-height: 80px;
+	max-height: 400px;
+}
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.select-selected {
+    width: 100%;
+    padding: 3px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    color: #000000;
+    font-family: inherit;
+    background-color: white;
+    cursor: pointer;
+	-webkit-user-select: none; /* Safari */
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px; /* Ensures consistent spacing between text and arrow */
+}
+
+
+.select-arrow {
+    color: #40E0D0; /* Darker color */
+    transition: transform 0.2s ease;
+    margin-right: 2px;
+    min-width: 24px; /* Prevent arrow from resizing */
+}
+
+.select-selected.select-arrow-active {
+    outline: none;
+    border-color: #40E0D0;
+    border-width: 2px;
+    padding: 2px 10px 3px 9px;
+}
+
+.select-selected.select-arrow-active .select-arrow {
+    transform: rotate(180deg);
+}
+
+.select-items {
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 99;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.select-items div {
+    padding: 3px 10px;
+    cursor: pointer;
+	font-size: 1.2rem;
+	-webkit-user-select: none; /* Safari */
+    user-select: none;
+}
+
+.select-items div:hover {
+    background-color: #40E0D0;
+    color: white;
+}
+
+.select-hide {
+    display: none !important;
+}
+
+.same-as-selected {
+    background-color: rgba(64, 224, 208, 0.1);
+}
+
+/* Specific to form buttons (if needed to prevent overrides) */
+input[type="submit"].btn, button.btn {
+    -webkit-appearance: none; /* For Safari */
+	appearance: none; /* Ensure cross-browser consistency */
+    border: none; /* Remove any default button borders */
+}
+
+/* ------ Controls for the 1. Dream, 2. Plan, 3. Build features in About and Who We Are */
+@media (max-width: 900px) {
+	#about .steps-container {
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+	}
+	#about .step {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		margin-bottom: 15px;
+		flex: 1 1 25%; /* Adjusts spacing while keeping balance */
+	}
+	#about .step p {
+		margin-top: 5px;
+		text-align: center;
+	}
+}
+@media (max-width: 600px) {
+	#about .steps-container {
+	flex-direction: column;
+	}
+}
+
+#services .step {
+  white-space: nowrap !important;
+}
+
+/* Card Flip Container */
+.flip-container {
+    perspective: 1000px; /* Allows for the 3D flip effect */
+    transition: height 0.6s ease; /* Smooth transition of height */
+}
+
+.flipper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flipped .flipper {
+    transform: rotateY(180deg);
+}
+
+.flip-front, .flip-back {
+    position: absolute;
+    width: 100%;
+    backface-visibility: hidden;
+	text-align: left;
+}
+
+.flip-front {
+    transform: rotateY(0deg);
+}
+
+.flip-back {
+    transform: rotateY(180deg);
+    top: 0;
+    left: 0;
+}
+
+.flip-front h3, .flip-back h3 {
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.flip-front p, .flip-back p {
+	text-align: left;
+	flex-grow: 1; /* Ensure content takes available space */
+}
+
+.flip-front .btn, .flip-back .btn {
+	align-self: flex-start;
+	margin-top: 20px;
+}
+
+/* Styles for the back card button */
+.flip-back .btn {
+	background-color: #000000; /* Black background */
+	color: #40E0D0; /* Green text */
+}
+
+/* Optional: Hover effect for the back card button */
+.flip-back .btn:hover {
+	background-color: #333333; /* Slightly lighter black */
+}
+
+/* Adjust text color for better visibility on the green background */
+.flip-back h3,
+.flip-back p {
+	color: #000000; /* Black text */
+}
+
+/* ===== Hero Section ===== */
+#hero {
+	position: relative;
+	min-height: 100vh; /* fill viewport */
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+/* Dots background canvas */
+#playCanvas {
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2; 
+	pointer-events: none;
+	background: linear-gradient(120deg, #ecfbfb, #f8ffff, #ecfbfb);
+	background-size: 200% 200%;
+	animation: gradientShift 15s ease infinite;
+}
+@keyframes gradientShift {
+	0%   { background-position: 0% 50%; }
+	50%  { background-position: 100% 50%; }
+	100% { background-position: 0% 50%; }
+}
+
+/* Black overlay limited by .container width */
+.hero-overlay-wrap {
+	position: relative;
+	z-index: 5; /* Above the canvas */
+	width: 100%; /* Ensures it stretches when needed */
+	max-width: 1200px; /* Keeps it limited to 1200px when possible */
+	min-width: 250px; /* Prevents excessive shrinking */
+	padding-left: 30px;
+	padding-right: 30px;
+	margin: 0 auto; /* Centers it within its container */
+	box-sizing: border-box; /* Ensures padding is included in width calculations */
+}
+
+.hero-overlay {
+	background: rgba(0,0,0,0.7);
+	border-radius: 10px;
+	padding: 30px;
+	text-align: center;
+	margin: 0 auto;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Default shadow */
+	transition: all 0.3s ease;
+}
+
+.hero-overlay:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Hero headings */
+#hero-heading {
+	font-size: 3.5rem;
+	color: #40E0D0;
+	margin-bottom: 1rem;
+	line-height: 1.2;
+	transition: opacity 1s ease;
+	padding-top: 30px;
+}
+
+.typed-subheading {
+	font-size: 1.8rem;
+	margin-bottom: 2rem;
+	color: #ffffff;
+	min-height: 1.6em;
+}
+
+/* Arrow at bottom center */
+.scroll-arrow {
+	position: absolute;
+	bottom: 2rem;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 4rem;
+	color: #000000;
+	cursor: pointer;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Default shadow */
+	z-index: 6;
+	animation: arrowBounce 2s infinite;
+}
+
+@keyframes arrowBounce {
+	0%   { transform: translate(-50%, 0) scale(1); }
+	20%  { transform: translate(-50%, 5px) scale(1.2); }
+	40%  { transform: translate(-50%, 2px) scale(1); }
+	60%  { transform: translate(-50%, 4px) scale(1.15); }
+	80%  { transform: translate(-50%, 0) scale(1); }
+	100% { transform: translate(-50%, 0) scale(1); }
+}
+
+/* TESTIMONIAL CSS */
+.testimonial-carousel {
+	position: relative;
+	overflow: hidden;
+	width: 100%;            /* Fills its parent container */
+	max-width: 900px;       /* No more than 900px wide */
+	margin: auto;
+}
+
+.testimonial-slide-container {
+	display: flex;
+	transition: transform 0.7s ease-in-out;
+	/* Its width will be set dynamically via JavaScript */
+}
+
+.testimonial-slide {
+	flex-shrink: 0;         /* Prevents slides from shrinking */
+	box-sizing: border-box;
+	text-align: center;
+	padding: 30px;
+	background: rgba(0,0,0,0.7);
+	color: white;
+	border-radius: 10px;
+	/* NEW: Fade transition */
+	opacity: 1;
+	transition: opacity 0.7s ease-in-out;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.quote-content p {
+	font-size: 1.2rem;
+}
+
+@media (max-width: 480px) {
+	.testimonial-slide {
+		padding: 20px 10px 20px 10px;
+	}
+}
+
+/* NEW: When this class is added, the slide fades out */
+.testimonial-slide.fade-out {
+	opacity: 0;
+}
+
+.quote-container {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	position: relative;
+	width: 100%;            /* Constrained to its slide’s width */
+	box-sizing: border-box;
+}
+
+.testimonial-slide blockquote {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.quote-mark {
+	font-size: 12rem;
+	color: #40E0D0;
+	font-family: 'Lora', serif;
+	position: relative;
+}
+
+@media (max-width: 480px) {
+	.quote-mark {
+		font-size: 8rem;
+	}
+}
+
+.quote-box {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+@media (max-width: 480px) {
+	.quote-box {
+		padding: 0px;
+	}
+	
+	.quote-content p {
+	font-size: 1.1rem !important;
+	}
+}
+
+.quote-content {
+	flex-grow: 1;
+	max-width: 600px;
+	text-align: center;
+	margin: 0 auto;
+	position: relative;
+	padding: 0 20px;
+}
+
+.testimonial-footer {
+	padding: 0px;
+	margin-top: 20px;
+	border-radius: 5px;
+	display: inline-block;
+	background: transparent;
+}
+
+.testimonial-name {
+	font-weight: bold;
+	color: #40E0D0;
+	font-size: 1.5rem;
+	display: block;
+	margin-bottom: 5px;
+}
+
+.testimonial-title {
+	font-size: 1rem;
+	color: #ffffff;
+	display: block;
+	margin-top: 0;
+}
+
+.carousel-dots {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.dot {
+	height: 12px;
+	width: 12px;
+	margin: 0 5px;
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	cursor: default;      /* No pointer cursor */
+	pointer-events: none; /* Prevent any mouse events */
+}
+
+.dot.active {
+	background-color: #40E0D0;
+}
+
+/* Existing chip styles */
+.chip {
+	display: flex;
+	align-items: center; /* Centers text vertically */
+	justify-content: center; /* Centers text horizontally */
+	background-color: #ffffff;
+	color: #000000;
+	border-radius: 10px;
+	width: 170px; /* Fixed width to prevent resizing */
+	height: 40px; /* Ensures consistent height */
+	max-height: 40px;
+	text-align: center;
+	font-weight: bold;
+}
+
+/* This element’s text fades in/out */
+.fill-in {
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	font-size: 1.8rem;
+}
+
+/* Group chip and punctuation so they never break apart */
+.no-break {
+	display: inline-flex;
+	white-space: nowrap;
+	align-items: center;
+}
+
+/* Punctuation styling – adjust if needed */
+.punctuation {
+	margin: 0; /* No extra space between chip and punctuation */
+}
+
+/* Flex container for the sentence */
+.reality-check-text {
+	font-size: 1.8rem;
+	font-weight: 400;
+	color: #000000;
+	margin: 20px auto;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	flex-wrap: wrap;
+	max-width: 1200px;
+}
+
+.fade-up {
+	opacity: 0;
+	transform: translateY(40px); /* Increased offset for a more pronounced effect */
+	transition: opacity 1.2s ease-out, transform 1.5s ease-out; /* Slower transition */
+}
+
+.fade-up.animate {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.fade-down {
+	opacity: 0;
+	transform: translateY(-40px); /* Increased offset for a more pronounced effect */
+	transition: opacity 1.2s ease-out, transform 1.5s ease-out; /* Slower transition */
+}
+
+.fade-down.animate {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Keyframe animation (unchanged) */
+@keyframes fade-in-out {
+	0% { opacity: 0; }
+	25% { opacity: 1; }
+	50% { opacity: 1; }
+	75% { opacity: 0.5; }
+	100% { opacity: 0; }
+}
+
+/* Animation assignments (unchanged) */
+#seq1 { animation: fade-in-out 8s 0s infinite; }
+#seq2 { animation: fade-in-out 8s 2s infinite; }
+#seq3 { animation: fade-in-out 8s 4s infinite; }
+#seq4 { animation: fade-in-out 8s 6s infinite; }
+		
+/* Base bubble style */
+.bubble {
+	position: absolute;
+	border-radius: 50%;
+	animation: bubbleMove linear infinite;
+}
+/* Bubble animation: bubbles start small at the bottom, rise, and then fade */
+@keyframes bubbleMove {
+	0% {
+	  transform: translate(0, 0) scale(0.5);
+	  opacity: 0;
+	}
+	20% {
+	  opacity: 1;
+	}
+	80% {
+	  opacity: 1;
+	}
+	100% {
+	  transform: translate(var(--tx, 0px), var(--ty, -100px)) scale(1);
+	  opacity: 0;
+	}
+}
+
+/* ----- Services Page CSS ----- */
+#services {
+	padding: 130px 0px 60px 0px;
+}
+
+.services-container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	flex-wrap: wrap;
+	gap: 20px;
+	text-align: center;
+	max-width: 1200px;
+	margin: 0 auto;
+	margin-top: 40px;
+	margin-bottom: 20px;
+}
+
+/* Services Card Base - works with flexbox container */
+.services-card {
+    background: #222;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    padding: 20px 30px 30px 30px;
+    border-radius: 10px;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Button Variants */
+.services-card .btn {
+    display: inline-block;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.services-card .btn-primary {
+    color: #000000;
+}
+
+.services-card .btn-secondary {
+    color: #40E0D0;
+    background: #000000;
+}
+
+.services-card:hover {
+    transform: scale(1.05);
+}
+
+/* Popular Card Specific */
+.popular-badge {
+    position: absolute;
+    top: -18px;
+    background: #F4BB44;
+    color: #000;
+    padding: 5px 20px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(244, 187, 68, 0.4);
+    z-index: 1;
+    white-space: nowrap;
+}
+
+/* Services Title and Tagline */
+.services-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #40E0D0;
+	margin-bottom: 20px;
+}
+
+.services-tagline {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px 10px;  /* Match solution-tag padding */
+    border-radius: 10px;  /* Match solution-tag radius */
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;  /* Match solution-tag */
+    text-align: center;  /* Match solution-tag */
+}
+
+.services-area {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px 0;
+}
+
+.services {
+	font-size: 1.8rem;
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+/* Features List */
+.features {
+    text-align: left;
+    margin-top: 15px;
+    line-height: 1;
+    width: 100%;
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.features li {
+    margin: 10px 0;
+    min-height: 20px;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.features-header {
+    color: #40E0D0;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.features-section-end {
+    margin-bottom: 15px;
+}
+
+/* Outcome Box */
+.outcome-box {
+    background-color: #000;
+    border: 1px solid #40E0D0;
+    border-radius: 8px;
+	font-size: 1.2rem;
+	line-height: 1.6;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.outcome-title {
+    color: #40E0D0;
+    font-weight: bold;
+}
+
+.outcome-text {
+    color: #fff;
+    margin-top: 5px;
+}
+
+/* Default size */
+.feature-item {
+    font-size: 1.1rem !important;
+	text-align: left;
+}
+
+.plan-label {
+	font-size: 1.3rem !important;
+}
+
+.check-mark, .dash-mark {
+	font-size: 1rem !important;
+}
+
+.feature-label {
+    text-align: left;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    .table-header {
+        grid-template-columns: 2fr 0.8fr 0.8fr 0.8fr !important;
+        gap: 10px !important;
+    }
+    
+    .table-row {
+        grid-template-columns: 2fr 0.8fr 0.8fr 0.8fr !important;
+        gap: 10px !important;
+    }
+    
+    .table-cta {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    .feature-label {
+        font-size: 1rem !important;
+    }
+    
+    .plan-label {
+        font-size: 1rem !important;
+    }
+    
+    .feature-item {
+        font-size: 0.9rem !important;
+    }
+    
+    .check-mark, .dash-mark {
+        font-size: 1.2rem !important;
+    }
+    
+    .btn-table {
+        font-size: 0.9rem !important;
+        padding: 8px 16px !important;
+    }
+	
+	/* Visibility controls */
+    .desktop-table { 
+        display: none !important; 
+    }
+    
+    .mobile-cards { 
+        display: block !important; 
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-item {
+        font-size: 0.8rem !important;
+    }
+    
+    .plan-label {
+        font-size: 0.8rem !important;
+    }
+    
+    .check-mark, .dash-mark {
+        font-size: 1rem !important;
+    }
+}
+
+#referrals {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 80px 0px 60px 0px;
+    text-align: center;
+    margin-top: 0px;
+}
+
+#referrals p {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+}
+
+#referrals .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #40E0D0;
+    color: #000000;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+#referrals .btn:hover {
+	background-color: #30C0B0; /* Darker turquoise on hover */
+	color: #000000;
+	transform: translateY(-3px);
+	box-shadow: 0 4px 8px rgba(64, 224, 208, 0.2);
+}
+
+/* Service card tooltip text styling */
+.feature-item[data-tooltip]{
+    /* display:inline;  <-- delete this */
+    color: inherit;
+    font-size: inherit;
+    cursor: help;
+    text-decoration: none; /* ensure parent isn’t decorating */
+    text-underline-offset: 3px;
+    /* leave it block-level (default for div) */
+}
+
+/* Same for this one */
+.service-tooltip[data-tooltip]{
+    /* display:inline;  <-- delete this */
+    color: inherit;
+    font-size: inherit;
+    cursor: help;
+    text-decoration: none;
+    text-underline-offset: 3px;
+}
+
+/* Put the underline on the inline span you inject */
+.feature-item[data-tooltip] .feature-text-wrapper,
+.service-tooltip[data-tooltip] .feature-text-wrapper{
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+}
+
+/* Safari fallback if dotted isn't honored */
+@supports not (text-decoration-style: dotted){
+  .feature-item[data-tooltip] .feature-text-wrapper,
+  .service-tooltip[data-tooltip] .feature-text-wrapper{
+      text-decoration: none;
+      border-bottom: 1px dotted currentColor;
+      padding-bottom: 2px; /* space that mimics underline gap */
+  }
+}
+
+.service-tooltip[data-tooltip]:hover {
+    color: #40E0D0; /* Turquoise on hover */
+}
+
+/* Tooltip styling - matches the style in your example */
+#tooltip {
+    position: fixed !important;
+    background: rgba(0, 0, 0, 0.95); /* Slightly transparent black */
+    color: #40E0D0;
+	text-align: left;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: none;
+    z-index: 10000; /* Very high z-index to ensure it's on top */
+    max-width: 300px;
+    min-width: 200px;
+    border: 1px solid #40E0D0;
+    pointer-events: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    line-height: 1.5;
+    font-weight: normal;
+}
+
+/* Visibility control classes */
+.desktop-table {
+    display: block;
+}
+
+.mobile-cards {
+    display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CASE STUDIES — Layout (2 columns desktop, 1 column tablet+)
+   ──────────────────────────────────────────────────────────── */
+.case-studies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* keep 2-wide */
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.case-study-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.case-study-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.10);
+}
+
+/* Space for the icon wrapper */
+.case-study-icon {
+  margin-bottom: 18px;
+  position: relative;
+}
+
+/* Titles & text */
+.case-study-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
+}
+
+/* Category tags container (replaces the single dotted line) */
+.case-study-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;              /* space between the two tags */
+  margin-bottom: 15px;
+}
+
+/* Individual tag — same color/size as before, just boxier corners */
+.case-study-tag {
+  font-size: 1rem;       /* unchanged */
+  font-weight: 700;      /* unchanged */
+  letter-spacing: 0.01em;
+  padding: 2px 8px;      /* unchanged */
+  color: #1aa69a;        /* unchanged */
+  background: rgba(64,224,208,0.12); /* unchanged */
+  border-radius: 6px;   /* boxy corners to match solution-tag style */
+  display: inline-block;
+  line-height: 1.3;
+}
+
+.case-study-summary {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #333;
+  flex-grow: 1;
+  margin-bottom: 20px;
+}
+
+.case-study-card .btn {
+  align-self: flex-start;
+  margin-top: auto;
+  transform: translateZ(0); /* micro polish */
+}
+
+.case-study-card .btn:hover {
+  filter: saturate(1.05);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CASE STUDIES — Icons (Inline SVG, MINIMAL theme)
+   ──────────────────────────────────────────────────────────── */
+.case-study-icon.modern-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  background: linear-gradient(180deg, #fff, #f7f7f7);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.case-study-card:hover .modern-icon {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.16);
+}
+
+/* Inline SVG styling (uses currentColor) */
+.case-study-icon.modern-icon .cs-svg {
+  width: 24px;
+  height: 24px;
+  color: #0b0b0b;            /* icon color via currentColor */
+  stroke: currentColor;
+  stroke-width: 1.8;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: color 0.18s ease;
+}
+
+/* Optional: if these cards are used on dark backgrounds elsewhere */
+.dark .case-study-icon.modern-icon .cs-svg { color: #fff; }
+
+/* ─────────────────────────────────────────────────────────────
+   CASE STUDIES — Responsive
+   ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .case-studies-grid {
+    grid-template-columns: 1fr; /* stack on tablet+ */
+    gap: 20px;
+  }
+  .case-study-card { min-height: auto; }
+}
+
+@media (max-width: 480px) {
+  .case-study-card { padding: 20px; }
+  .case-study-title { font-size: 1.3rem; }
+  .case-study-summary { font-size: 1rem; }
+  /* Optional: scale icons down slightly on XS
+  .case-study-icon.modern-icon { width: 44px; height: 44px; }
+  .case-study-icon.modern-icon .cs-svg { width: 22px; height: 22px; }
+  */
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CASE STUDIES PAGE — unified styles
+   (merges inline <style> + mainstyles.css; safe to drop in)
+   ──────────────────────────────────────────────────────────── */
+
+/* Page-level tweaks */
+.cs-single .case-study-container { 
+  display:block;
+}
+
+/* Optional landing hero (keep if you show a short intro above studies) */
+.cs-landing-hero {
+  background: #f8f8f8;
+  padding: 80px 0 40px;
+  text-align: center;
+}
+.cs-landing-hero .cs-landing-subtitle {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  color: #333;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── Per-study header band (teal gradient) ─────────────────── */
+.cs-header,
+.case-study-header {                                /* back-compat selector */
+  background: #40E0D0;
+  padding: 130px 0 50px;
+  color: #000;
+  position: relative;
+  overflow: hidden;
+}
+.cs-header .container,
+.case-study-header .container { max-width: 1000px; }
+
+.case-study-header::before {                        /* subtle pattern if older markup is used */
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: csPattern 28s linear infinite;
+  opacity: 0.6;
+}
+@keyframes csPattern {
+  0% { transform: translate(0,0); }
+  100% { transform: translate(50px,50px); }
+}
+
+/* Title (left-aligned to match section copy) */
+.cs-title,
+.case-study-title-main {                            /* back-compat selector */
+    font-size: 2.5rem;
+    text-align: center;
+	margin-top: 0px;
+    margin-bottom: 50px;
+    color: #000000;
+    position: relative;
+}
+
+.cs-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    margin: 10px auto 0;
+    background-color: #FFFFFF;
+}
+
+.cs-description {
+    color: #000000;
+    font-weight: 400;
+	font-size: 1.5rem;
+    margin-top: 0; /* Remove top margin */
+    margin-bottom: 10px; /* Add bottom margin for spacing before founder cards */
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    text-align: center; /* Center the text */
+}
+
+/* Meta tags (industry / function) below title */
+.cs-meta { 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap;
+  padding-top: 10px;
+  justify-content: center;
+ }
+ 
+.cs-tag {
+  display: inline-block;
+  background: #ffffff;
+  color: #000000;
+  padding: 6px 12px;
+  border-radius: 10px;          /* match workshop tag corners */
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.cs-tag:hover {
+    color: #ffffff;
+	background: #000000;
+}
+
+/* Legacy tag look (kept for safety if used elsewhere) */
+.case-study-tags {
+  display: inline-flex; 
+  gap: 8px; 
+  margin-bottom: 16px;
+}
+
+.case-study-tag {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(64,224,208,0.12);
+  color: #1aa69a;
+  line-height: 1.3;
+}
+
+/* ── Main content area ─────────────────────────────────────── */
+.cs-body,
+.case-study-content { 
+  background: #fff; 
+  padding: 50px 0 80px;
+}
+
+.cs-body .container,
+.case-study-content .container { 
+  max-width: 1000px;
+}
+
+.cs-section,
+.case-study-section { 
+  margin: 0 0 56px 0;
+}
+
+.cs-section h2,
+.case-study-section h2 {
+  margin: 0 0 14px 0;
+  font-size: 1.4rem;
+  color: #40E0D0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.cs-section {
+  position: relative;                          /* so ::before can anchor */
+  padding: 30px;
+  margin: 0 0 30px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* subtle lift */
+  z-index: 0;                                  /* keeps it behind content */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* optional: extra soft overlay via pseudo-element (like transparency.html) */
+.cs-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);       /* faint milky layer */
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Ensure section text & cards sit above the backdrop */
+.cs-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.cs-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cs-text,
+.case-study-text {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #333;
+  margin: 0;
+}
+
+/* ── Results cards (refined) ───────────────────────────────── */
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 28px;
+}
+
+.impact-item {
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  border-radius: 12px;
+  padding: 26px 22px;
+  text-align: center;
+  border: 1px solid rgba(64,224,208,.25);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.impact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.impact-number {
+  display: block;
+  font-size: 1.8rem;              /* toned down per request */
+  font-weight: 800;
+  color: #40E0D0;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+
+.impact-caption { 
+  font-size: .95rem; 
+  opacity: .9;
+}
+
+/* ── Tech stack (chips) ───────────────────────────────────── */
+.tech-stack {
+  background: #f8f8f8;
+  border-radius: 10px;
+  padding: 18px 18px 8px 18px;
+  margin-top: 24px;
+}
+
+.tech-stack-title {
+  font-weight: 800; 
+  margin: 0 0 12px 0;
+}
+
+.tech-tags {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 8px;
+}
+
+.tech-tag {
+  background: #fff;
+  color: #000;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-weight: 700;
+  font-size: .95rem;
+}
+
+.tech-tag:hover {
+    color: #ffffff;
+	background: #000000;
+}
+
+/* Back to cases (if you keep the button) */
+.back-to-cases { text-align: center; margin-top: 56px; }
+
+/* ── Page navigation (Prev / Next / picker) ────────────────── */
+.cs-nav {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  align-items: center; justify-content: space-between;
+  margin-top: 36px;
+}
+.cs-nav-left, .cs-nav-right { display: flex; gap: 12px; align-items: center; }
+.cs-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #000000;      /* turquoise background */
+  color: #fff;                    /* white text */
+  text-decoration: none;
+  border-radius: 30px;            /* pill corners */
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: all 0.3s;
+  border: none;                   /* remove border that cs-btn had */
+  width: auto;
+  margin-top: 20px;
+  align-self: flex-start;
+}
+.cs-btn:hover { 
+  background-color: #000;         /* black hover, like SEE SERVICES */
+  color: #fff;                    /* keep text white */
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);  /* adjust shadow for dark bg */
+ }
+
+.cs-select {
+  border: none; outline: none; background: transparent;
+  font-weight: 700; font-size: .95rem;
+}
+
+/* ── Utilities ─────────────────────────────────────────────── */
+.case-study-container { display: none; }
+.case-study-container.active { display: block; }
+
+/* ── Responsive tweaks ─────────────────────────────────────── */
+@media (max-width: 768px){
+  .cs-header,
+  .case-study-header { padding: 120px 0 44px; }
+  .impact-number { font-size: 1.6rem; }
+  .case-study-section h2 { font-size: 1.6rem; } /* if legacy section titles exist */
+}
+
+@media (max-width: 768px) {
+    .ai-badge {
+        top: 60px;
+        right: 10px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+@media (min-width: 769px) {
+    /* Show desktop table on larger screens */
+    .desktop-table { display: block; }
+    
+    /* Hide mobile cards on desktop */
+    .mobile-cards { display: none; }
+}
+
+@media screen and (max-width: 1239px) {
+	#services .card {
+		min-width: 700px;
+	}
+}
+
+@media screen and (max-width: 739px) {
+	#services .card {
+		min-width: 400px;
+	}
+	
+	#case-studies .dot {
+		height: 10px;
+		width: 10px;
+		margin: 0 3px;
+		background-color: #bbb;
+		border-radius: 50%;
+		display: inline-block;
+		cursor: default;      /* No pointer cursor */
+		pointer-events: none; /* Prevent any mouse events */
+	}
+	
+	#case-studies .dot.active {
+		background-color: #40E0D0;
+	}
+}
+
+/* By default, 1rem = 16px if the browser hasn't changed. */
+@media screen and (max-width: 768px) {
+	html {
+		font-size: 96%; /* 13px → 1rem */
+	}
+	
+    .founder-profile {
+        flex-direction: column;
+    }
+
+    .founder-image-container {
+        height: auto;
+		width: auto;
+		min-width: 300px;
+    }
+	
+	.hero-overlay {
+		font-size: 3rem;
+	}
+	
+	.scroll-arrow {
+		font-size: 3rem;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	html {
+		font-size: 92%; /* 12px → 1rem */
+	}
+	
+	#referrals svg  {
+		height: 60px;
+		width: 60px;
+	}
+	
+	.sol-column {
+		min-width: 250px; /* Ensure minimum width, but allow wrapping */
+		padding-right: 20px;
+		padding-left: 20px;
+	}
+	
+    .founder-image-container {
+        height: auto;
+		width: auto;
+		min-width: 250px;
+    }
+
+	.logo-slide-track {
+		width: calc(200px * 28); /* Width plus margin right. Need to update in 3 places (1 of 3) logo width times logos x2 */
+	}
+
+	.logo-slide {
+		width: 180px; /* Need to update in 3 places (2 of 3) logo width times logos x2 */
+		height:100px;
+	}
+
+	/* Keyframes for Scrolling Logos */
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(calc(-200px * 14)); /* Width plus margin right. Need to update in 3 places (3 of 3) logo width times number of unique logos */
+		}
+	}
+	
+	#services .card {
+		min-width: 280px !important;
+	}
+	
+	#hero-heading {
+		font-size: 2.5rem !important;
+		padding-top: 0px !important;
+	}
+	
+	#case-studies .dot {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 359px) {
+	html {
+		font-size: 90%; /* 12px → 1rem */
+	}
+	
+	.social-icons-mobile img {
+        height: 20px;
+        width: 20px;
+    }
+	
+	#services .card {
+		min-width: 260px !important;
+	}
+	
+	.testimonial-name {
+		font-size: 1.2rem;
+	}
+}
+
+/* Bulletproof dotted underline (no text-decoration at all) */
+.feature-item[data-tooltip] .feature-text-wrapper,
+.service-tooltip[data-tooltip] .feature-text-wrapper {
+  text-decoration: none !important;                 /* ignore text-decoration */
+  background-image: radial-gradient(currentColor 1px, transparent 1.5px);
+  background-repeat: repeat-x;
+  background-size: 4px 1px;                         /* dot spacing & thickness */
+  background-position: 0 calc(100% - 1px);          /* sit just below baseline */
+  padding-bottom: 2px;                               /* small gap from glyphs */
+  -webkit-box-decoration-break: clone;               /* multi-line safety */
+          box-decoration-break: clone;
+}
+
+/* --- Founder name + LinkedIn icon responsive tweaks --- */
+/* --- Founder name, LinkedIn icon, and title responsive tweaks --- */
+#bios .founder-name { 
+  gap: 12px;
+}
+
+#bios .founder-name a {
+  display: inline-flex;
+  align-items: center;
+}
+
+#bios .founder-name a img {
+  width: 35px;
+  height: 35px;
+  margin: 0;
+}
+
+#bios .founder-title {
+  font-size: 1.5rem;   /* baseline from your current CSS */
+}
+
+/* Tablet */
+@media (max-width: 1024px){
+  #bios .founder-name { font-size: 2.2rem; gap: 10px; }
+  #bios .founder-name a img { width: 30px; height: 30px; }
+  #bios .founder-title { font-size: 1.3rem; }
+}
+
+/* Mobile (landscape) */
+@media (max-width: 768px){
+  #bios .founder-name { font-size: 1.9rem; }
+  #bios .founder-name a img { width: 26px; height: 26px; }
+  #bios .founder-title { font-size: 1.5rem; }
+  #bios .founder-bio { font-size: 1.1rem; }
+}
+
+/* Mobile (portrait / narrow) */
+@media (max-width: 480px){
+  #bios .founder-name { font-size: 1.6rem; gap: 8px; }
+  #bios .founder-name a img { width: 22px; height: 22px; }
+  #bios .founder-title { font-size: 1.3rem; }
+  #bios .founder-bio { font-size: 1rem; }
+  /* Let long names wrap if needed */
+  #bios .founder-name-text { white-space: normal; margin-right: 0px; }
+}

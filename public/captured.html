@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html class="js js-enabled js-ready loaded wf-loaded" lang="en" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882" xmlns:mso="urn:schemas-microsoft-com:office:office"><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type"/><style rel="stylesheet" type="text/css">@charset "utf-8";
+
+#chatbase-bubble-button, #chatbase-bubble-button * { margin: 0px; padding: 0px; box-sizing: border-box; }
+
+html.__cb_widget_active, html.__cb_widget_active body { top: 0px; left: 0px; overscroll-behavior: none; position: fixed !important; width: 0px !important; height: 0px !important; margin: 0px !important; overflow: hidden !important; transform: none !important; }
+
+#chatbase-bubble-window { border: 1px solid rgb(244, 244, 245); box-shadow: rgba(0, 0, 0, 0) 0px 260px 73px 0px, rgba(0, 0, 0, 0.01) 0px 166px 67px 0px, rgba(0, 0, 0, 0.02) 0px 94px 56px 0px, rgba(0, 0, 0, 0.03) 0px 42px 42px 0px, rgba(0, 0, 0, 0.04) 0px 10px 23px 0px; backdrop-filter: blur(4px); }</style>
+    
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AI Consulting Services | Solutions for AI Adoption</title>
+	<link href="https://hqforai.com/" rel="canonical"/>
+	<link href="/assets/css/hqforai_com_mainstyles_1ebba871.css" rel="stylesheet"/> <!-- Link to your CSS file -->
+	<link href="/assets/icons/hqforai_com_Favicon_f9951822.png" rel="icon" type="image/png"/> <!-- Link to Favicon -->
+	
+	<!-- SEO -->
+    <meta content="Headquarters for AI helps organizations adopt and scale AI with consulting, workshops, and tailored solutions." name="description"/>
+
+    <!-- Open Graph -->
+    <meta content="website" property="og:type"/>
+    <meta content="Headquarters for AI" property="og:site_name"/>
+    <meta content="https://hqforai.com/" property="og:url"/>
+    <meta content="AI Consulting Services | Solutions for AI Adoption" property="og:title"/>
+    <meta content="Headquarters for AI helps organizations adopt and scale AI with consulting, workshops, and tailored solutions." property="og:description"/>
+    <meta content="https://hqforai.com/Favicon.png" property="og:image"/>
+
+    <!-- Twitter -->
+    <meta content="summary" name="twitter:card"/>
+    <meta content="AI Consulting Services | Solutions for AI Adoption" name="twitter:title"/>
+    <meta content="Headquarters for AI helps organizations adopt and scale AI with consulting, workshops, and tailored solutions." name="twitter:description"/>
+    <meta content="https://hqforai.com/Favicon.png" name="twitter:image"/>
+
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:MediaServiceImageTags msdt:dt="string"></mso:MediaServiceImageTags>
+<mso:lcf76f155ced4ddcb4097134ff3c332f msdt:dt="string"></mso:lcf76f155ced4ddcb4097134ff3c332f>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+<link href="https://www.chatbase.co/" rel="preconnect"/></head>
+
+<body data-js-loaded="true">
+    <div class="scroll-indicator"></div>
+
+	<header id="main-header">
+		<div class="container">
+			<div class="header-left">
+				<a>
+					<img alt="HQ for AI Logo" class="logo" src="/assets/images/hqforai_com_Logo_642900b3.png"/>
+				</a>
+				<div class="vertical-line"></div>
+				<div class="social-icons-header">
+					<a target="_blank"><img alt="Facebook" src="/assets/images/hqforai_com_facebook_fa82bed4.png"/></a>
+					<a target="_blank"><img alt="Instagram" src="/assets/images/hqforai_com_instagram_aefcd835.png"/></a>
+					<a target="_blank"><img alt="LinkedIn" src="/assets/images/hqforai_com_linkedin_09e23afb.png"/></a>
+					<a target="_blank"><img alt="Bluesky" src="/assets/images/hqforai_com_bluesky_99fa151d.png"/></a>
+				</div>
+			</div>
+			<div>
+				<nav class="navbar-location">
+					<a class="navbar-link">HOME</a>
+					<a class="navbar-link">SERVICES</a>
+					<a class="navbar-link">CASE STUDIES</a>					
+					<a class="navbar-link">WORKSHOPS</a>
+					<a class="navbar-link">BIOS</a>
+					<a class="navbar-link">TRANSPARENCY</a>
+					<a class="navbar-link">CONTACT</a>
+				</nav>
+			
+			<!--Mobile Menu-->
+			<div class="hamburger-menu">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+
+			<nav class="mobile-nav" id="mobile-menu">
+				<a class="mobile-nav-link">HOME</a>
+				<a class="mobile-nav-link">SERVICES</a>
+				<a class="mobile-nav-link">CASE STUDIES</a>
+				<a class="mobile-nav-link">WORKSHOPS</a>
+				<a class="mobile-nav-link">BIOS</a>
+				<a class="mobile-nav-link">TRANSPARENCY</a>
+				<a class="mobile-nav-link">CONTACT</a>
+			
+			<!-- Placeholder for Social Icons (for 480px and smaller) -->
+			<div class="social-icons-mobile">
+				<a target="_blank"><img alt="Facebook" src="/assets/images/hqforai_com_facebook_fa82bed4.png"/></a>
+				<a target="_blank"><img alt="Instagram" src="/assets/images/hqforai_com_instagram_aefcd835.png"/></a>
+				<a target="_blank"><img alt="LinkedIn" src="/assets/images/hqforai_com_linkedin_09e23afb.png"/></a>
+				<a target="_blank"><img alt="Bluesky" src="/assets/images/hqforai_com_bluesky_99fa151d.png" style="margin-right: 0px;"/></a>
+			</div>
+			
+			</nav>
+			
+			</div>
+		</div>
+	</header>
+
+    <main>
+	    <!-- ====== HERO ====== -->
+		<section id="hero">
+			<!-- Canvas for dots -->
+			<canvas height="150" id="playCanvas" width="300"></canvas>
+			<!-- Black overlay, constrained by container width -->
+			<div class="hero-overlay-wrap">
+				<div class="hero-overlay">
+					<!-- Heading that fades from HELLO, AI. to AI, MEET YOUR HQ. -->
+					<h1 id="hero-heading" style="opacity: 1;">MEET HQ.</h1>
+					<!-- Typed subheading -->
+					<p class="typed-subheading" id="typed-text">Practical. </p>
+					<!-- CTA -->
+					<a class="btn" style="margin-bottom: 30px;">GET IN TOUCH</a>
+				</div>
+			</div>
+			<!-- Scroll arrow -->
+			<div class="scroll-arrow" id="scrollArrow" style="background: #40E0D0;">▼</div>
+		</section>
+	
+		<section id="about" style="padding: 80px 20px 40px 20px; background-color: #000000; color: #ffffff; text-align: center; position: relative;">
+			<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+				<div class="steps-container" style="display: flex; justify-content: space-evenly; gap: 10px; align-items: center; max-width: 600px; margin: 0 auto; padding-bottom: 0px;">
+					<div class="step fade-up animate" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+						<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+							1
+						</div>
+						<p style="font-size: 2.5rem; font-weight: 700; color: #ffffff;">Dream.</p>
+					</div>
+					<div class="step fade-up animate" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+						<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+							2
+						</div>
+						<p style="font-size: 2.5rem; font-weight: 700; color: #ffffff;">Plan.</p>
+					</div>
+					<div class="step fade-up animate" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+						<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+							3
+						</div>
+						<p style="font-size: 2.5rem; font-weight: 700; color: #ffffff;">Build.</p>
+					</div>
+				</div>
+				<p style="font-size: 2.5rem; font-weight: 400; color: #ffffff; max-width: 900px; margin: 20px auto; font-style: italic;">
+					<em>AI is complex.</em> At <strong style="color: #40E0D0; font-style: italic;">Headquarters for AI</strong>, we make it simple.
+				</p>
+				<p style="font-size: 1.5rem; line-height: 1.6; color: #ffffff; max-width: 900px; margin: 20px auto;">
+					We show up with bold ideas, relentless execution, and a passion for making AI <strong>work for you</strong>. Whether you're just starting or scaling fast, we bring the energy, expertise, and creativity to turn vision into reality.
+				</p>
+			</div>
+		</section>
+
+        <section id="services" style="padding: 80px 0; background-color: #f8f8f8;">
+            <div class="container">
+                <h2 class="section-title">WHO WE ARE</h2>
+				<div style="text-align: center; margin-bottom: 40px;">
+					<p style="font-size: 1.5rem; line-height: 1.6;">We’re your all-in-one consulting partner for bold, practical AI solutions—empowering you to <strong>dream</strong> big, <strong>plan</strong> smart, and <strong>build</strong> the future without breaking the bank.</p>
+				</div>
+                <div style="display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap;">
+					<div class="card" style="height: 256px;">
+						<div class="flip-container">
+							<div class="flipper">
+								<div class="flip-front">
+									<div class="steps-container fade-down animate" style="display: flex; gap: 10px; margin: 0 auto; padding-bottom: 20px;">
+										<div class="step" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+											<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+												1
+											</div>
+											<p style="font-size: 2.5rem; font-weight: 700; color: #000000; margin-top: 0px;">Dream.</p>
+										</div>
+									</div>
+									<p class="fade-up animate" style="font-size: 1.2rem;">We spark your imagination and help you <span style="color: #40E0D0; font-weight: bold;">DREAM</span>. We break down AI into clear, hands-on lessons—so your team can explore ideas, experiment fearlessly, and uncover the potential of AI in everyday work.</p>
+									<a class="btn flip-button" style="padding: 12px 24px;">LEARN MORE</a>
+								</div>
+								<div class="flip-back">
+									<h3 style="font-size: 1.8rem; color: #000000;"><span style="color: #40E0D0; font-weight: bold;">DREAM</span> Details</h3>
+									<p style="font-size: 1.2rem;">We tear down the barriers to AI—our approach is hands-on and intuitive. We equip your team with the core AI concepts and practical exercises they need to experiment and innovate.</p>
+									<ul style="list-style-type: none; padding: 0; margin-top: 20px; font-size: 1.2rem;">
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Essential Knowledge: </span>Demystify AI so everyone understands its potential and practical applications.</li>
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Interactive Learning: </span>Workshops, coaching, and live demos that transform curiosity into capability.</li>
+										<li><span style="color: #40E0D0; font-weight:bold;">Confidence Building: </span>Create an environment where experimentation leads to real action.</li>
+									</ul>
+									<a class="btn flip-button-back">BACK</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="card" style="height: 256px;">
+						<div class="flip-container">
+							<div class="flipper">
+								<div class="flip-front">
+									<div class="steps-container fade-down animate" style="display: flex; gap: 10px; margin: 0 auto; padding-bottom: 20px;">
+										<div class="step" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+											<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+												2
+											</div>
+											<p style="font-size: 2.5rem; font-weight: 700; color: #000000; margin-top: 0px;">Plan.</p>
+										</div>
+									</div>
+									<p class="fade-up animate" style="font-size: 1.2rem;">With <span style="color: #40E0D0; font-weight: bold;">PLAN</span>, we work side-by-side to evaluate the right AI tools and design a secure, scalable adoption strategy. Using rapid prototypes, we cut through the noise and validate ideas meet business goals.</p>
+									<a class="btn flip-button" style="padding: 12px 24px;">LEARN MORE</a>
+								</div>
+								<div class="flip-back">
+									<h3 style="font-size: 1.8rem; color: #000000;"><span style="color: #40E0D0; font-weight: bold;">PLAN</span> Details</h3>
+									<p style="font-size: 1.2rem;">Skip the consulting jargon. We help you cut through the hype to find the right AI tools, create a nimble action plan, and find real use cases that drive measurable impact.</p>
+									<ul style="list-style-type: none; padding: 0; margin-top: 20px; font-size: 1.2rem;">
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Smart Tool Evaluation: </span>Quickly identify and test AI tools that align with your goals.</li>
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Prototyping: </span>Validate AI solutions for fit and scale before making further investments.</li>
+										<li><span style="color: #40E0D0; font-weight:bold;">Real-World Use Cases: </span>Uncover genuine opportunities to deploy AI where it fits best.</li>
+									</ul>
+									<a class="btn flip-button-back">BACK</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="card" style="height: 256px;">
+						<div class="flip-container">
+							<div class="flipper">
+								<div class="flip-front">
+									<div class="steps-container fade-down animate" style="display: flex; gap: 10px; margin: 0 auto; padding-bottom: 20px;">
+										<div class="step" style="display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; max-width: 200px;">
+											<div style="background-color: #40E0D0; color: #000000; font-weight: bold; border-radius: 50%; width: 60px; height: 60px; display: flex; justify-content: center; align-items: center; font-size: 2rem;">
+												3
+											</div>
+											<p style="font-size: 2.5rem; font-weight: 700; color: #000000; margin-top: 0px;">Build.</p>
+										</div>
+									</div>
+									<p class="fade-up animate" style="font-size: 1.2rem;">Now, put your plans into action with <span style="color: #40E0D0; font-weight: bold;">BUILD</span>. Our AI-enabled engineers create smart, automated workflows, dynamic AI agents, and custom data solutions that deliver real outcomes—no fluff, just results.</p>
+									<a class="btn flip-button" style="padding: 12px 24px;">LEARN MORE</a>
+								</div>
+								<div class="flip-back">
+									<h3 style="font-size: 1.8rem; color: #000000;"><span style="color: #40E0D0; font-weight: bold;">BUILD</span> Details</h3>
+									<p style="font-size: 1.2rem;">When it’s time to turn vision into reality, this is your launchpad. Our AI-enabled engineers develop cutting-edge automations, dynamic AI agents, and custom data solutions.</p>
+									<ul style="list-style-type: none; padding: 0; margin-top: 20px; font-size: 1.2rem;">
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Rapid Development: </span>Leverage AI to accelerate your projects without sacrificing quality.</li>
+										<li style="margin-bottom: 10px;"><span style="color: #40E0D0; font-weight:bold;">Tailored Solutions: </span>From data pipelines to custom AI applications, we build it all.</li>
+										<li><span style="color: #40E0D0; font-weight:bold;">Grow Together: </span>Get more than a project—gain a learning experience that upskills your team.</li>
+									</ul>
+									<a class="btn flip-button-back">BACK</a>
+								</div>
+							</div>
+						</div>
+					</div>					
+                </div>
+            </div>
+        </section>
+		
+		<section id="reality-check" style="background-color: #40E0D0; color: #000000; padding: 80px 0; text-align: center;">
+			<div class="container" style="max-width: 1200px; margin: auto;">
+				<h2 class="section-titlewhite">REALITY CHECK</h2>
+				<p class="reality-check-text">
+					The <span class="chip"><span class="fill-in" id="seq1" style="opacity: 1;">profitable</span></span> opportunities in AI belong to those who <span class="no-break"><span class="chip" style="margin-right: 5px;"><span class="fill-in" id="seq2" style="opacity: 1;">act now</span></span><span class="punctuation">.</span></span> Are you <span class="no-break"><span class="chip" style="margin-right: 5px;"><span class="fill-in" id="seq3" style="opacity: 1;">ready</span></span><span class="punctuation">,</span></span> or will you be <span class="no-break"><span class="chip" style="margin-right: 2.5px;"><span class="fill-in" id="seq4" style="opacity: 1;">left out</span></span><span class="punctuation">?</span></span>
+				</p>
+				<a class="btn" style="margin-top: 30px; background-color: #000000;">START TODAY</a>
+			</div>
+		</section>
+
+		<section id="key-trends" style="position: relative; padding: 80px 0;">
+		  <!-- Background canvas for floating dots -->
+		  <canvas height="418" id="keyTrendsCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;" width="1888"></canvas>
+		  
+		  <!-- Content container with higher z-index -->
+		  <div class="container" style="position: relative; z-index: 1;">
+			<div class="content-wrapper">
+			  <h2 class="section-title">KEY TRENDS</h2>
+			  <div style="display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap;">
+				<div class="card" style="flex: 1; background: rgba(0,0,0,0.7);">
+				  <h3 class="fade-down animate" style="font-size: 1.8rem; color: #ffffff; margin-bottom: 0px;">SPENDING</h3>
+				  <h4 class="fade-down animate" style="font-size: 2.5rem; color: #40E0D0; margin: 0px 0px 10px 0px;">92%</h4>
+				  <p class="fade-up animate" style="color: #ffffff; font-size: 1.2rem;">of companies plan to invest more in GenAI over the next 3 years.</p>
+				</div>
+				<div class="card" style="flex: 1; background: rgba(0,0,0,0.7);">
+				  <h3 class="fade-down animate" style="font-size: 1.8rem; color: #ffffff; margin-bottom: 0px;">USAGE</h3>
+				  <h4 class="fade-down animate" style="font-size: 2.5rem; color: #40E0D0; margin: 0px 0px 10px 0px;">3x</h4>
+				  <p class="fade-up animate" style="color: #ffffff; font-size: 1.2rem;">more employees are using GenAI, and for more tasks, than their leaders realize.</p>
+				</div>
+				<div class="card" style="flex: 1; background: rgba(0,0,0,0.7);">
+				  <h3 class="fade-down animate" style="font-size: 1.8rem; color: #ffffff; margin-bottom: 0px;">ADOPTION</h3>
+				  <h4 class="fade-down animate" style="font-size: 2.5rem; color: #40E0D0; margin: 0px 0px 10px 0px;">48%</h4>
+				  <p class="fade-up animate" style="color: #ffffff; font-size: 1.2rem;">of employees rank training as the most important factor for GenAI adoption.</p>
+				</div>
+				<div class="card" style="flex: 1; background: rgba(0,0,0,0.7);">
+				  <h3 class="fade-down animate" style="font-size: 1.8rem; color: #ffffff; margin-bottom: 0px;">SPEED</h3>
+				  <h4 class="fade-down animate" style="font-size: 2.5rem; color: #40E0D0; margin: 0px 0px 10px 0px;">47%</h4>
+				  <p class="fade-up animate" style="color: #ffffff; font-size: 1.2rem;">of the C-suite say their companies are developing GenAI tools too slowly.</p>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</section>
+
+		<section id="partners" style="padding: 80px 0; background-color: #000000;">
+			<div class="container">
+				<h2 class="section-titlewhite" style="color: #40E0D0;">OUR PARTNERS</h2>
+					<div class="logo-carousel">
+						<div class="logo-slide-track">
+						<!-- Original set of logos -->
+							<div class="logo-slide"><img alt="Partner 1" src="/assets/images/hqforai_com_Compass_0551f621.png"/></div>
+							<div class="logo-slide"><img alt="Partner 2" src="/assets/images/hqforai_com_Team_Bespoke_32a4e0a8.png"/></div>
+							<div class="logo-slide"><img alt="Partner 3" src="/assets/images/hqforai_com_Thresholds_91c55e17.png"/></div>
+							<div class="logo-slide"><img alt="Partner 4" src="/assets/images/hqforai_com_SurePath_AI_f58b9a62.png"/></div>
+							<div class="logo-slide"><img alt="Partner 5" src="/assets/images/hqforai_com_WestLoop_75167be1.png"/></div>
+							<div class="logo-slide"><img alt="Partner 6" src="/assets/images/hqforai_com_Rockhop_536bbcfc.png"/></div>
+							<div class="logo-slide"><img alt="Partner 7" src="/assets/images/hqforai_com_ACPM_3e635944.png"/></div>
+							<div class="logo-slide"><img alt="Partner 8" src="/assets/images/hqforai_com_Bruce_Bolt_9266bb74.png"/></div>
+							<div class="logo-slide"><img alt="Partner 9" src="/assets/images/hqforai_com_Trackforce_8cf840da.png"/></div>
+							<div class="logo-slide"><img alt="Partner 10" src="/assets/images/hqforai_com_Smithbucklin_643cfe78.png"/></div>
+							<div class="logo-slide"><img alt="Partner 11" src="/assets/images/hqforai_com_Qurrent_d93adb7c.png"/></div>
+							<div class="logo-slide"><img alt="Partner 12" src="/assets/images/hqforai_com_47th_44f8b44e.png"/></div>
+							<div class="logo-slide"><img alt="Partner 13" src="/assets/images/hqforai_com_FiveM_8e5a35ce.png"/></div>
+							<div class="logo-slide"><img alt="Partner 14" src="/assets/images/hqforai_com_BIG_b1e738a9.png"/></div>
+							<div class="logo-slide"><img alt="Partner 15" src="/assets/images/hqforai_com_Nixon_6d11f812.png"/></div>
+							<div class="logo-slide"><img alt="Partner 16" src="/assets/images/hqforai_com_JusticeJourney_b57dc27d.png"/></div>
+							<div class="logo-slide"><img alt="Partner 17" src="/assets/images/hqforai_com_AIT_a9a95fe3.png"/></div>
+						<!-- Duplicate set of logos for seamless looping -->
+							<div class="logo-slide"><img alt="Partner 1" src="/assets/images/hqforai_com_Compass_0551f621.png"/></div>
+							<div class="logo-slide"><img alt="Partner 2" src="/assets/images/hqforai_com_Team_Bespoke_32a4e0a8.png"/></div>
+							<div class="logo-slide"><img alt="Partner 3" src="/assets/images/hqforai_com_Thresholds_91c55e17.png"/></div>
+							<div class="logo-slide"><img alt="Partner 4" src="/assets/images/hqforai_com_SurePath_AI_f58b9a62.png"/></div>
+							<div class="logo-slide"><img alt="Partner 5" src="/assets/images/hqforai_com_WestLoop_75167be1.png"/></div>
+							<div class="logo-slide"><img alt="Partner 6" src="/assets/images/hqforai_com_Rockhop_536bbcfc.png"/></div>
+							<div class="logo-slide"><img alt="Partner 7" src="/assets/images/hqforai_com_ACPM_3e635944.png"/></div>
+							<div class="logo-slide"><img alt="Partner 8" src="/assets/images/hqforai_com_Bruce_Bolt_9266bb74.png"/></div>
+							<div class="logo-slide"><img alt="Partner 9" src="/assets/images/hqforai_com_Trackforce_8cf840da.png"/></div>
+							<div class="logo-slide"><img alt="Partner 10" src="/assets/images/hqforai_com_Smithbucklin_643cfe78.png"/></div>
+							<div class="logo-slide"><img alt="Partner 11" src="/assets/images/hqforai_com_Qurrent_d93adb7c.png"/></div>
+							<div class="logo-slide"><img alt="Partner 12" src="/assets/images/hqforai_com_47th_44f8b44e.png"/></div>
+							<div class="logo-slide"><img alt="Partner 13" src="/assets/images/hqforai_com_FiveM_8e5a35ce.png"/></div>
+							<div class="logo-slide"><img alt="Partner 14" src="/assets/images/hqforai_com_BIG_b1e738a9.png"/></div>
+							<div class="logo-slide"><img alt="Partner 15" src="/assets/images/hqforai_com_Nixon_6d11f812.png"/></div>
+							<div class="logo-slide"><img alt="Partner 16" src="/assets/images/hqforai_com_JusticeJourney_b57dc27d.png"/></div>
+							<div class="logo-slide"><img alt="Partner 17" src="/assets/images/hqforai_com_AIT_a9a95fe3.png"/></div>
+						</div>
+					</div>
+			</div>
+		</section>
+		
+		<!-- OUR SERVICES Section -->
+		<section id="whyHQ" style="position: relative; padding: 80px 0; background-color: #40E0D0; text-align: center;">
+		  <!-- Bubble Container (fills entire section) -->
+		  <div id="bubbleContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"><div class="bubble" style="width: 35px; height: 35px; opacity: 1; transition: opacity 1s ease-out; left: 1370.08px; top: 406px; --tx: -5px; --ty: -127px; animation-duration: 8.13532s; animation-delay: 0s; background-color: rgba(255, 255, 255, 0.8); border: none;"></div><div class="bubble" style="width: 28px; height: 28px; opacity: 1; transition: opacity 1s ease-out; left: 856.094px; top: 413px; --tx: -13px; --ty: -129px; animation-duration: 9.86845s; animation-delay: 0s; background-color: transparent; border: 2px dotted rgba(0, 0, 0, 0.8);"></div><div class="bubble" style="width: 58px; height: 58px; opacity: 1; transition: opacity 1s ease-out; left: 1296.12px; top: 383px; --tx: -3px; --ty: -97px; animation-duration: 9.90225s; animation-delay: 0s; background-color: rgba(128, 128, 128, 0.6); border: none;"></div><div class="bubble" style="width: 33px; height: 33px; opacity: 1; transition: opacity 1s ease-out; left: 480.486px; top: 408px; --tx: -7px; --ty: -76px; animation-duration: 9.80569s; animation-delay: 0s; background-color: rgba(255, 255, 255, 0.8); border: none;"></div><div class="bubble" style="width: 32px; height: 32px; opacity: 1; transition: opacity 1s ease-out; left: 184.671px; top: 409px; --tx: -12px; --ty: -97px; animation-duration: 9.29443s; animation-delay: 0s; background-color: rgba(255, 255, 255, 0.8); border: none;"></div><div class="bubble" style="width: 36px; height: 36px; opacity: 1; transition: opacity 1s ease-out; left: 780.59px; top: 405px; --tx: 8px; --ty: -100px; animation-duration: 7.18319s; animation-delay: 0s; background-color: rgba(0, 0, 0, 0.8); border: none;"></div><div class="bubble" style="width: 35px; height: 35px; opacity: 1; transition: opacity 1s ease-out; left: 757.425px; top: 406px; --tx: -13px; --ty: -76px; animation-duration: 7.10891s; animation-delay: 0s; background-color: rgba(0, 0, 0, 0.8); border: none;"></div><div class="bubble" style="width: 37px; height: 37px; opacity: 1; transition: opacity 1s ease-out; left: 1579.88px; top: 404px; --tx: -11px; --ty: -52px; animation-duration: 9.21916s; animation-delay: 0s; background-color: rgba(0, 0, 0, 0.8); border: none;"></div><div class="bubble" style="width: 36px; height: 36px; opacity: 1; transition: opacity 1s ease-out; left: 1114.58px; top: 405px; --tx: 3px; --ty: -119px; animation-duration: 7.75935s; animation-delay: 0s; background-color: rgba(128, 128, 128, 0.6); border: none;"></div><div class="bubble" style="width: 33px; height: 33px; opacity: 1; transition: opacity 1s ease-out; left: 939.396px; top: 408px; --tx: -7px; --ty: -93px; animation-duration: 6.61586s; animation-delay: 0s; background-color: transparent; border: 2px dotted rgba(0, 0, 0, 0.8);"></div><div class="bubble" style="width: 48px; height: 48px; opacity: 1; transition: opacity 1s ease-out; left: 52.7486px; top: 393px; --tx: 17px; --ty: -81px; animation-duration: 9.38094s; animation-delay: 0s; background-color: transparent; border: 2px dotted rgba(0, 0, 0, 0.8);"></div><div class="bubble" style="width: 38px; height: 38px; opacity: 1; transition: opacity 1s ease-out; left: 560.948px; top: 403px; --tx: 15px; --ty: -62px; animation-duration: 7.47468s; animation-delay: 0s; background-color: transparent; border: 2px dotted rgba(255, 255, 255, 0.8);"></div></div>
+		  
+		  <!-- Content Layer -->
+		  <div class="container" style="position: relative; z-index: 2;">
+			<!-- Section Heading -->
+			<h2 class="section-titlewhite" style="color: #000;">OUR SERVICES</h2>
+				<div style="text-align: center; margin-bottom: 40px;">
+					<p style="font-size: 1.5rem; line-height: 1.6; margin-top: 0px;">Experience <strong>Fortune 500</strong> expertise without the traditional price tag—our subscription model and lean, AI-powered teams are rewriting the rules of consulting.</p>
+				</div>
+			<!-- Three Services Cards (in three columns) -->
+			<div style="display: flex; justify-content: space-around; flex-wrap: wrap; max-width: 900px; margin: 20px auto 40px;">
+			  <div style="background: #fff; padding: 20px; margin: 10px; border-radius: 10px; flex: 1; min-width: 200px; max-width: 300px; text-align: center; font-weight: bold; color: #000;">
+				OVERYPAYING FOR ADVICE?
+			  </div>
+			  <div style="background: #fff; padding: 20px; margin: 10px; border-radius: 10px; flex: 1; min-width: 200px; max-width: 300px; text-align: center; font-weight: bold; color: #000;">
+				TIRED OF SLIDES?
+			  </div>
+			  <div style="background: #fff; padding: 20px; margin: 10px; border-radius: 10px; flex: 1; min-width: 200px; max-width: 300px;  text-align: center; font-weight: bold; color: #000;">
+				READY FOR PROGRESS?
+			  </div>
+			</div>
+			
+			<!-- Call-to-Action Button -->
+			<div style="text-align: center;">
+			  <a class="btn" style="background-color: #000; color: #fff; padding: 12px 24px; border-radius: 30px; font-weight: bold; transition: all 0.3s;">
+				SEE SERVICES
+			  </a>
+			</div>
+		  </div>
+		</section>
+		
+		<!-- CASE STUDIES Section -->
+		<section class="cs-theme--minimal" id="case-studies" style="position: relative; padding: 80px 0; background-color: #f8f8f8;">
+		  <!-- Background canvas for floating dots -->
+		  <canvas height="16737" id="caseStudiesCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;" width="1904"></canvas>
+		  
+		  <!-- Content container with higher z-index -->
+		  <div class="container" style="position: relative; z-index: 1;">
+			<div class="content-wrapper">
+			  <h2 class="section-title">CASE STUDIES</h2>
+			  <div style="text-align: center; margin-bottom: 40px;">
+				<p style="font-size: 1.5rem; line-height: 1.6;">Real results from real clients—see how we transform AI from concept to <strong>competitive advantage</strong>.</p>
+			  </div>
+			  
+			  <div class="case-studies-grid">
+			  
+				<!-- Case Study 1 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Book -->
+					<svg aria-label="Book" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <rect height="16" rx="2" width="12" x="4" y="3"></rect>
+					  <path d="M16 5h4v16H8a4 4 0 0 1-4-4"></path>
+					  <path d="M8 7h6"></path>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Knowledge at Your Fingertips</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Consumer Goods</span>
+					  <span class="case-study-tag">Product Enablement</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">We turned scattered expertise into instant answers. One brand went from hours of searching to seconds—and avoided additional costs in the process.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 2 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Search -->
+					<svg aria-label="Search" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <circle cx="11" cy="11" r="6"></circle>
+					  <line x1="16" x2="21" y1="16" y2="21"></line>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Prospecting Without Limits</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Professional Services</span>
+					  <span class="case-study-tag">Business Development</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">Goodbye, manual research. Our AI agent scans 30,000 websites quarterly—saving $300K annually and delivering fresher leads than ever before.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 3 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Line Chart -->
+					<svg aria-label="Line chart" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <polyline points="3,17 9,11 13,14 21,6"></polyline>
+					  <line x1="3" x2="21" y1="21" y2="21"></line>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Instant Marketing Briefs</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Marketing &amp; Advertising</span>
+					  <span class="case-study-tag">Performance Reporting</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">80 brands. 150 hours saved weekly. Zero spreadsheet headaches. See how we transformed reporting from all-day chaos to almost instant clarity.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 4 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Microphone -->
+					<svg aria-label="Microphone" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <rect height="10" rx="3" width="6" x="9" y="3"></rect>
+					  <path d="M5 10v1a7 7 0 0 0 14 0v-1"></path>
+					  <line x1="12" x2="12" y1="21" y2="17"></line>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">AI Interviews Create Standards</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Nonprofit &amp; Associations</span>
+					  <span class="case-study-tag">Operations</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">What if meetings wrote their own documentation? Our voice AI turns conversations into polished SOPs—700 and counting, each in under an hour.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 5 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- File Text -->
+					<svg aria-label="Document" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
+					  <polyline points="14 3 14 8 19 8"></polyline>
+					  <line x1="9" x2="15" y1="13" y2="13"></line>
+					  <line x1="9" x2="15" y1="17" y2="17"></line>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Payment Now, Not Later</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">B2B SaaS</span>
+					  <span class="case-study-tag">Accounts Receivable</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">Smart AI drafts that actually get invoices paid. We cut AR teams' daily grind by 75% while keeping every message professional and personal.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 6 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Users -->
+					<svg aria-label="Users" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <circle cx="9" cy="8" r="3"></circle>
+					  <path d="M3 20a6 6 0 0 1 12 0"></path>
+					  <circle cx="17" cy="9" r="2.5"></circle>
+					  <path d="M14.5 20a5.5 5.5 0 0 1 7-4.9"></path>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Demystify to Multiply</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Nonprofit</span>
+					  <span class="case-study-tag">Org-Wide Enablement</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">30 staff members. 10 hours saved per person weekly. One organization's journey from AI anxiety to AI mastery through hands-on transformation.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 7 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Megaphone -->
+					<svg aria-label="Megaphone" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <path d="M3 11v2"></path>
+					  <path d="M5 12h6l7-4v12l-7-4H8"></path>
+					  <path d="M8 14v4c0 1.1-.9 2-2 2H5"></path>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Pitches that Pitch Themselves</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">PR &amp; Communications</span>
+					  <span class="case-study-tag">Content Production</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">PR teams now spend time building relationships, not drafting emails. Our AI writes pitches editors actually want to read—in your brand's voice.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+				
+				<!-- Case Study 8 -->
+				<div class="case-study-card">
+				  <div class="case-study-icon modern-icon">
+					<!-- Message Square -->
+					<svg aria-label="Message" class="cs-svg" role="img" viewBox="0 0 24 24">
+					  <rect height="14" rx="3" width="18" x="3" y="4"></rect>
+					  <path d="M8 18v3l3-3"></path>
+					  <line x1="7" x2="17" y1="9" y2="9"></line>
+					  <line x1="7" x2="13" y1="13" y2="13"></line>
+					</svg>
+				  </div>
+				  <h3 class="case-study-title fade-down animate">Hear Your Customers, At Scale</h3>
+					<div class="case-study-tags fade-up animate">
+					  <span class="case-study-tag">Retail Services</span>
+					  <span class="case-study-tag">Voice of the Customer</span>
+					</div>
+				  <p class="case-study-summary fade-up animate">Thousands of reviews. Dozens of locations. One clear picture. We turned customer feedback chaos into actionable insights that drive real change.</p>
+				  <a class="btn">LEARN MORE</a>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		</section>
+		
+		<section id="client-feedback" style="background-color: #ffffff; padding: 80px 0; text-align: center;">
+		  <div class="container">
+			<h2 class="section-title">CLIENT FEEDBACK</h2>
+			<div class="testimonial-carousel">
+			  <div class="testimonial-slide-container" style="width: 11424px; transition: transform 700ms ease-in-out; transform: translateX(-7616px);">
+				<div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p>
+						  HQ helped us cut through the noise, making AI approachable and impactful. Their workshops and expert support leveled up our AI capabilities, adding value for us and our clients.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">DEANNA AVI MADIGAN</span>
+						  <span class="testimonial-title">Co-Founder, Team Bespoke</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div>
+				
+				<div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p>
+						  HQ’s engineering team developed AI tools for us that have produced instant ROI and saved us hours. On top of that, they taught us how to maintain and build our own AI solutions.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">COURTNEY TREVINO</span>
+						  <span class="testimonial-title">COO, Bruce Bolt</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div>
+
+				<div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p>
+						  We have really appreciated the partnership with HQ. I have learned and became interested in more than I imagined and am already putting my new knowledge to work.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">ROSEMAY MICHEL, DPM, FACPM</span>
+						  <span class="testimonial-title">President, ACPM</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div>
+				
+				<div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p style="font-size: 1.2rem;">
+						  Within months of HQ presenting their Demystify AI workshop, most of our team is using AI regularly and reporting an average time savings of 10 hours per week.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">REMY REYA</span>
+						  <span class="testimonial-title">Deputy Chief of Staff, Compass Pro Bono</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div>
+				
+				<div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p>
+						  Thanks to HQ, we’re ahead of the AI curve. While my husband’s Fortune 500 bank is just now rolling out AI tools, we’ve been using them for over a year with HQ’s help.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">DIRECTOR</span>
+						  <span class="testimonial-title">Client Relationships, Marketing Company</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div>
+				
+				<!-- ADD A NEW BLOCK FOR A NEW QUOTE -->
+				<!-- <div class="testimonial-slide">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">&#8220;</span>
+					  </div>
+					  <div class="quote-content">
+						<p style="font-size: 1.2rem;">
+						  Working with HQ was a transformative experience. Their ability to simplify complex AI concepts and implement effective solutions made all the difference for our business.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">MARCUS D. RIVERA</span>
+						  <span class="testimonial-title">CEO, SurePath AI</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">&#8221;</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div> -->
+				
+			  <div class="testimonial-slide" style="width: 1904px">
+				  <blockquote>
+					<div class="quote-container">
+					  <div class="quote-box">
+						<span class="quote-mark left">“</span>
+					  </div>
+					  <div class="quote-content">
+						<p>
+						  HQ helped us cut through the noise, making AI approachable and impactful. Their workshops and expert support leveled up our AI capabilities, adding value for us and our clients.
+						</p>
+						<footer class="testimonial-footer">
+						  <span class="testimonial-name">DEANNA AVI MADIGAN</span>
+						  <span class="testimonial-title">Co-Founder, Team Bespoke</span>
+						</footer>
+					  </div>
+					  <div class="quote-box">
+						<span class="quote-mark right">”</span>
+					  </div>
+					</div>
+				  </blockquote>
+				</div></div>
+			</div>
+			<div class="carousel-dots">
+			  <span class="dot"></span>
+			  <span class="dot"></span>
+			  <span class="dot"></span>
+			  <span class="dot"></span>
+			  <span class="dot active"></span>
+			  
+			  <!-- ADD A NEW SPAN WHEN ADDING A NEW QUOTE -->
+			  <!-- <span class="dot"></span> -->
+			</div>
+		  </div>
+		</section>
+
+		<section class="section" id="solutions" style="padding: 80px 0; background-color: #000000;">
+			<div class="container">
+				<h2 class="section-titlewhite" style="color: #40E0D0;">AI WORKSHOPS</h2>
+					<div style="text-align: center; margin-bottom: 40px;">
+						<p style="font-size: 1.5rem; line-height: 1.6; margin-top: 0px; color: #ffffff;"><strong>Still not sure where to start?</strong> Our workshops make it simple. Learn the essentials, see AI in action, and uncover the best ways to put AI to work for you.</p>
+					</div>
+					<div style="display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap;">
+
+						<div class="solution-card" style="flex: 1 1 calc(30% - 40px); min-width: 250px;">
+							<h3 class="solution-title fade-down animate">Demystify AI</h3>
+							<!-- Tags for the solution -->
+							<div class="tag-container">
+								<span class="solution-tag fade-up animate">Workshop</span>
+								<span class="solution-tag fade-up animate">Fixed Pricing</span>
+							</div>
+							<p class="fade-up animate">Lay the foundation for understanding GenAI technologies and their potential impact on your organization with our introductory workshop, perfect for teams new to GenAI or looking to align on the basics.</p>
+							<a class="btn" style="margin-top: 20px;">LEARN MORE</a>
+						</div>
+						
+						<div class="solution-card" style="flex: 1 1 calc(30% - 40px); min-width: 250px;">
+							<h3 class="solution-title fade-down animate">Bootcamp Series</h3>
+							<!-- Tags for the solution -->
+							<div class="tag-container">
+								<span class="solution-tag fade-up animate">Workshop</span>
+								<span class="solution-tag fade-up animate">Fixed Pricing</span>
+							</div>
+							<p class="fade-up animate">Equip your team with the knowledge, skills, and confidence to drive GenAI adoption through our comprehensive and hands-on bootcamp series, tailored to your organization's unique needs and goals.</p>
+							<a class="btn" style="margin-top: 20px;">LEARN MORE</a>
+						</div>
+						
+						<div class="solution-card" style="flex: 1 1 calc(30% - 40px); min-width: 250px;">
+							<h3 class="solution-title fade-down animate">Ideation Workshop</h3>
+							<!-- Tags for the solution -->
+							<div class="tag-container">
+								<span class="solution-tag fade-up animate">Workshop</span>
+								<span class="solution-tag fade-up animate">Fixed Pricing</span>
+							</div>
+							<p class="fade-up animate">Identify and prioritize high-impact GenAI use cases specific to your business needs with our ideation workshop, setting the stage for practical application and value creation.</p>
+							<a class="btn" style="margin-top: 20px;">LEARN MORE</a>
+						</div>
+			
+					</div>
+			</div>
+		</section>
+
+		<section id="beliefs" style="background-color: #f8f8f8; padding: 80px 0;">
+			<div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+				<h2 class="section-title">OUR BELIEFS</h2>
+				<div style="display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap;">
+					<div class="card">
+						<h3 class="fade-down animate" style="font-size: 1.8rem; color: #40E0D0; margin-bottom: 0px;">OUR PURPOSE</h3>
+						<p class="fade-up animate" style="font-size: 1.2rem;">To be your leading AI adoption experts—helping organizations get more out of AI while empowering their people, customers, and data.</p>
+					</div>
+					<div class="card">
+						<h3 class="fade-down animate" style="font-size: 1.8rem; color: #40E0D0; margin-bottom: 0px;">OUR MISSION</h3>
+						<p class="fade-up animate" style="font-size: 1.2rem;">We are a catalyst for unlocking AI solutions in organizations while ensuring every team member thrives—benefiting employees and customers.</p>
+					</div>
+					<div class="card">
+						<h3 class="fade-down animate" style="font-size: 1.8rem; color: #40E0D0; margin-bottom: 0px;">OUR PROMISE</h3>
+						<p class="fade-up animate" style="font-size: 1.2rem;">We commit to delivering exceptionally positive thought leadership to maximize safe and healthy consumption of AI tools within organizations.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+  </main>
+
+ <!-- ====== FOOTER ====== -->
+	<footer style="background-color: #40E0D0; color: #000; padding: 40px 0; text-align: center;">
+		<div class="container">
+            <a style="display: inline-block; padding: 0; margin: 0; line-height: 0;">
+				<img alt="HQ for AI Logo" class="logo" src="/assets/images/hqforai_com_Logo_642900b3.png"/>
+			</a>
+			
+			<div class="social-icons-footer">
+				<a target="_blank">
+					<img alt="Facebook" src="/assets/images/hqforai_com_facebook_fa82bed4.png"/>
+				</a>
+				<a target="_blank">
+					<img alt="Instagram" src="/assets/images/hqforai_com_instagram_aefcd835.png"/>
+				</a>
+				<a target="_blank">
+					<img alt="LinkedIn" src="/assets/images/hqforai_com_linkedin_09e23afb.png"/>
+				</a>
+				<a target="_blank">
+					<img alt="Bluesky" src="/assets/images/hqforai_com_bluesky_99fa151d.png" style="margin-right: 0px;"/>
+				</a>
+			</div>
+			
+			<p>Copyright © 2025 Headquarters for AI. All Rights Reserved.</p>
+			<p style="font-size: 0.8rem; margin-top: 20px;">This content was Co-Created with AI, Human Approved: <a style="color:#000000; font-weight:bold;">AI Transparency Commitments</a></p>
+		</div>
+	</footer>
+
+<!-- ========== SCRIPTS ========== -->
+	<!-- Script for mobile menu toggle -->
+	
+	
+	<!-- Script for scroll indicator -->
+	
+	
+	<!-- Resets the browser to the top of the page on refresh -->
+	
+
+	<!-- New JavaScript to trigger the fade-up / fade-down effect when elements scroll into view -->
+	
+
+	<!-- Card flip logic for Who We Are section -->
+	
+
+	<!-- Typing Effect (DOMContentLoaded Required) -->
+	
+
+	<!-- Fade-in Hero Text Effect (DOMContentLoaded Required) -->
+	
+
+	<!-- Chatbot Config (Moved Lower) -->
+	
+
+	<!-- Chatbot External Script (Deferred for Performance) -->
+	
+
+	<!-- Inline JavaScript for Services to Spawn Bubbles with 6 Uniform Style Options -->
+	
+
+	<!-- Customer Quotes -->
+	
+
+	<!-- Floating Dots Animation Script -->
+	
+
+	<!-- Floating dots for the Key Trends background -->
+	
+
+	<!-- Mad Libs Functionality for Reality Check -->	
+	
+	
+	<!-- JavaScript for Case Studies floating dots (place after footer) -->
+	
+
+
+<div id="chatbase-message-bubbles" style="position: fixed; bottom: 85px; border-radius: 10px; font-family: sans-serif; font-size: 16px; line-height: normal; z-index: 2147483644; pointer-events: auto; cursor: pointer; flex-direction: column; gap: 50px; max-width: 70vw; display: block; right: 1rem; left: unset;"><div style="position: absolute; top: -7px; right: -7px; font-weight: bold; display: none; justify-content: center; align-items: center; z-index: 2147483643; pointer-events: auto; width: 22px; height: 22px; border-radius: 50%; text-align: center; font-size: 12px; cursor: pointer; background-color: rgb(224, 224, 224); color: black; box-shadow: rgba(150, 150, 150, 0.15) 0px 6px 24px 0px, rgba(150, 150, 150, 0.15) 0px 0px 0px 1px;">✕</div><div style="display: flex; justify-content: flex-end;"><div style="background-color: white; color: black; box-shadow: rgba(150, 150, 150, 0.2) 0px 10px 30px 0px, rgba(150, 150, 150, 0.2) 0px 0px 0px 1px; border-radius: 10px; padding: 20px; margin: 8px; font-size: 14px; opacity: 1; transform: scale(1); transition: opacity 0.5s, transform 0.5s;">Hi! I'm Ava, a chatbot for HQ's website. What can I help you with?</div></div></div><button aria-label="chat-button" id="chatbase-bubble-button" style="position: fixed; border: 0px; bottom: 1rem; right: 1rem; width: 55px; height: 55px; border-radius: 27.5px; background-color: rgb(0, 0, 0); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px 0px; cursor: pointer; z-index: 2147483645; pointer-events: auto; transition: 0.2s ease-in-out; left: unset;" type="button"><div style="display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; z-index: 2147483646;"><svg fill="none" height="55" viewBox="0 0 1120 1120" width="55" xmlns="http://www.w3.org/2000/svg">
+  <path clip-rule="evenodd" d="M252 434C252 372.144 302.144 322 364 322H770C831.856 322 882 372.144 882 434V614.459L804.595 585.816C802.551 585.06 800.94 583.449 800.184 581.405L763.003 480.924C760.597 474.424 751.403 474.424 748.997 480.924L711.816 581.405C711.06 583.449 709.449 585.06 707.405 585.816L606.924 622.997C600.424 625.403 600.424 634.597 606.924 637.003L707.405 674.184C709.449 674.94 711.06 676.551 711.816 678.595L740.459 756H629.927C629.648 756.476 629.337 756.945 628.993 757.404L578.197 825.082C572.597 832.543 561.403 832.543 555.803 825.082L505.007 757.404C504.663 756.945 504.352 756.476 504.073 756H364C302.144 756 252 705.856 252 644V434ZM633.501 471.462C632.299 468.212 627.701 468.212 626.499 471.462L619.252 491.046C618.874 492.068 618.068 492.874 617.046 493.252L597.462 500.499C594.212 501.701 594.212 506.299 597.462 507.501L617.046 514.748C618.068 515.126 618.874 515.932 619.252 516.954L626.499 536.538C627.701 539.788 632.299 539.788 633.501 536.538L640.748 516.954C641.126 515.932 641.932 515.126 642.954 514.748L662.538 507.501C665.788 506.299 665.788 501.701 662.538 500.499L642.954 493.252C641.932 492.874 641.126 492.068 640.748 491.046L633.501 471.462Z" fill="white" fill-rule="evenodd"></path>
+  <path d="M771.545 755.99C832.175 755.17 881.17 706.175 881.99 645.545L804.595 674.184C802.551 674.94 800.94 676.551 800.184 678.595L771.545 755.99Z" fill="white"></path>
+  </svg>            
+  </div></button><div id="chatbase-bubble-window" style="border: none; position: fixed; flex-direction: column; justify-content: space-between; bottom: 5rem; right: 1rem; width: 406px; height: 85dvh; max-height: 824px; border-radius: 1.25rem; display: none; z-index: 2147483646; pointer-events: auto; overflow: hidden; background-color: white; left: unset; top: unset;"><div style="display: flex; justify-content: center; height: 100%; width: 100%; align-items: center; position: absolute;"><svg style="width:24px;height:24px;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <style>
+      @keyframes chatbase-spin { 100% { transform: rotate(360deg); } }
+      @keyframes chatbase-dash { 0% { stroke-dasharray: 1, 150; stroke-dashoffset: 0; } 50% { stroke-dasharray: 90, 150; stroke-dashoffset: -35; } 100% { stroke-dasharray: 90, 150; stroke-dashoffset: -124; } }
+      .chatbase-spinner { animation: chatbase-spin 2s linear infinite, chatbase-dash 1.5s ease-in-out infinite; transform-origin: center; }
+    </style>
+    <circle class="chatbase-spinner" cx="12" cy="12" fill="none" r="10" stroke="black" stroke-linecap="round" stroke-width="2.5"></circle>
+  </svg></div><div allow="microphone" data-original-tag="iframe" style="height: 100%; width: 100%; border: none; display: flex; visibility: hidden; position: absolute;" title='AI Virtual Assistant "Ava"'></div></div></body></html>
