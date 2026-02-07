@@ -59,22 +59,22 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 hero-gradient opacity-30"></div>
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-flash-purple/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-fusion-pink/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-int-navy/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-int-orange/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         </div>
         
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-flash-purple via-fusion-pink to-flash-purple bg-clip-text text-transparent animate-gradient">
-            HELLO, AI.
+          <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-int-navy via-int-teal to-int-orange bg-clip-text text-transparent animate-gradient">
+            AI for YOUR Business
           </h1>
           <p className="text-2xl md:text-4xl mb-12 text-signal-white/90">
-            Yep, we <span className="text-fusion-pink font-semibold">get it</span>.
+            Our Purpose is <span className="text-int-orange font-semibold">YOUR Success</span>.
           </p>
           <Link 
             to={createPageUrl('Contact')}
-            className="inline-block px-8 py-4 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+            className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
           >
-            GET IN TOUCH
+            GET STARTED
           </Link>
         </div>
 
@@ -83,7 +83,7 @@ export default function Home() {
           className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce"
           aria-label="Scroll down to process section"
         >
-          <ChevronDown className="w-8 h-8 text-flash-purple" aria-hidden="true" />
+          <ChevronDown className="w-8 h-8 text-int-orange" aria-hidden="true" />
         </button>
       </section>
 
@@ -93,30 +93,30 @@ export default function Home() {
           <h2 id="process-heading" className="sr-only">Our Three-Step Process</h2>
           <div className="flex justify-center items-center gap-8 mb-16 flex-wrap">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-flash-purple/20 border-2 border-flash-purple flex items-center justify-center" aria-hidden="true">
-                <span className="text-2xl font-bold text-flash-purple">1</span>
+              <div className="w-16 h-16 rounded-full bg-int-orange/20 border-2 border-int-orange flex items-center justify-center" aria-hidden="true">
+                <span className="text-2xl font-bold text-int-orange">1</span>
               </div>
               <span className="text-xl font-semibold">Discover.</span>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-flash-purple/20 border-2 border-flash-purple flex items-center justify-center">
-                <span className="text-2xl font-bold text-flash-purple">2</span>
+              <div className="w-16 h-16 rounded-full bg-int-navy/20 border-2 border-int-navy flex items-center justify-center">
+                <span className="text-2xl font-bold text-int-navy">2</span>
               </div>
               <span className="text-xl font-semibold">Harden.</span>
             </div>
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-flash-purple/20 border-2 border-flash-purple flex items-center justify-center">
-                <span className="text-2xl font-bold text-flash-purple">3</span>
+              <div className="w-16 h-16 rounded-full bg-int-teal/20 border-2 border-int-teal flex items-center justify-center">
+                <span className="text-2xl font-bold text-int-teal">3</span>
               </div>
               <span className="text-xl font-semibold">Ship.</span>
             </div>
           </div>
           
           <p className="text-xl mb-4">
-            <em className="text-fusion-pink">AI is complex.</em> At <strong>INTinc Technology</strong>, we make it simple.
+            <em className="text-int-orange">AI transforms businesses.</em> At <strong>INTinc.com</strong>, we deliver results.
           </p>
           <p className="text-lg text-signal-white/80 max-w-4xl mx-auto">
-            We deliver practical AI solutions with enterprise-grade security and measurable outcomes. Whether you're exploring AI's potential or scaling deployment, we bring technical expertise and operational discipline to transform vision into production-ready systems.
+            We implement AI solutions tailored to YOUR business needs with enterprise-grade security and measurable ROI. From discovery to deployment, we bring technical expertise and proven methodology to transform your operations with production-ready AI systems.
           </p>
         </div>
       </section>

@@ -31,18 +31,20 @@ export default function Layout({ children, currentPageName }) {
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
         
         :root {
-          /* FlashFusion Brand Colors (Official v1.0) */
-          --flash-purple: #A855F7;
-          --fusion-pink: #F472B6;
-          --void-black: #0F0618;
-          --carbon-night: #120A1F;
-          --signal-white: #F8F7FF;
-          
+          /* INTinc Brand Colors */
+          --int-navy: #1E3A5F;
+          --int-orange: #F26522;
+          --int-teal: #4A90A4;
+          --int-light-blue: #7AB8CC;
+          --void-black: #0A0F1A;
+          --carbon-night: #151D2C;
+          --signal-white: #F8F9FA;
+
           /* Accent Colors */
-          --electric-blue: #38BDF8;
-          --neon-mint: #2DD4BF;
-          --ember-red: #FB7185;
-          --solar-amber: #FBBF24;
+          --electric-blue: #4A90A4;
+          --neon-mint: #7AB8CC;
+          --ember-red: #F26522;
+          --solar-amber: #F79E44;
           
           /* Neutral Colors */
           --slate-200: #E5E7EB;
@@ -101,17 +103,20 @@ export default function Layout({ children, currentPageName }) {
         .bg-void { background-color: var(--void-black); }
         .bg-carbon-night { background-color: var(--carbon-night); }
         .text-signal-white { color: var(--signal-white); }
-        .text-flash-purple { color: var(--flash-purple); }
-        .text-fusion-pink { color: var(--fusion-pink); }
-        .border-flash-purple { border-color: var(--flash-purple); }
-        .border-fusion-pink { border-color: var(--fusion-pink); }
+        .text-flash-purple { color: var(--int-navy); }
+        .text-fusion-pink { color: var(--int-orange); }
+        .text-int-orange { color: var(--int-orange); }
+        .text-int-navy { color: var(--int-navy); }
+        .text-int-teal { color: var(--int-teal); }
+        .border-flash-purple { border-color: var(--int-navy); }
+        .border-fusion-pink { border-color: var(--int-orange); }
         
         .font-inter { font-family: var(--font-primary); }
         .font-display { font-family: var(--font-display); }
         
         /* Button Styles */
         .btn-primary {
-          background: linear-gradient(135deg, var(--flash-purple) 0%, var(--fusion-pink) 100%);
+          background: linear-gradient(135deg, var(--int-orange) 0%, var(--int-navy) 100%);
           color: var(--signal-white);
           padding: 0.75rem 1.5rem;
           border-radius: var(--radius-full);
@@ -120,31 +125,31 @@ export default function Layout({ children, currentPageName }) {
           border: none;
           cursor: pointer;
         }
-        
+
         .btn-primary:hover {
           transform: scale(1.05);
-          box-shadow: 0 0 30px rgba(168,85,247,0.6);
+          box-shadow: 0 0 30px rgba(242,101,34,0.6);
         }
-        
+
         .btn-secondary {
           background: transparent;
-          color: var(--flash-purple);
-          border: 2px solid var(--flash-purple);
+          color: var(--int-navy);
+          border: 2px solid var(--int-navy);
           padding: 0.75rem 1.5rem;
           border-radius: var(--radius-full);
           font-weight: 600;
           transition: all var(--transition-base);
           cursor: pointer;
         }
-        
+
         .btn-secondary:hover {
-          background: var(--flash-purple);
+          background: var(--int-navy);
           color: var(--signal-white);
         }
-        
+
         /* Gradient Text */
         .gradient-text {
-          background: linear-gradient(135deg, var(--flash-purple) 0%, var(--fusion-pink) 50%, #7C3AED 100%);
+          background: linear-gradient(135deg, var(--int-navy) 0%, var(--int-teal) 50%, var(--int-orange) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -161,7 +166,7 @@ export default function Layout({ children, currentPageName }) {
         
         /* Focus Styles for Accessibility */
         *:focus-visible {
-          outline: 3px solid var(--flash-purple);
+          outline: 3px solid var(--int-orange);
           outline-offset: 3px;
           border-radius: 4px;
         }
@@ -203,7 +208,7 @@ export default function Layout({ children, currentPageName }) {
       {/* Skip to main content link for keyboard navigation */}
       <a 
         href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-flash-purple focus:text-signal-white focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-int-orange focus:text-signal-white focus:rounded-lg"
       >
         Skip to main content
       </a>
@@ -218,11 +223,17 @@ export default function Layout({ children, currentPageName }) {
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc Technology home">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center font-bold text-xl" aria-hidden="true">
-                INT
+            <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc home">
+              <div className="flex items-center gap-1" aria-hidden="true">
+                <span className="text-2xl font-bold text-int-navy">i</span>
+                <span className="text-2xl font-bold text-int-navy">N</span>
+                <span className="text-2xl font-bold text-int-navy">T</span>
+                <span className="text-sm font-light text-int-navy align-top">™</span>
               </div>
-              <span className="text-xl font-bold">INTinc Technology</span>
+              <div className="border-l-2 border-int-navy/30 pl-3">
+                <div className="text-xs font-semibold text-int-navy leading-tight">Our Purpose is</div>
+                <div className="text-xs font-bold text-int-orange leading-tight">YOUR Business</div>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}
@@ -238,19 +249,7 @@ export default function Layout({ children, currentPageName }) {
                   {link.name}
                 </Link>
               ))}
-              
-              {/* Attribution Badge */}
-              <div className="flex flex-col items-end text-xs ml-4 pl-4 border-l border-flash-purple/30">
-                <div className="text-signal-white/60">Made by INTinc Technology</div>
-                <a 
-                  href="https://flashfusion.co" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-flash-purple hover:text-fusion-pink transition-colors font-semibold"
-                >
-                  Powered by FlashFusion
-                </a>
-              </div>
+
             </div>
 
             {/* Mobile Menu Button */}
@@ -279,19 +278,7 @@ export default function Layout({ children, currentPageName }) {
                     {link.name}
                   </Link>
                 ))}
-                
-                {/* Mobile Attribution */}
-                <div className="flex flex-col gap-1 text-xs pt-4 border-t border-flash-purple/30">
-                  <div className="text-signal-white/60">Made by INTinc Technology</div>
-                  <a 
-                    href="https://flashfusion.co" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-flash-purple hover:text-fusion-pink transition-colors font-semibold"
-                  >
-                    Powered by FlashFusion
-                  </a>
-                </div>
+
               </div>
             </div>
           )}
@@ -307,23 +294,26 @@ export default function Layout({ children, currentPageName }) {
       <LiveChat />
 
       {/* Footer */}
-      <footer className="bg-carbon-night border-t border-flash-purple/30 py-12 px-6" role="contentinfo">
+      <footer className="bg-carbon-night border-t border-int-navy/30 py-12 px-6" role="contentinfo">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-flash-purple to-fusion-pink flex items-center justify-center font-bold">
-                  INT
+                <div className="flex items-center gap-1">
+                  <span className="text-xl font-bold text-int-navy">i</span>
+                  <span className="text-xl font-bold text-int-navy">N</span>
+                  <span className="text-xl font-bold text-int-navy">T</span>
+                  <span className="text-xs font-light text-int-navy align-top">™</span>
                 </div>
-                <span className="font-bold">INTinc Technology</span>
+                <span className="text-sm font-semibold text-int-navy">INTinc.com</span>
               </div>
               <p className="text-sm text-signal-white/60">
-                Enterprise AI implementation with MSP discipline. Secure, measurable, production-ready.
+                Enterprise AI solutions built for YOUR business. Secure, measurable, production-ready.
               </p>
             </div>
-            
+
             <div>
-              <h4 className="font-semibold mb-4 text-flash-purple">Quick Links</h4>
+              <h4 className="font-semibold mb-4 text-int-navy">Quick Links</h4>
               <div className="flex flex-col gap-2 text-sm">
                 {navLinks.map((link) => (
                   <Link
@@ -338,34 +328,32 @@ export default function Layout({ children, currentPageName }) {
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-flash-purple">Get in Touch</h4>
+              <h4 className="font-semibold mb-4 text-int-navy">Get in Touch</h4>
               <p className="text-sm text-signal-white/60 mb-4">
-                Ready to build production AI systems? Let's talk.
+                Ready to transform YOUR business with AI? Let's connect.
               </p>
               <Link
                 to={createPageUrl('Contact')}
-                className="inline-block px-6 py-2 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full text-sm font-semibold hover:shadow-glow transition-all"
+                className="inline-block px-6 py-2 bg-gradient-to-r from-int-orange to-int-navy rounded-full text-sm font-semibold hover:shadow-glow transition-all"
               >
                 Contact Us
               </Link>
             </div>
           </div>
           
-          <div className="pt-8 border-t border-flash-purple/30">
+          <div className="pt-8 border-t border-int-navy/30">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-signal-white/60">
               <div>
-                © {new Date().getFullYear()} INTinc Technology. All rights reserved.
+                © {new Date().getFullYear()} INTinc.com. All rights reserved.
               </div>
-              <div className="flex items-center gap-2">
-                <span>Made by INTinc Technology</span>
-                <span className="text-signal-white/40">|</span>
+              <div>
                 <a 
-                  href="https://flashfusion.co" 
+                  href="https://intinc.com" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-flash-purple hover:text-fusion-pink transition-colors font-semibold"
+                  className="text-int-orange hover:text-int-teal transition-colors font-semibold"
                 >
-                  Powered by FlashFusion
+                  INTinc.com
                 </a>
               </div>
             </div>
