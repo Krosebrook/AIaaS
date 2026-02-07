@@ -60,6 +60,7 @@ import Home from './pages/Home';
 import Services from './pages/Services';
 import Workshops from './pages/Workshops';
 import SEODashboard from './pages/SEODashboard';
+import ContentGenerator from './pages/ContentGenerator';
 import __Layout from './Layout.jsx';
 
 
@@ -77,6 +78,7 @@ export const PAGES = {
     "Services": Services,
     "Workshops": Workshops,
     "SEODashboard": SEODashboard,
+    "ContentGenerator": ContentGenerator,
 }
 
 export const pagesConfig = {
