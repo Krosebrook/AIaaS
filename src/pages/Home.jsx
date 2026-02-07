@@ -4,6 +4,7 @@ import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
 import { usePersonalization } from '../components/PersonalizationEngine';
 import DynamicFAQ from '../components/DynamicFAQ';
+import { BehaviorOutreachTrigger, useBehaviorAnalytics } from '../components/BehaviorAnalytics';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -19,7 +20,9 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const { userProfile, trackPageVisit, trackInterest, getRecommendations } = usePersonalization();
+  const { trackPageView, trackInteraction } = useBehaviorAnalytics();
   const [recommendations, setRecommendations] = useState(null);
+  const [pageStartTime] = useState(Date.now());
 
   useEffect(() => {
     trackPageVisit('Home');
@@ -28,7 +31,11 @@ export default function Home() {
       setIsScrolled(window.scrollY > 50);
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      trackPageView('Home', Date.now() - pageStartTime);
+    };
   }, []);
 
   useEffect(() => {
@@ -72,10 +79,13 @@ export default function Home() {
           </p>
           <Link 
             to={createPageUrl('Contact')}
+            onClick={() => trackInteraction('click', 'hero-cta', { source: 'hero' })}
             className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
           >
             GET STARTED
           </Link>
+          
+          <BehaviorOutreachTrigger />
         </div>
 
         <button 

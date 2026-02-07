@@ -59,6 +59,7 @@ import Contact from './pages/Contact';
 import Home from './pages/Home';
 import Services from './pages/Services';
 import Workshops from './pages/Workshops';
+import SEODashboard from './pages/SEODashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -75,6 +76,7 @@ export const PAGES = {
     "Home": Home,
     "Services": Services,
     "Workshops": Workshops,
+    "SEODashboard": SEODashboard,
 }
 
 export const pagesConfig = {
