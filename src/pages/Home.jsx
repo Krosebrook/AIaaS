@@ -124,23 +124,23 @@ export default function Home() {
       {/* Who We Are */}
       <section className="py-24 px-6 bg-void">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-flash-purple to-fusion-pink bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
             WHO WE ARE
           </h2>
           <p className="text-xl text-center mb-16 max-w-4xl mx-auto text-signal-white/90">
-            Your MSP partner for secure, measurable AI implementation—empowering you to <strong>discover</strong> opportunities, <strong>harden</strong> your infrastructure, and <strong>ship</strong> production solutions.
+            INTinc.com specializes in enterprise AI implementation—empowering you to <strong>discover</strong> opportunities, <strong>harden</strong> your infrastructure, and <strong>ship</strong> production solutions that drive YOUR business forward.
           </p>
 
           {/* Three Steps */}
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             {/* Discover */}
             <div className="relative group">
-              <div className="p-8 bg-carbon-night rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 h-full">
+              <div className="p-8 bg-carbon-night rounded-2xl border border-int-orange/30 hover:border-int-orange transition-all duration-300 h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-flash-purple/20 flex items-center justify-center">
-                    <span className="text-xl font-bold text-flash-purple">1</span>
+                  <div className="w-12 h-12 rounded-full bg-int-orange/20 flex items-center justify-center">
+                    <span className="text-xl font-bold text-int-orange">1</span>
                   </div>
-                  <Sparkles className="w-8 h-8 text-flash-purple" />
+                  <Sparkles className="w-8 h-8 text-int-orange" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Discover.</h3>
                 <p className="text-signal-white/80 mb-6">
@@ -148,14 +148,14 @@ export default function Home() {
                 </p>
                 <button 
                   onClick={() => toggleSection('discover')}
-                  className="text-flash-purple hover:text-fusion-pink transition-colors font-semibold flex items-center gap-2"
+                  className="text-int-navy hover:text-int-orange transition-colors font-semibold flex items-center gap-2"
                 >
                   LEARN MORE <ChevronDown className={`w-4 h-4 transition-transform ${activeSection === 'discover' ? 'rotate-180' : ''}`} />
                 </button>
-                
+
                 {activeSection === 'discover' && (
-                  <div className="mt-6 pt-6 border-t border-flash-purple/30">
-                    <h4 className="font-semibold mb-3 text-fusion-pink">DISCOVER Details</h4>
+                  <div className="mt-6 pt-6 border-t border-int-navy/30">
+                    <h4 className="font-semibold mb-3 text-int-orange">DISCOVER Details</h4>
                     <ul className="space-y-3 text-sm text-signal-white/80">
                       <li><strong>Risk-First Assessment:</strong> Map AI opportunities against your compliance, security, and operational requirements.</li>
                       <li><strong>Hands-On Workshops:</strong> Structured sessions that build technical literacy and identify high-impact use cases.</li>
@@ -174,12 +174,12 @@ export default function Home() {
 
             {/* Harden */}
             <div className="relative group">
-              <div className="p-8 bg-carbon-night rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 h-full">
+              <div className="p-8 bg-carbon-night rounded-2xl border border-int-navy/30 hover:border-int-navy transition-all duration-300 h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-flash-purple/20 flex items-center justify-center">
-                    <span className="text-xl font-bold text-flash-purple">2</span>
+                  <div className="w-12 h-12 rounded-full bg-int-navy/20 flex items-center justify-center">
+                    <span className="text-xl font-bold text-int-navy">2</span>
                   </div>
-                  <Shield className="w-8 h-8 text-flash-purple" />
+                  <Shield className="w-8 h-8 text-int-navy" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Harden.</h3>
                 <p className="text-signal-white/80 mb-6">
@@ -213,12 +213,12 @@ export default function Home() {
 
             {/* Ship */}
             <div className="relative group">
-              <div className="p-8 bg-carbon-night rounded-2xl border border-flash-purple/30 hover:border-flash-purple transition-all duration-300 h-full">
+              <div className="p-8 bg-carbon-night rounded-2xl border border-int-teal/30 hover:border-int-teal transition-all duration-300 h-full">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 rounded-full bg-flash-purple/20 flex items-center justify-center">
-                    <span className="text-xl font-bold text-flash-purple">3</span>
+                  <div className="w-12 h-12 rounded-full bg-int-teal/20 flex items-center justify-center">
+                    <span className="text-xl font-bold text-int-teal">3</span>
                   </div>
-                  <Rocket className="w-8 h-8 text-flash-purple" />
+                  <Rocket className="w-8 h-8 text-int-teal" />
                 </div>
                 <h3 className="text-2xl font-bold mb-4">Ship.</h3>
                 <p className="text-signal-white/80 mb-6">
@@ -257,14 +257,14 @@ export default function Home() {
       <section className="py-24 px-6 bg-gradient-to-br from-carbon-night to-void">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">
-            REALITY CHECK
+            YOUR BUSINESS DESERVES MORE
           </h2>
           <p className="text-xl mb-8 text-signal-white/90">
-            The competitive advantages in AI belong to those who act with <span className="text-fusion-pink font-semibold">discipline</span>. Are you <span className="text-flash-purple font-semibold">building capability</span>, or will you be <span className="text-signal-white/50">left behind</span>?
+            AI implementation shouldn't be complicated. At <span className="text-int-orange font-semibold">INTinc.com</span>, we focus on <span className="text-int-navy font-semibold">YOUR results</span>—delivering solutions that <span className="text-int-teal font-semibold">transform operations</span> and drive measurable ROI.
           </p>
           <Link 
             to={createPageUrl('Contact')}
-            className="inline-block px-8 py-4 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+            className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
           >
             START TODAY
           </Link>
@@ -274,43 +274,43 @@ export default function Home() {
       {/* Key Trends */}
       <section className="py-24 px-6 bg-void">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-flash-purple to-fusion-pink bg-clip-text text-transparent">
-            KEY TRENDS
+          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
+            AI INSIGHTS FOR YOUR BUSINESS
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-flash-purple/30">
+            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-int-orange/30">
               <div className="mb-4">
-                <TrendingUp className="w-12 h-12 text-flash-purple mx-auto" />
+                <TrendingUp className="w-12 h-12 text-int-orange mx-auto" />
               </div>
               <h3 className="text-sm uppercase tracking-wide text-signal-white/60 mb-2">SPENDING</h3>
-              <div className="text-5xl font-bold text-fusion-pink mb-2">92%</div>
+              <div className="text-5xl font-bold text-int-orange mb-2">92%</div>
               <p className="text-sm text-signal-white/80">of companies plan to invest more in GenAI over the next 3 years.</p>
             </div>
 
-            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-flash-purple/30">
+            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-int-navy/30">
               <div className="mb-4">
-                <Users className="w-12 h-12 text-flash-purple mx-auto" />
+                <Users className="w-12 h-12 text-int-navy mx-auto" />
               </div>
               <h3 className="text-sm uppercase tracking-wide text-signal-white/60 mb-2">USAGE</h3>
-              <div className="text-5xl font-bold text-fusion-pink mb-2">3x</div>
+              <div className="text-5xl font-bold text-int-navy mb-2">3x</div>
               <p className="text-sm text-signal-white/80">more employees are using GenAI than their leaders realize.</p>
             </div>
 
-            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-flash-purple/30">
+            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-int-teal/30">
               <div className="mb-4">
-                <Award className="w-12 h-12 text-flash-purple mx-auto" />
+                <Award className="w-12 h-12 text-int-teal mx-auto" />
               </div>
               <h3 className="text-sm uppercase tracking-wide text-signal-white/60 mb-2">ADOPTION</h3>
-              <div className="text-5xl font-bold text-fusion-pink mb-2">48%</div>
+              <div className="text-5xl font-bold text-int-teal mb-2">48%</div>
               <p className="text-sm text-signal-white/80">of employees rank training as the most important factor for GenAI adoption.</p>
             </div>
 
-            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-flash-purple/30">
+            <div className="text-center p-6 bg-carbon-night rounded-2xl border border-int-orange/30">
               <div className="mb-4">
-                <Zap className="w-12 h-12 text-flash-purple mx-auto" />
+                <Zap className="w-12 h-12 text-int-orange mx-auto" />
               </div>
               <h3 className="text-sm uppercase tracking-wide text-signal-white/60 mb-2">SPEED</h3>
-              <div className="text-5xl font-bold text-fusion-pink mb-2">47%</div>
+              <div className="text-5xl font-bold text-int-orange mb-2">47%</div>
               <p className="text-sm text-signal-white/80">of the C-suite say their companies are developing GenAI tools too slowly.</p>
             </div>
           </div>
@@ -340,26 +340,26 @@ export default function Home() {
 
       {/* Personalized Recommendations */}
       {recommendations && (
-        <section className="py-16 px-6 bg-gradient-to-r from-flash-purple/10 to-fusion-pink/10 border-y border-flash-purple/30">
+        <section className="py-16 px-6 bg-gradient-to-r from-int-navy/10 to-int-orange/10 border-y border-int-navy/30">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block px-4 py-1 bg-flash-purple/20 border border-flash-purple/30 rounded-full text-sm font-semibold text-flash-purple mb-4">
-              Recommended for You
+            <div className="inline-block px-4 py-1 bg-int-orange/20 border border-int-orange/30 rounded-full text-sm font-semibold text-int-orange mb-4">
+              Recommended for Your Business
             </div>
             <h2 className="text-3xl font-bold mb-4">{recommendations.headline}</h2>
             <p className="text-lg text-signal-white/80 mb-6">
-              Based on your interests in <strong className="text-fusion-pink">{recommendations.contentEmphasis}</strong>
+              Based on your interests in <strong className="text-int-orange">{recommendations.contentEmphasis}</strong>
             </p>
             <div className="flex gap-4 justify-center">
               <Link
                 to={createPageUrl(`CaseStudy${recommendations.recommendedCaseStudy}`)}
-                className="px-6 py-3 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold hover:shadow-glow transition-all"
+                className="px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold hover:shadow-glow transition-all"
               >
                 View Relevant Case Study
               </Link>
               <Link
                 to={createPageUrl('Services')}
                 onClick={() => trackInterest(recommendations.servicesFocus)}
-                className="px-6 py-3 bg-void border-2 border-flash-purple rounded-full font-semibold hover:bg-flash-purple/10 transition-all"
+                className="px-6 py-3 bg-void border-2 border-int-navy rounded-full font-semibold hover:bg-int-navy/10 transition-all"
               >
                 Explore {recommendations.servicesFocus}
               </Link>
@@ -374,22 +374,22 @@ export default function Home() {
       {/* Services Teaser */}
       <section className="py-24 px-6 bg-void">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-flash-purple to-fusion-pink bg-clip-text text-transparent">
-            OUR SERVICES
+          <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
+            SERVICES FOR YOUR BUSINESS
           </h2>
           <p className="text-xl mb-8 text-signal-white/90">
-            Experience <strong>enterprise-grade</strong> AI implementation without enterprise overhead—our flexible engagement model and lean teams deliver Fortune 500 expertise at MSP efficiency.
+            Enterprise AI implementation tailored to <strong>YOUR needs</strong>. We deliver proven solutions with flexible engagement models that fit your budget and timeline.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center mb-8 text-lg">
-            <div className="text-fusion-pink font-semibold">TIRED OF VENDORS?</div>
-            <div className="text-fusion-pink font-semibold">READY FOR RESULTS?</div>
-            <div className="text-fusion-pink font-semibold">NEED SECURITY?</div>
+            <div className="text-int-orange font-semibold">YOUR GOALS</div>
+            <div className="text-int-navy font-semibold">YOUR TIMELINE</div>
+            <div className="text-int-teal font-semibold">YOUR SUCCESS</div>
           </div>
           <Link 
             to={createPageUrl('Services')}
-            className="inline-block px-8 py-4 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+            className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
           >
-            SEE SERVICES
+            EXPLORE SERVICES
           </Link>
         </div>
       </section>
@@ -489,26 +489,26 @@ export default function Home() {
       {/* Beliefs */}
       <section className="py-24 px-6 bg-void">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-flash-purple to-fusion-pink bg-clip-text text-transparent">
-            OUR BELIEFS
+          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
+            OUR COMMITMENT TO YOUR BUSINESS
           </h2>
           <div className="space-y-12">
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4 text-fusion-pink">OUR PURPOSE</h3>
+              <h3 className="text-2xl font-bold mb-4 text-int-orange">OUR PURPOSE</h3>
               <p className="text-lg text-signal-white/90">
-                To be your leading AI implementation partner—helping organizations <strong>discover</strong> opportunities, <strong>harden</strong> infrastructure, and <strong>ship</strong> production systems with confidence.
+                Our purpose is <strong>YOUR business</strong>. We implement AI solutions that align with your goals, delivering measurable results that transform operations and drive growth.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4 text-fusion-pink">OUR APPROACH</h3>
+              <h3 className="text-2xl font-bold mb-4 text-int-navy">OUR APPROACH</h3>
               <p className="text-lg text-signal-white/90">
-                We combine MSP discipline with AI expertise. Every engagement starts with security, compliance, and measurable outcomes—no hype, just engineered solutions.
+                We focus on YOUR success. Every engagement is tailored to your specific needs, timeline, and budget—delivering practical solutions that work for YOUR business.
               </p>
             </div>
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-4 text-fusion-pink">OUR COMMITMENT</h3>
+              <h3 className="text-2xl font-bold mb-4 text-int-teal">OUR PROMISE</h3>
               <p className="text-lg text-signal-white/90">
-                We don't just deliver projects—we build capability. Full documentation, knowledge transfer, and ongoing support ensure your team owns the solution.
+                We partner with you for the long term. Full training, ongoing support, and knowledge transfer ensure your team is empowered to maintain and grow your AI capabilities.
               </p>
             </div>
           </div>
@@ -519,28 +519,28 @@ export default function Home() {
       <section className="py-24 px-6 bg-gradient-to-br from-carbon-night to-void">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-8">
-            Ready to Ship AI?
+            Ready to Transform YOUR Business?
           </h2>
           <p className="text-xl mb-12 text-signal-white/90">
-            Let's build production systems that deliver measurable value.
+            Let's implement AI solutions that deliver real results for YOUR operations.
           </p>
           <Link 
             to={createPageUrl('Contact')}
-            className="inline-block px-10 py-5 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full font-semibold text-xl hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+            className="inline-block px-10 py-5 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-xl hover:shadow-glow transition-all duration-300 transform hover:scale-105"
           >
-            GET STARTED
+            GET STARTED TODAY
           </Link>
         </div>
       </section>
 
       <style jsx>{`
         .hero-gradient {
-          background: radial-gradient(circle at 30% 20%, rgba(168,85,247,0.35), transparent 60%),
-                      radial-gradient(circle at 70% 80%, rgba(244,114,182,0.35), transparent 60%);
+          background: radial-gradient(circle at 30% 20%, rgba(30,58,95,0.35), transparent 60%),
+                      radial-gradient(circle at 70% 80%, rgba(242,101,34,0.35), transparent 60%);
         }
-        
+
         .shadow-glow {
-          box-shadow: 0 0 30px rgba(168,85,247,0.6), 0 0 60px rgba(244,114,182,0.4);
+          box-shadow: 0 0 30px rgba(242,101,34,0.6), 0 0 60px rgba(30,58,95,0.4);
         }
 
         @keyframes scroll {
