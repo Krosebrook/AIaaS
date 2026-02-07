@@ -1,9 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import { CaseStudySummary, RelatedCaseStudies } from '../components/CaseStudyEnhancer';
 import { Database, ArrowLeft, TrendingUp, Clock, DollarSign } from 'lucide-react';
 
 export default function CaseStudy1() {
+  const allCaseStudies = [
+    { title: 'Knowledge at Your Fingertips', category: 'Product Enablement', industry: 'Consumer Goods' },
+    { title: 'Automated Prospecting Engine', category: 'Business Development', industry: 'Professional Services' },
+    { title: 'Instant Marketing Intelligence', category: 'Performance Reporting', industry: 'Marketing & Advertising' },
+    { title: 'Voice-to-Documentation Pipeline', category: 'Operations', industry: 'Nonprofit & Associations' },
+    { title: 'Smart AR Collections', category: 'Accounts Receivable', industry: 'B2B SaaS' },
+    { title: 'Enterprise AI Training Program', category: 'Org-Wide Enablement', industry: 'Nonprofit' }
+  ];
+
   const study = {
     icon: Database,
     title: 'Knowledge at Your Fingertips',
@@ -158,6 +168,13 @@ export default function CaseStudy1() {
         </div>
       </section>
 
+      {/* AI-Generated Summary */}
+      <section className="py-12 px-6 bg-carbon-night">
+        <div className="max-w-6xl mx-auto">
+          <CaseStudySummary caseStudyData={study} />
+        </div>
+      </section>
+
       {/* Main Content */}
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto space-y-16">
@@ -205,6 +222,17 @@ export default function CaseStudy1() {
             </p>
             <div className="text-signal-white/60">— {study.testimonial.author}, {study.client}</div>
           </div>
+        </div>
+      </section>
+
+      {/* Related Case Studies */}
+      <section className="py-12 px-6 bg-void">
+        <div className="max-w-6xl mx-auto">
+          <RelatedCaseStudies 
+            currentStudyId={1}
+            currentCategory={study.category}
+            allCaseStudies={allCaseStudies}
+          />
         </div>
       </section>
 
