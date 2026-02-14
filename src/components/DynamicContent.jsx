@@ -17,13 +17,13 @@ export function DynamicContentAdapter({ children, defaultContent, variants }) {
     if (bestMatch) {
       setActiveVariant(bestMatch.content);
     }
-  }, [journey.engagementScore]);
+  }, [userBehavior.visitCount, userBehavior.pageViews.length]);
 
   return <>{activeVariant}</>;
 }
 
 export function PersonalizedCTA({ defaultCTA, variants }) {
-  const { getUserJourney } = useBehaviorAnalytics();
+  const { userBehavior, getUserJourney } = useBehaviorAnalytics();
   const [activeCTA, setActiveCTA] = useState(defaultCTA);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function PersonalizedCTA({ defaultCTA, variants }) {
     };
 
     setActiveCTA(ctaMap[currentStage]);
-  }, [getUserJourney().engagementScore]);
+  }, [userBehavior.visitCount, userBehavior.pageViews.length]);
 
   return (
     <div className="transition-all duration-500">
