@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Sparkles, FileText, Share2, Copy, Download, Loader2 } from 'lucide-react';
+import ConfirmationDialog from '../components/shell/ConfirmationDialog';
 
 export default function ContentGenerator() {
   const [formData, setFormData] = useState({
@@ -14,6 +15,8 @@ export default function ContentGenerator() {
   const [generatedContent, setGeneratedContent] = useState(null);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showGenerateConfirm, setShowGenerateConfirm] = useState(false);
+  const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
 
   const contentTypes = [
     { value: 'blog', label: 'Blog Post', icon: FileText },
@@ -211,6 +214,16 @@ Create variations for A/B testing. Focus on click-through optimization.`
     a.href = url;
     a.download = `${formData.topic.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.md`;
     a.click();
+    setShowDownloadConfirm(false);
+  };
+
+  const handleGenerateClick = () => {
+    setShowGenerateConfirm(true);
+  };
+
+  const confirmGenerate = async () => {
+    setShowGenerateConfirm(false);
+    await generateContent();
   };
 
   return (
@@ -316,7 +329,7 @@ Create variations for A/B testing. Focus on click-through optimization.`
               </div>
 
               <button
-                onClick={generateContent}
+                onClick={handleGenerateClick}
                 disabled={loading || !formData.topic || !formData.keywords}
                 className="w-full px-6 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
@@ -332,6 +345,24 @@ Create variations for A/B testing. Focus on click-through optimization.`
                   </>
                 )}
               </button>
+              
+              <ConfirmationDialog
+                isOpen={showGenerateConfirm}
+                onClose={() => setShowGenerateConfirm(false)}
+                onConfirm={confirmGenerate}
+                title="Generate AI Content"
+                description="This will use AI credits to generate content based on your specifications."
+                actionType="play"
+                actionLabel="Generate Content"
+                previewData={{
+                  contentType: formData.contentType.toUpperCase(),
+                  topic: formData.topic,
+                  keywords: formData.keywords,
+                  tone: formData.tone,
+                  audience: formData.audience,
+                  length: formData.length
+                }}
+              />
             </div>
           </div>
 
@@ -351,12 +382,27 @@ Create variations for A/B testing. Focus on click-through optimization.`
                         {copied ? 'Copied!' : 'Copy'}
                       </button>
                       <button
-                        onClick={downloadContent}
+                        onClick={() => setShowDownloadConfirm(true)}
                         className="px-4 py-2 bg-void border border-int-navy/30 rounded-lg hover:border-int-orange transition-all flex items-center gap-2"
                       >
                         <Download className="w-4 h-4" />
                         Download
                       </button>
+                      
+                      <ConfirmationDialog
+                        isOpen={showDownloadConfirm}
+                        onClose={() => setShowDownloadConfirm(false)}
+                        onConfirm={downloadContent}
+                        title="Download Generated Content"
+                        description="Download this content as a Markdown file to your computer."
+                        actionType="download"
+                        actionLabel="Download File"
+                        previewData={{
+                          title: generatedContent?.title,
+                          type: 'Markdown (.md)',
+                          size: `~${Math.round((generatedContent?.content?.length || 0) / 1024)} KB`
+                        }}
+                      />
                     </div>
                   </div>
 

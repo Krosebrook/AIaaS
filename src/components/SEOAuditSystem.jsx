@@ -9,7 +9,12 @@ export default function SEOAuditSystem() {
 
   const pages = ['Home', 'Services', 'CaseStudies', 'About', 'Contact', 'Workshops'];
 
+  const handleAuditClick = () => {
+    setShowAuditConfirm(true);
+  };
+
   const runAudit = async () => {
+    setShowAuditConfirm(false);
     setLoading(true);
     try {
       const pageContent = {
