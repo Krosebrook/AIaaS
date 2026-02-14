@@ -2,9 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import LiveChat from './components/LiveChat';
+import AppShell from './components/shell/AppShell';
 import { Menu, X } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
+  // Check if current page should use AppShell (admin/tool pages)
+  const useAppShell = ['ContentGenerator', 'SEODashboard'].includes(currentPageName);
+
+  if (useAppShell) {
+    return (
+      <AppShell currentPage={currentPageName}>
+        {children}
+      </AppShell>
+    );
+  }
+
+  // Original layout for public pages
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 

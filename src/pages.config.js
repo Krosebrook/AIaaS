@@ -56,11 +56,11 @@ import CaseStudy4 from './pages/CaseStudy4';
 import CaseStudy5 from './pages/CaseStudy5';
 import CaseStudy6 from './pages/CaseStudy6';
 import Contact from './pages/Contact';
+import ContentGenerator from './pages/ContentGenerator';
 import Home from './pages/Home';
+import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
 import Workshops from './pages/Workshops';
-import SEODashboard from './pages/SEODashboard';
-import ContentGenerator from './pages/ContentGenerator';
 import __Layout from './Layout.jsx';
 
 
@@ -74,11 +74,11 @@ export const PAGES = {
     "CaseStudy5": CaseStudy5,
     "CaseStudy6": CaseStudy6,
     "Contact": Contact,
+    "ContentGenerator": ContentGenerator,
     "Home": Home,
+    "SEODashboard": SEODashboard,
     "Services": Services,
     "Workshops": Workshops,
-    "SEODashboard": SEODashboard,
-    "ContentGenerator": ContentGenerator,
 }
 
 export const pagesConfig = {
