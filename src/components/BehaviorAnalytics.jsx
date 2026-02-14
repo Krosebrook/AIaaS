@@ -123,7 +123,46 @@ Provide actionable recommendations.`,
     }
   };
 
-  return { userBehavior, trackPageView, trackInteraction, trackInterest, analyzeBehavior };
+  const getUserJourney = () => {
+    const interests = Array.from(userBehavior.interests);
+    const pageViews = userBehavior.pageViews;
+    
+    // Determine journey stage based on behavior
+    let currentStage = 'awareness';
+    if (userBehavior.visitCount >= 3 || pageViews.length >= 5) {
+      currentStage = 'consideration';
+    }
+    if (userBehavior.interactions.some(i => i.target?.includes('contact') || i.target?.includes('consultation'))) {
+      currentStage = 'decision';
+    }
+
+    // Calculate engagement score
+    const engagementScore = 
+      (userBehavior.visitCount * 50) + 
+      (pageViews.length * 20) + 
+      (userBehavior.interactions.length * 30) +
+      (interests.length * 40);
+
+    // Get top interests
+    const topInterests = interests.slice(0, 3);
+
+    return {
+      currentStage,
+      topInterests,
+      engagementScore,
+      visitCount: userBehavior.visitCount,
+      pageViewCount: pageViews.length
+    };
+  };
+
+  return { 
+    userBehavior, 
+    trackPageView, 
+    trackInteraction, 
+    trackInterest, 
+    analyzeBehavior,
+    getUserJourney
+  };
 }
 
 export function BehaviorOutreachTrigger() {

@@ -3,26 +3,27 @@ import { base44 } from '@/api/base44Client';
 import { useBehaviorAnalytics } from './BehaviorAnalytics';
 
 export function CRMFollowUpQueue() {
-  const { behavior, analyzeBehavior, getUserJourney } = useBehaviorAnalytics();
+  const { userBehavior, analyzeBehavior, getUserJourney } = useBehaviorAnalytics();
   const [queuedSequences, setQueuedSequences] = useState([]);
 
   useEffect(() => {
     const checkAndQueueFollowUp = async () => {
+      const journey = getUserJourney();
+      
       // Only trigger for high-engagement users
-      if (behavior.engagementScore < 300) return;
+      if (journey.engagementScore < 300) return;
 
       const analysis = await analyzeBehavior();
-      const journey = getUserJourney();
 
       // Determine follow-up sequence based on behavior
-      const sequence = await generateFollowUpSequence(analysis, journey, behavior);
+      const sequence = await generateFollowUpSequence(analysis, journey, userBehavior);
       
       if (sequence && !queuedSequences.find(s => s.id === sequence.id)) {
         setQueuedSequences(prev => [...prev, sequence]);
         
         // Trigger first touchpoint
         if (sequence.touchpoints.length > 0) {
-          await executeTouchpoint(sequence.touchpoints[0], behavior);
+          await executeTouchpoint(sequence.touchpoints[0], userBehavior);
         }
       }
     };
@@ -30,7 +31,7 @@ export function CRMFollowUpQueue() {
     // Check every 2 minutes of engagement
     const interval = setInterval(checkAndQueueFollowUp, 120000);
     return () => clearInterval(interval);
-  }, [behavior.engagementScore]);
+  }, [getUserJourney().engagementScore]);
 
   const generateFollowUpSequence = async (analysis, journey, behaviorData) => {
     const sequencePrompt = await base44.integrations.Core.InvokeLLM({
@@ -108,7 +109,7 @@ For each touchpoint specify:
 }
 
 export function usePersonalizedContent() {
-  const { behavior, getUserJourney } = useBehaviorAnalytics();
+  const { getUserJourney } = useBehaviorAnalytics();
   
   const getContentRecommendations = () => {
     const journey = getUserJourney();
@@ -138,9 +139,11 @@ export function usePersonalizedContent() {
     return recommendations;
   };
 
+  const journey = getUserJourney();
+  
   return {
-    journey: getUserJourney(),
+    journey,
     recommendations: getContentRecommendations(),
-    shouldShowPersonalization: behavior.engagementScore > 150
+    shouldShowPersonalization: journey.engagementScore > 150
   };
 }
