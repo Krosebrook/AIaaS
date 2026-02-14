@@ -5,6 +5,8 @@ import SEOMetadata from '../components/SEOMetadata';
 import { usePersonalization } from '../components/PersonalizationEngine';
 import DynamicFAQ from '../components/DynamicFAQ';
 import { BehaviorOutreachTrigger, useBehaviorAnalytics } from '../components/BehaviorAnalytics';
+import { CRMFollowUpQueue, usePersonalizedContent } from '../components/CRMIntegration';
+import { AdaptiveHero, PersonalizedCTA, DynamicContentAdapter } from '../components/DynamicContent';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -20,9 +22,11 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const { userProfile, trackPageVisit, trackInterest, getRecommendations } = usePersonalization();
-  const { trackPageView, trackInteraction } = useBehaviorAnalytics();
+  const { trackPageView, trackInteraction, getUserJourney } = useBehaviorAnalytics();
+  const { journey, recommendations: contentRecs, shouldShowPersonalization } = usePersonalizedContent();
   const [recommendations, setRecommendations] = useState(null);
   const [pageStartTime] = useState(Date.now());
+  const adaptiveHero = AdaptiveHero();
 
   useEffect(() => {
     trackPageVisit('Home');
@@ -71,22 +75,80 @@ export default function Home() {
         </div>
         
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-int-navy via-int-teal to-int-orange bg-clip-text text-transparent animate-gradient">
-            AI for YOUR Business
-          </h1>
-          <p className="text-2xl md:text-4xl mb-12 text-signal-white/90">
-            Our Purpose is <span className="text-int-orange font-semibold">YOUR Success</span>.
-          </p>
-          <Link 
-            to={createPageUrl('Contact')}
-            onClick={() => trackInteraction('click', 'hero-cta', { source: 'hero' })}
-            className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
-          >
-            GET STARTED
-          </Link>
-          
-          <BehaviorOutreachTrigger />
-        </div>
+            <DynamicContentAdapter
+              defaultContent={
+                <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-int-navy via-int-teal to-int-orange bg-clip-text text-transparent animate-gradient">
+                  AI for YOUR Business
+                </h1>
+              }
+              variants={[
+                {
+                  stage: 'consideration',
+                  content: (
+                    <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-int-navy via-int-teal to-int-orange bg-clip-text text-transparent animate-gradient">
+                      {adaptiveHero.headline}
+                    </h1>
+                  )
+                },
+                {
+                  stage: 'decision',
+                  content: (
+                    <h1 className="text-6xl md:text-8xl font-bold mb-8 bg-gradient-to-r from-int-navy via-int-teal to-int-orange bg-clip-text text-transparent animate-gradient">
+                      {adaptiveHero.headline}
+                    </h1>
+                  )
+                }
+              ]}
+            />
+
+            <p className="text-2xl md:text-4xl mb-12 text-signal-white/90">
+              {adaptiveHero.subheadline || 'Our Purpose is YOUR Success.'}
+            </p>
+
+            <PersonalizedCTA
+              defaultCTA={
+                <Link 
+                  to={createPageUrl('Contact')}
+                  onClick={() => trackInteraction('click', 'hero-cta', { source: 'hero', stage: journey.currentStage })}
+                  className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+                >
+                  GET STARTED
+                </Link>
+              }
+              variants={{
+                soft: (
+                  <Link 
+                    to={createPageUrl('Services')}
+                    onClick={() => trackInteraction('click', 'hero-cta-soft', { stage: 'awareness' })}
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+                  >
+                    EXPLORE SOLUTIONS
+                  </Link>
+                ),
+                educational: (
+                  <Link 
+                    to={createPageUrl('CaseStudies')}
+                    onClick={() => trackInteraction('click', 'hero-cta-edu', { stage: 'consideration' })}
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+                  >
+                    SEE SUCCESS STORIES
+                  </Link>
+                ),
+                direct: (
+                  <Link 
+                    to={createPageUrl('Contact')}
+                    onClick={() => trackInteraction('click', 'hero-cta-direct', { stage: 'decision' })}
+                    className="inline-block px-8 py-4 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+                  >
+                    SCHEDULE CONSULTATION
+                  </Link>
+                )
+              }}
+            />
+
+            <BehaviorOutreachTrigger />
+            <CRMFollowUpQueue />
+          </div>
 
         <button 
           onClick={() => scrollToSection('process')}
@@ -348,31 +410,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Personalized Recommendations */}
-      {recommendations && (
+      {/* Personalized Recommendations - Enhanced with Journey Data */}
+      {(recommendations || shouldShowPersonalization) && (
         <section className="py-16 px-6 bg-gradient-to-r from-int-navy/10 to-int-orange/10 border-y border-int-navy/30">
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-block px-4 py-1 bg-int-orange/20 border border-int-orange/30 rounded-full text-sm font-semibold text-int-orange mb-4">
-              Recommended for Your Business
+              {journey.currentStage === 'decision' ? '🎯 Ready to Move Forward?' : 'Recommended for Your Business'}
             </div>
-            <h2 className="text-3xl font-bold mb-4">{recommendations.headline}</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              {recommendations?.headline || `${journey.currentStage === 'decision' ? 'Let\'s Build Your Solution' : 'Continue Your Journey'}`}
+            </h2>
             <p className="text-lg text-signal-white/80 mb-6">
-              Based on your interests in <strong className="text-int-orange">{recommendations.contentEmphasis}</strong>
+              {journey.topInterests.length > 0 && (
+                <>Based on your interest in <strong className="text-int-orange">{journey.topInterests.join(', ')}</strong></>
+              )}
             </p>
-            <div className="flex gap-4 justify-center">
-              <Link
-                to={createPageUrl(`CaseStudy${recommendations.recommendedCaseStudy}`)}
-                className="px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold hover:shadow-glow transition-all"
-              >
-                View Relevant Case Study
-              </Link>
-              <Link
-                to={createPageUrl('Services')}
-                onClick={() => trackInterest(recommendations.servicesFocus)}
-                className="px-6 py-3 bg-void border-2 border-int-navy rounded-full font-semibold hover:bg-int-navy/10 transition-all"
-              >
-                Explore {recommendations.servicesFocus}
-              </Link>
+            <div className="flex gap-4 justify-center flex-wrap">
+              {contentRecs.map((rec, i) => (
+                <Link
+                  key={i}
+                  to={createPageUrl(rec.type === 'case-study' ? 'CaseStudies' : rec.type === 'consultation' ? 'Contact' : 'Services')}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all ${
+                    rec.priority === 'critical'
+                      ? 'bg-gradient-to-r from-int-orange to-int-navy hover:shadow-glow'
+                      : 'bg-void border-2 border-int-navy hover:bg-int-navy/10'
+                  }`}
+                >
+                  {rec.title}
+                </Link>
+              ))}
             </div>
           </div>
         </section>
