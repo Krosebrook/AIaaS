@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Search, AlertCircle, CheckCircle, Loader2, Download } from 'lucide-react';
+import ConfirmationDialog from './shell/ConfirmationDialog';
 
 export default function SEOAuditSystem() {
   const [auditResults, setAuditResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [selectedPage, setSelectedPage] = useState('all');
+  const [showAuditConfirm, setShowAuditConfirm] = useState(false);
 
   const pages = ['Home', 'Services', 'CaseStudies', 'About', 'Contact', 'Workshops'];
 
@@ -144,7 +146,7 @@ Be specific and actionable.`,
 
         <div className="flex gap-4 mb-8">
           <button
-            onClick={runAudit}
+            onClick={handleAuditClick}
             disabled={loading}
             className="px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 flex items-center gap-2"
           >
@@ -170,6 +172,33 @@ Be specific and actionable.`,
             </button>
           )}
         </div>
+        
+        <ConfirmationDialog
+          isOpen={showAuditConfirm}
+          onClose={() => setShowAuditConfirm(false)}
+          onConfirm={runAudit}
+          title="Start SEO Audit"
+          description="This will perform a comprehensive SEO analysis of your website using AI. The audit will analyze all major pages, identify keyword gaps, and provide recommendations."
+          actionType="play"
+          actionLabel="Start Audit"
+          previewData={{
+            scope: 'Full website analysis',
+            estimatedTime: '2-3 minutes',
+            aiCredits: 'Moderate usage',
+            output: 'Detailed SEO report with actionable insights'
+          }}
+        >
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h4 className="text-sm font-semibold text-blue-900 mb-2">What will be analyzed:</h4>
+            <ul className="text-sm text-blue-800 space-y-1">
+              <li>• Keyword density and optimization</li>
+              <li>• Meta tags and structured data</li>
+              <li>• Internal linking strategy</li>
+              <li>• Content gaps and opportunities</li>
+              <li>• Technical SEO issues</li>
+            </ul>
+          </div>
+        </ConfirmationDialog>
 
         {auditResults && (
           <div className="space-y-6">
