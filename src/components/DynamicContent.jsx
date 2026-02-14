@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useBehaviorAnalytics } from './BehaviorAnalytics';
 
 export function DynamicContentAdapter({ children, defaultContent, variants }) {
-  const { behavior, getUserJourney } = useBehaviorAnalytics();
+  const { userBehavior, getUserJourney } = useBehaviorAnalytics();
   const [activeVariant, setActiveVariant] = useState(defaultContent);
 
   useEffect(() => {
@@ -17,13 +17,13 @@ export function DynamicContentAdapter({ children, defaultContent, variants }) {
     if (bestMatch) {
       setActiveVariant(bestMatch.content);
     }
-  }, [behavior.engagementScore, behavior.interests]);
+  }, [journey.engagementScore]);
 
   return <>{activeVariant}</>;
 }
 
 export function PersonalizedCTA({ defaultCTA, variants }) {
-  const { behavior, getUserJourney } = useBehaviorAnalytics();
+  const { getUserJourney } = useBehaviorAnalytics();
   const [activeCTA, setActiveCTA] = useState(defaultCTA);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function PersonalizedCTA({ defaultCTA, variants }) {
     };
 
     setActiveCTA(ctaMap[currentStage]);
-  }, [behavior.engagementScore]);
+  }, [getUserJourney().engagementScore]);
 
   return (
     <div className="transition-all duration-500">
@@ -46,25 +46,26 @@ export function PersonalizedCTA({ defaultCTA, variants }) {
   );
 }
 
-export function AdaptiveHero({ visitor }) {
-  const { behavior, getUserJourney } = useBehaviorAnalytics();
+export function AdaptiveHero() {
+  const { userBehavior, getUserJourney } = useBehaviorAnalytics();
   const journey = getUserJourney();
+  const interests = Array.from(userBehavior.interests);
 
   const headlines = {
     awareness: "Transform Your Business with AI",
-    consideration: `Proven AI Solutions for ${behavior.interests[0] || 'Enterprise'}`,
+    consideration: `Proven AI Solutions for ${interests[0] || 'Enterprise'}`,
     decision: "Ready to Deploy? Let's Build Your AI Solution"
   };
 
   const subheadlines = {
     awareness: "Discover how enterprise AI can serve YOUR business needs",
-    consideration: `See how companies like yours achieved measurable ROI with our ${behavior.interests[0] || 'AI'} solutions`,
+    consideration: `See how companies like yours achieved measurable ROI with our ${interests[0] || 'AI'} solutions`,
     decision: "Schedule your consultation today and start transforming operations"
   };
 
   return {
-    headline: headlines[journey.currentStage],
-    subheadline: subheadlines[journey.currentStage],
+    headline: headlines[journey.currentStage] || headlines.awareness,
+    subheadline: subheadlines[journey.currentStage] || subheadlines.awareness,
     journeyStage: journey.currentStage
   };
 }
