@@ -18,7 +18,11 @@ export default function ContentGenerator() {
   const contentTypes = [
     { value: 'blog', label: 'Blog Post', icon: FileText },
     { value: 'marketing', label: 'Marketing Copy', icon: Sparkles },
-    { value: 'social', label: 'Social Media', icon: Share2 }
+    { value: 'social', label: 'Social Media', icon: Share2 },
+    { value: 'email', label: 'Email Campaign', icon: FileText },
+    { value: 'landing', label: 'Landing Page', icon: FileText },
+    { value: 'technical', label: 'Tech Docs', icon: FileText },
+    { value: 'ads', label: 'Ad Copy', icon: Sparkles }
   ];
 
   const tones = ['professional', 'conversational', 'technical', 'persuasive'];
@@ -26,7 +30,11 @@ export default function ContentGenerator() {
   const lengths = {
     blog: ['short (500 words)', 'medium (1000 words)', 'long (1500+ words)'],
     marketing: ['short (100 words)', 'medium (250 words)', 'long (500 words)'],
-    social: ['twitter (280 chars)', 'linkedin (1500 chars)', 'thread (5 posts)']
+    social: ['twitter (280 chars)', 'linkedin (1500 chars)', 'thread (5 posts)'],
+    email: ['single email', 'nurture sequence (3 emails)', 'promotional (5 emails)'],
+    landing: ['hero + benefits', 'full page', 'conversion-focused'],
+    technical: ['outline', 'summary', 'full documentation'],
+    ads: ['short (25 words)', 'medium (50 words)', 'variations (3 versions)']
   };
 
   const generateContent = async () => {
@@ -88,7 +96,84 @@ Generate platform-optimized content:
 - Call-to-action
 - For threads: numbered posts with clear narrative flow
 
-Focus on practical insights and business value.`
+Focus on practical insights and business value.`,
+
+        email: `Create email marketing content for: ${formData.topic}
+
+Target Keywords: ${formData.keywords}
+Tone: ${formData.tone}
+Target Audience: ${formData.audience}
+Type: ${formData.length}
+
+Brand: INTinc.com - Enterprise AI implementation firm
+
+Generate professional email content:
+- Compelling subject lines (3 variations)
+- Email body with clear value proposition
+- Personalization tokens for CRM integration
+- Strong CTA
+- For sequences: map out email timing and progression (Day 1, Day 3, Day 7, etc.)
+
+Format for automation platforms. Include A/B test variations for subject lines.`,
+
+        landing: `Write landing page copy for: ${formData.topic}
+
+Target Keywords: ${formData.keywords}
+Tone: ${formData.tone}
+Target Audience: ${formData.audience}
+Page Type: ${formData.length}
+
+Brand: INTinc.com - "Our Purpose is YOUR Business"
+
+Create conversion-focused landing page:
+- Headline (benefit-driven)
+- Subheadline (expand on value)
+- Hero section copy
+- Feature/benefit sections (3-5)
+- Social proof placement
+- FAQ section (3-5 questions)
+- CTA variations (primary, secondary)
+
+Optimize for conversion and SEO.`,
+
+        technical: `Create technical documentation for: ${formData.topic}
+
+Technical Keywords: ${formData.keywords}
+Complexity: ${formData.tone}
+Audience: ${formData.audience}
+Documentation Type: ${formData.length}
+
+Company: INTinc.com - Enterprise AI Systems
+
+Generate professional technical content:
+- Overview/Introduction
+- Architecture/System Design
+- Key Components
+- Integration Points
+- Security Considerations
+- Best Practices
+- Troubleshooting Guide
+
+Use clear, precise language appropriate for technical stakeholders.`,
+
+        ads: `Create social media ad copy for: ${formData.topic}
+
+Target Keywords: ${formData.keywords}
+Tone: ${formData.tone}
+Target Audience: ${formData.audience}
+Format: ${formData.length}
+
+Brand: INTinc.com - Enterprise AI Solutions
+
+Generate high-performing ad copy:
+- Attention-grabbing hooks
+- Pain point identification
+- Clear value proposition
+- Urgency/scarcity elements
+- Strong CTA
+- Platform-specific formatting (Facebook, LinkedIn, Twitter)
+
+Create variations for A/B testing. Focus on click-through optimization.`
       };
 
       const result = await base44.integrations.Core.InvokeLLM({
@@ -143,7 +228,7 @@ Focus on practical insights and business value.`
           <div className="space-y-6">
             <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
               <h3 className="text-xl font-bold mb-4">Content Type</h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-3 lg:grid-cols-4 gap-3">
                 {contentTypes.map(type => {
                   const Icon = type.icon;
                   return (
