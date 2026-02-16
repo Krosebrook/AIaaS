@@ -79,6 +79,11 @@ export function useBehaviorAnalytics() {
       sessionDuration: Date.now() - userBehavior.sessionStart
     };
 
+    // Load explicit preferences
+    const savedPrefs = localStorage.getItem('userPreferences');
+    const explicitPrefs = savedPrefs ? JSON.parse(savedPrefs) : null;
+    const hasExplicitPrefs = explicitPrefs && (explicitPrefs.interests.length > 0 || explicitPrefs.contentTypes.length > 0);
+
     try {
       const analysis = await base44.integrations.Core.InvokeLLM({
         prompt: `Analyze user behavior and recommend personalized outreach.
@@ -88,18 +93,24 @@ Behavior Data:
 - Session Duration: ${Math.round(data.sessionDuration / 1000)}s
 - Page Views: ${data.pageViews.map(pv => pv.page).join(', ')}
 - Time on Pages: ${JSON.stringify(data.timeOnPages)}
-- Interests: ${data.interests.join(', ')}
+- Tracked Interests: ${data.interests.join(', ')}
 - Interactions: ${data.interactions.length} actions
+${hasExplicitPrefs ? `\nExplicit User Preferences:
+- Selected interests: ${explicitPrefs.interests.join(', ')}
+- Preferred content types: ${explicitPrefs.contentTypes.join(', ')}
+- Personalization enabled: ${explicitPrefs.communicationPreferences.personalization}
+- Outreach triggers enabled: ${explicitPrefs.communicationPreferences.outreachTriggers}` : ''}
 
 Determine:
 1. User Intent: browsing, researching, ready-to-buy, hot-lead
-2. Primary Interest Area: security, ROI, training, technical, workshops
+2. Primary Interest Area: ${hasExplicitPrefs ? `(prioritize: ${explicitPrefs.interests.join(', ')})` : 'security, ROI, training, technical, workshops'}
 3. Engagement Level: low (1-3), medium (4-6), high (7-10)
-4. Recommended Outreach: email, in-app-message, none
+4. Recommended Outreach: ${hasExplicitPrefs && !explicitPrefs.communicationPreferences.outreachTriggers ? 'none' : 'email, in-app-message, none'}
 5. Optimal Timing: immediate, 1-day, 3-days, 1-week
 6. Message Focus: what specific value prop to emphasize
 7. Suggested CTA: consultation, workshop, case-study, demo
 
+${hasExplicitPrefs ? 'Prioritize explicit preferences when making recommendations.' : ''}
 Provide actionable recommendations.`,
         response_json_schema: {
           type: "object",
@@ -172,6 +183,13 @@ export function BehaviorOutreachTrigger() {
 
   useEffect(() => {
     const checkOutreach = async () => {
+      // Check if user has enabled outreach triggers
+      const savedPrefs = localStorage.getItem('userPreferences');
+      const explicitPrefs = savedPrefs ? JSON.parse(savedPrefs) : null;
+      const outreachEnabled = !explicitPrefs || explicitPrefs.communicationPreferences.outreachTriggers !== false;
+
+      if (!outreachEnabled) return;
+
       // Trigger analysis after significant engagement
       if (userBehavior.pageViews.length >= 3 || userBehavior.visitCount >= 2) {
         const analysis = await analyzeBehavior();
