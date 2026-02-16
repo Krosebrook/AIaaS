@@ -24,6 +24,15 @@ export default function ContentGenerator() {
   const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
   const [editHistory, setEditHistory] = useState([]);
   const [showEditor, setShowEditor] = useState(false);
+  const [contentVariations, setContentVariations] = useState([]);
+  const [loadingVariations, setLoadingVariations] = useState(false);
+  const [contentOutline, setContentOutline] = useState(null);
+  const [loadingOutline, setLoadingOutline] = useState(false);
+  const [seoSuggestions, setSeoSuggestions] = useState(null);
+  const [loadingSeo, setLoadingSeo] = useState(false);
+  const [plagiarismCheck, setPlagiarismCheck] = useState(null);
+  const [loadingPlagiarism, setLoadingPlagiarism] = useState(false);
+  const [activeFeature, setActiveFeature] = useState('generator');
 
   const contentTypes = [
     { value: 'blog', label: 'Blog Post', icon: FileText },
@@ -310,6 +319,182 @@ Focus on discoverability and SEO best practices.`,
     });
   };
 
+  const generateVariations = async () => {
+    if (!generatedContent) return;
+    
+    setLoadingVariations(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Create 3 variations of this content with different approaches:
+
+Original Content:
+${generatedContent.content}
+
+Generate variations with:
+1. Professional/Formal tone - More corporate, serious, data-driven
+2. Conversational/Friendly tone - More casual, relatable, engaging
+3. Persuasive/Sales tone - More action-oriented, benefits-focused, compelling
+
+For each variation, maintain the core message but adjust:
+- Vocabulary and word choice
+- Sentence structure and length
+- Emotional appeal and engagement style
+- Call-to-action strength`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            variations: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  tone: { type: "string" },
+                  content: { type: "string" },
+                  bestFor: { type: "string" }
+                }
+              }
+            }
+          }
+        }
+      });
+      
+      setContentVariations(result.variations);
+    } catch (error) {
+      console.error('Variation generation failed:', error);
+    } finally {
+      setLoadingVariations(false);
+    }
+  };
+
+  const generateOutline = async () => {
+    setLoadingOutline(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Create a comprehensive content outline and summary for:
+
+Topic: ${formData.topic}
+Content Type: ${formData.contentType}
+Target Audience: ${formData.audience}
+
+Provide:
+1. Executive Summary (2-3 sentences)
+2. Detailed Outline with main sections and subsections
+3. Key points to cover in each section
+4. Recommended content structure
+5. Estimated reading time
+6. Content goals and objectives`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            summary: { type: "string" },
+            outline: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  section: { type: "string" },
+                  subsections: { type: "array", items: { type: "string" } },
+                  keyPoints: { type: "array", items: { type: "string" } }
+                }
+              }
+            },
+            readingTime: { type: "string" },
+            goals: { type: "array", items: { type: "string" } }
+          }
+        }
+      });
+      
+      setContentOutline(result);
+    } catch (error) {
+      console.error('Outline generation failed:', error);
+    } finally {
+      setLoadingOutline(false);
+    }
+  };
+
+  const generateSeoSuggestions = async () => {
+    setLoadingSeo(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Provide comprehensive SEO analysis and keyword suggestions for:
+
+Topic: ${formData.topic}
+Industry: Enterprise AI Implementation
+Target Audience: ${formData.audience}
+Content Type: ${formData.contentType}
+
+Using current 2026 SEO best practices and industry trends, provide:
+1. Primary keywords (high volume, high intent)
+2. Secondary keywords (supporting topics)
+3. Long-tail keywords (specific queries)
+4. Trending topics in this space (current market trends)
+5. Content gaps and opportunities
+6. Search intent analysis
+7. Recommended content structure for SEO
+8. Internal linking opportunities`,
+        add_context_from_internet: true,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            primaryKeywords: { type: "array", items: { type: "string" } },
+            secondaryKeywords: { type: "array", items: { type: "string" } },
+            longTailKeywords: { type: "array", items: { type: "string" } },
+            trendingTopics: { type: "array", items: { type: "string" } },
+            contentGaps: { type: "array", items: { type: "string" } },
+            searchIntent: { type: "string" },
+            seoRecommendations: { type: "array", items: { type: "string" } }
+          }
+        }
+      });
+      
+      setSeoSuggestions(result);
+    } catch (error) {
+      console.error('SEO suggestions failed:', error);
+    } finally {
+      setLoadingSeo(false);
+    }
+  };
+
+  const checkPlagiarism = async () => {
+    if (!generatedContent) return;
+    
+    setLoadingPlagiarism(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze this content for originality and potential plagiarism concerns:
+
+Content:
+${generatedContent.content.substring(0, 3000)}
+
+Provide:
+1. Originality assessment (0-100 score)
+2. Unique phrases and concepts identified
+3. Common phrases that might need citations
+4. Recommendations to improve uniqueness
+5. Areas that may benefit from paraphrasing
+6. Overall content authenticity rating`,
+        add_context_from_internet: true,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            originalityScore: { type: "number" },
+            assessment: { type: "string" },
+            uniquePhrases: { type: "array", items: { type: "string" } },
+            commonPhrases: { type: "array", items: { type: "string" } },
+            recommendations: { type: "array", items: { type: "string" } },
+            overallRating: { type: "string" }
+          }
+        }
+      });
+      
+      setPlagiarismCheck(result);
+    } catch (error) {
+      console.error('Plagiarism check failed:', error);
+    } finally {
+      setLoadingPlagiarism(false);
+    }
+  };
+
   const [activeTab, setActiveTab] = useState('generator');
 
   return (
@@ -333,10 +518,10 @@ Focus on discoverability and SEO best practices.`,
           </div>
           <p className="text-signal-white/70">Create professional content for YOUR business in seconds</p>
           
-          <div className="flex gap-2 mt-6 border-b border-slate-700">
+          <div className="flex gap-2 mt-6 border-b border-slate-700 overflow-x-auto">
             <button
               onClick={() => setActiveTab('generator')}
-              className={`px-4 py-2 font-semibold transition-all ${
+              className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
                 activeTab === 'generator'
                   ? 'border-b-2 border-int-orange text-int-orange'
                   : 'text-signal-white/60 hover:text-signal-white'
@@ -346,7 +531,7 @@ Focus on discoverability and SEO best practices.`,
             </button>
             <button
               onClick={() => setActiveTab('strategy')}
-              className={`px-4 py-2 font-semibold transition-all ${
+              className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
                 activeTab === 'strategy'
                   ? 'border-b-2 border-int-orange text-int-orange'
                   : 'text-signal-white/60 hover:text-signal-white'
@@ -354,10 +539,312 @@ Focus on discoverability and SEO best practices.`,
             >
               Content Strategy
             </button>
+            {generatedContent && (
+              <>
+                <button
+                  onClick={() => setActiveTab('variations')}
+                  className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
+                    activeTab === 'variations'
+                      ? 'border-b-2 border-int-orange text-int-orange'
+                      : 'text-signal-white/60 hover:text-signal-white'
+                  }`}
+                >
+                  Variations
+                </button>
+                <button
+                  onClick={() => setActiveTab('seo')}
+                  className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
+                    activeTab === 'seo'
+                      ? 'border-b-2 border-int-orange text-int-orange'
+                      : 'text-signal-white/60 hover:text-signal-white'
+                  }`}
+                >
+                  SEO Tools
+                </button>
+              </>
+            )}
           </div>
         </div>
 
         {activeTab === 'strategy' && <ContentStrategyPlanner />}
+
+        {activeTab === 'variations' && (
+          <div className="space-y-6">
+            <div className="p-6 bg-carbon-night rounded-xl border border-int-orange/30">
+              <h3 className="text-xl font-bold mb-4">Content Variations</h3>
+              <p className="text-signal-white/70 mb-6">Generate alternative versions of your content with different tones and styles.</p>
+
+              <button
+                onClick={generateVariations}
+                disabled={loadingVariations || !generatedContent}
+                className="px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {loadingVariations ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Generating Variations...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" />
+                    Generate Variations
+                  </>
+                )}
+              </button>
+            </div>
+
+            {contentVariations.length > 0 && (
+              <div className="grid gap-6">
+                {contentVariations.map((variation, i) => (
+                  <div key={i} className="p-6 bg-carbon-night rounded-xl border border-int-teal/30">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <h4 className="text-lg font-bold text-int-teal">{variation.tone}</h4>
+                        <p className="text-sm text-signal-white/60">{variation.bestFor}</p>
+                      </div>
+                      <button
+                        onClick={() => setGeneratedContent({ ...generatedContent, content: variation.content })}
+                        className="px-4 py-2 bg-int-teal/20 border border-int-teal/30 rounded-lg hover:bg-int-teal/30 transition-all text-sm font-medium"
+                      >
+                        Use This Version
+                      </button>
+                    </div>
+                    <div className="prose prose-invert max-w-none">
+                      <div className="text-signal-white/90 text-sm whitespace-pre-wrap">
+                        {variation.content}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {activeTab === 'seo' && (
+          <div className="space-y-6">
+            {/* Outline Generator */}
+            <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
+              <h3 className="text-xl font-bold mb-4">Content Outline</h3>
+              <p className="text-signal-white/70 mb-6">Generate a structured outline before writing your content.</p>
+
+              <button
+                onClick={generateOutline}
+                disabled={loadingOutline}
+                className="px-6 py-3 bg-int-navy/30 border border-int-navy/50 rounded-lg font-semibold hover:bg-int-navy/40 transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {loadingOutline ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Generating Outline...
+                  </>
+                ) : (
+                  <>
+                    <FileText className="w-5 h-5" />
+                    Generate Outline
+                  </>
+                )}
+              </button>
+
+              {contentOutline && (
+                <div className="mt-6 space-y-4">
+                  <div className="p-4 bg-int-navy/10 rounded-lg border border-int-navy/30">
+                    <h4 className="font-semibold text-int-navy mb-2">Summary</h4>
+                    <p className="text-sm text-signal-white/80">{contentOutline.summary}</p>
+                  </div>
+
+                  <div className="space-y-4">
+                    {contentOutline.outline.map((section, i) => (
+                      <div key={i} className="p-4 bg-void rounded-lg">
+                        <h4 className="font-semibold text-int-teal mb-2">{section.section}</h4>
+                        {section.subsections.length > 0 && (
+                          <ul className="space-y-1 mb-3">
+                            {section.subsections.map((sub, j) => (
+                              <li key={j} className="text-sm text-signal-white/70 ml-4">• {sub}</li>
+                            ))}
+                          </ul>
+                        )}
+                        {section.keyPoints.length > 0 && (
+                          <div className="mt-2 text-xs text-signal-white/60">
+                            <strong>Key points:</strong> {section.keyPoints.join(', ')}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* SEO Keyword Suggestions */}
+            <div className="p-6 bg-carbon-night rounded-xl border border-int-orange/30">
+              <h3 className="text-xl font-bold mb-4">SEO Keyword Research</h3>
+              <p className="text-signal-white/70 mb-6">Get AI-powered keyword suggestions based on current industry trends.</p>
+
+              <button
+                onClick={generateSeoSuggestions}
+                disabled={loadingSeo}
+                className="px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 flex items-center gap-2"
+              >
+                {loadingSeo ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Researching Keywords...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="w-5 h-5" />
+                    Research Keywords
+                  </>
+                )}
+              </button>
+
+              {seoSuggestions && (
+                <div className="mt-6 space-y-4">
+                  <div className="p-4 bg-int-orange/10 rounded-lg border border-int-orange/30">
+                    <h4 className="font-semibold text-int-orange mb-3">Primary Keywords</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {seoSuggestions.primaryKeywords.map((kw, i) => (
+                        <span key={i} className="px-3 py-1 bg-int-orange/30 border border-int-orange rounded-full text-sm font-medium">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-int-navy/10 rounded-lg border border-int-navy/30">
+                    <h4 className="font-semibold text-int-navy mb-3">Secondary Keywords</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {seoSuggestions.secondaryKeywords.map((kw, i) => (
+                        <span key={i} className="px-3 py-1 bg-int-navy/20 border border-int-navy/30 rounded-full text-xs">
+                          {kw}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-int-teal/10 rounded-lg border border-int-teal/30">
+                    <h4 className="font-semibold text-int-teal mb-3">Long-tail Keywords</h4>
+                    <div className="space-y-1">
+                      {seoSuggestions.longTailKeywords.map((kw, i) => (
+                        <div key={i} className="text-sm text-signal-white/80">• {kw}</div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-void rounded-lg border border-slate-700">
+                    <h4 className="font-semibold mb-3">Trending Topics (2026)</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {seoSuggestions.trendingTopics.map((topic, i) => (
+                        <span key={i} className="px-3 py-1 bg-green-500/20 border border-green-500/30 rounded-full text-xs text-green-400">
+                          🔥 {topic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-void rounded-lg border border-slate-700">
+                    <h4 className="font-semibold mb-3">SEO Recommendations</h4>
+                    <ul className="space-y-2">
+                      {seoSuggestions.seoRecommendations.map((rec, i) => (
+                        <li key={i} className="text-sm text-signal-white/80 flex items-start gap-2">
+                          <span className="text-int-orange">•</span>
+                          {rec}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Plagiarism Checker */}
+            {generatedContent && (
+              <div className="p-6 bg-carbon-night rounded-xl border border-int-teal/30">
+                <h3 className="text-xl font-bold mb-4">Originality Check</h3>
+                <p className="text-signal-white/70 mb-6">Verify content originality and get suggestions to improve uniqueness.</p>
+
+                <button
+                  onClick={checkPlagiarism}
+                  disabled={loadingPlagiarism}
+                  className="px-6 py-3 bg-int-teal/30 border border-int-teal/50 rounded-lg font-semibold hover:bg-int-teal/40 transition-all disabled:opacity-50 flex items-center gap-2"
+                >
+                  {loadingPlagiarism ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Checking Originality...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-5 h-5" />
+                      Check Originality
+                    </>
+                  )}
+                </button>
+
+                {plagiarismCheck && (
+                  <div className="mt-6 space-y-4">
+                    <div className="p-6 bg-void rounded-lg border-2 border-int-teal/30">
+                      <div className="flex items-center justify-between mb-4">
+                        <h4 className="text-lg font-bold">Originality Score</h4>
+                        <div className={`text-4xl font-bold ${
+                          plagiarismCheck.originalityScore >= 80 ? 'text-green-500' :
+                          plagiarismCheck.originalityScore >= 60 ? 'text-yellow-500' : 'text-red-500'
+                        }`}>
+                          {plagiarismCheck.originalityScore}%
+                        </div>
+                      </div>
+                      <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+                        <div 
+                          className={`h-full ${
+                            plagiarismCheck.originalityScore >= 80 ? 'bg-green-500' :
+                            plagiarismCheck.originalityScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                          }`}
+                          style={{ width: `${plagiarismCheck.originalityScore}%` }}
+                        />
+                      </div>
+                      <p className="mt-4 text-sm text-signal-white/80">{plagiarismCheck.assessment}</p>
+                    </div>
+
+                    <div className="p-4 bg-void rounded-lg">
+                      <h4 className="font-semibold mb-3 text-green-400">Unique Phrases</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {plagiarismCheck.uniquePhrases.slice(0, 5).map((phrase, i) => (
+                          <span key={i} className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs">
+                            {phrase}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {plagiarismCheck.commonPhrases.length > 0 && (
+                      <div className="p-4 bg-void rounded-lg">
+                        <h4 className="font-semibold mb-3 text-yellow-400">Common Phrases</h4>
+                        <div className="space-y-1">
+                          {plagiarismCheck.commonPhrases.map((phrase, i) => (
+                            <div key={i} className="text-sm text-signal-white/70">⚠️ {phrase}</div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="p-4 bg-void rounded-lg">
+                      <h4 className="font-semibold mb-3">Recommendations</h4>
+                      <ul className="space-y-2">
+                        {plagiarismCheck.recommendations.map((rec, i) => (
+                          <li key={i} className="text-sm text-signal-white/80 flex items-start gap-2">
+                            <span className="text-int-teal">•</span>
+                            {rec}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
         {activeTab === 'generator' && (
         <div className="grid lg:grid-cols-2 gap-8">
