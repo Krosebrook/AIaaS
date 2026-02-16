@@ -4,6 +4,7 @@ import { Sparkles, FileText, Share2, Copy, Download, Loader2 } from 'lucide-reac
 import ConfirmationDialog from '../components/shell/ConfirmationDialog';
 import ContentEditor from '../components/ContentEditor';
 import ContentStrategyPlanner from '../components/ContentStrategyPlanner';
+import Tooltip from '../components/onboarding/Tooltip';
 
 export default function ContentGenerator() {
   const [formData, setFormData] = useState({
@@ -315,9 +316,21 @@ Focus on discoverability and SEO best practices.`,
     <div className="min-h-screen bg-void text-signal-white p-6">
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
-            AI Content Generator
-          </h1>
+          <div className="flex items-center gap-3 mb-4">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
+              AI Content Generator
+            </h1>
+            <Tooltip 
+              content="Generate blog posts, marketing copy, social media content, and more using AI. The tool analyzes your inputs and creates professional, SEO-optimized content tailored to your audience."
+              position="right"
+              persistent={true}
+              id="content-generator-help"
+            >
+              <div className="w-8 h-8 bg-int-teal/20 border border-int-teal/30 rounded-full flex items-center justify-center cursor-help">
+                <Sparkles className="w-4 h-4 text-int-teal" />
+              </div>
+            </Tooltip>
+          </div>
           <p className="text-signal-white/70">Create professional content for YOUR business in seconds</p>
           
           <div className="flex gap-2 mt-6 border-b border-slate-700">

@@ -9,6 +9,8 @@ import { CRMFollowUpQueue, usePersonalizedContent } from '../components/CRMInteg
 import { AdaptiveHero, PersonalizedCTA, DynamicContentAdapter } from '../components/DynamicContent';
 import GuidedTour from '../components/GuidedTour';
 import { useScrollRestoration } from '../components/utils/useScrollRestoration';
+import OnboardingChecklist from '../components/onboarding/OnboardingChecklist';
+import InteractiveTour from '../components/onboarding/InteractiveTour';
 import { 
   ChevronDown, 
   Sparkles, 
