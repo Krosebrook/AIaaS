@@ -2,9 +2,11 @@ import React, { useState, useMemo } from 'react';
 import { Search, Filter, Zap, Brain, BarChart3, Lock, ChevronRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../../utils';
+import { usePersonalization } from '../PersonalizationEngine';
 
 export default function SolutionExplorer() {
   const navigate = useNavigate();
+  const { trackSolutionExplored } = usePersonalization();
   const [selectedIndustry, setSelectedIndustry] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
   const [selectedTechStack, setSelectedTechStack] = useState('all');
@@ -334,7 +336,10 @@ export default function SolutionExplorer() {
               <p className="text-slate-400 text-sm mb-4 flex-1">{solution.description}</p>
               <div className="flex gap-3">
                 <button
-                  onClick={() => setSelectedSolution(solution)}
+                  onClick={() => {
+                    trackSolutionExplored(solution.id, solution.name, solution.type);
+                    setSelectedSolution(solution);
+                  }}
                   className="flex-1 flex items-center justify-center gap-2 text-int-orange font-semibold text-sm hover:text-int-orange/80 transition-colors"
                 >
                   View Details
