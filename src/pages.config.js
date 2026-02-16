@@ -63,6 +63,7 @@ import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
+import Projects from './pages/Projects';
 import __Layout from './Layout.jsx';
 
 
@@ -83,6 +84,7 @@ export const PAGES = {
     "Services": Services,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
+    "Projects": Projects,
 }
 
 export const pagesConfig = {
