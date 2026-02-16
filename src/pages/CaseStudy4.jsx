@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { Users, ArrowLeft, Clock, TrendingUp, FileText } from 'lucide-react';
+import Breadcrumb from '../components/Breadcrumb';
+import { useScrollRestoration } from '../components/utils/useScrollRestoration';
 
 export default function CaseStudy4() {
   const study = {
@@ -33,11 +35,16 @@ export default function CaseStudy4() {
   };
 
   const Icon = study.icon;
+  useScrollRestoration('case-study-4');
 
   return (
     <div className="min-h-screen bg-void text-signal-white">
       <section className="relative py-12 px-6 bg-carbon-night border-b border-flash-purple/30">
         <div className="max-w-6xl mx-auto">
+          <Breadcrumb items={[
+            { label: 'Case Studies', href: createPageUrl('CaseStudies') },
+            { label: study.title }
+          ]} />
           <Link to={createPageUrl('CaseStudies')} className="inline-flex items-center gap-2 text-flash-purple hover:text-fusion-pink transition-colors mb-6">
             <ArrowLeft className="w-5 h-5" />
             Back to Case Studies

@@ -8,6 +8,7 @@ import { BehaviorOutreachTrigger, useBehaviorAnalytics } from '../components/Beh
 import { CRMFollowUpQueue, usePersonalizedContent } from '../components/CRMIntegration';
 import { AdaptiveHero, PersonalizedCTA, DynamicContentAdapter } from '../components/DynamicContent';
 import GuidedTour from '../components/GuidedTour';
+import { useScrollRestoration } from '../components/utils/useScrollRestoration';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -28,6 +29,7 @@ export default function Home() {
   const [recommendations, setRecommendations] = useState(null);
   const [pageStartTime] = useState(Date.now());
   const adaptiveHero = AdaptiveHero();
+  useScrollRestoration('home');
 
   useEffect(() => {
     trackPageVisit('Home');

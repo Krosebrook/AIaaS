@@ -55,14 +55,14 @@ import CaseStudy3 from './pages/CaseStudy3';
 import CaseStudy4 from './pages/CaseStudy4';
 import CaseStudy5 from './pages/CaseStudy5';
 import CaseStudy6 from './pages/CaseStudy6';
+import ClientHealth from './pages/ClientHealth';
 import Contact from './pages/Contact';
 import ContentGenerator from './pages/ContentGenerator';
 import Home from './pages/Home';
 import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
-import Workshops from './pages/Workshops';
 import UserSettings from './pages/UserSettings';
-import ClientHealth from './pages/ClientHealth';
+import Workshops from './pages/Workshops';
 import __Layout from './Layout.jsx';
 
 
@@ -75,14 +75,14 @@ export const PAGES = {
     "CaseStudy4": CaseStudy4,
     "CaseStudy5": CaseStudy5,
     "CaseStudy6": CaseStudy6,
+    "ClientHealth": ClientHealth,
     "Contact": Contact,
     "ContentGenerator": ContentGenerator,
     "Home": Home,
     "SEODashboard": SEODashboard,
     "Services": Services,
-    "Workshops": Workshops,
     "UserSettings": UserSettings,
-    "ClientHealth": ClientHealth,
+    "Workshops": Workshops,
 }
 
 export const pagesConfig = {

@@ -29,6 +29,11 @@ export default function Layout({ children, currentPageName }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [currentPageName]);
+
   const navLinks = [
     { name: 'HOME', page: 'Home' },
     { name: 'SERVICES', page: 'Services' },
@@ -179,9 +184,19 @@ export default function Layout({ children, currentPageName }) {
         
         /* Focus Styles for Accessibility */
         *:focus-visible {
-          outline: 3px solid var(--int-orange);
-          outline-offset: 3px;
-          border-radius: 4px;
+          outline: 2px solid var(--int-orange);
+          outline-offset: 2px;
+        }
+
+        button:focus-visible,
+        a:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible,
+        [role="button"]:focus-visible {
+          outline: 2px solid var(--int-orange);
+          outline-offset: 2px;
+          box-shadow: 0 0 0 4px rgba(242, 101, 34, 0.2);
         }
 
         /* Screen reader only utility */
@@ -255,8 +270,8 @@ export default function Layout({ children, currentPageName }) {
                 <Link
                   key={link.page}
                   to={createPageUrl(link.page)}
-                  className={`text-sm font-medium transition-colors hover:text-fusion-pink ${
-                    currentPageName === link.page ? 'text-flash-purple' : 'text-signal-white/80'
+                  className={`text-sm font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-void rounded px-2 py-1 ${
+                    currentPageName === link.page ? 'text-int-orange font-bold' : 'text-signal-white/80'
                   }`}
                 >
                   {link.name}
@@ -284,8 +299,10 @@ export default function Layout({ children, currentPageName }) {
                     key={link.page}
                     to={createPageUrl(link.page)}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`text-sm font-medium transition-colors hover:text-fusion-pink ${
-                      currentPageName === link.page ? 'text-flash-purple' : 'text-signal-white/80'
+                    className={`text-base font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-carbon-night rounded px-3 py-2 ${
+                      currentPageName === link.page 
+                        ? 'text-int-orange font-bold bg-int-orange/10 border-l-4 border-int-orange' 
+                        : 'text-signal-white/80'
                     }`}
                   >
                     {link.name}

@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
 import { usePersonalization } from '../components/PersonalizationEngine';
+import { useScrollRestoration } from '../components/utils/useScrollRestoration';
 import { Database, TrendingUp, FileText, Users, DollarSign, Zap } from 'lucide-react';
 
 export default function CaseStudies() {
   const { trackPageVisit, trackInterest } = usePersonalization();
+  useScrollRestoration('case-studies');
 
   useEffect(() => {
     trackPageVisit('CaseStudies');
