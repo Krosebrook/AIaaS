@@ -290,6 +290,8 @@ Focus on discoverability and SEO best practices.`,
     await generateContent();
   };
 
+  const [activeTab, setActiveTab] = useState('generator');
+
   return (
     <div className="min-h-screen bg-void text-signal-white p-6">
       <div className="max-w-7xl mx-auto">
@@ -298,6 +300,29 @@ Focus on discoverability and SEO best practices.`,
             AI Content Generator
           </h1>
           <p className="text-signal-white/70">Create professional content for YOUR business in seconds</p>
+          
+          <div className="flex gap-2 mt-6 border-b border-slate-700">
+            <button
+              onClick={() => setActiveTab('generator')}
+              className={`px-4 py-2 font-semibold transition-all ${
+                activeTab === 'generator'
+                  ? 'border-b-2 border-int-orange text-int-orange'
+                  : 'text-signal-white/60 hover:text-signal-white'
+              }`}
+            >
+              Content Generator
+            </button>
+            <button
+              onClick={() => setActiveTab('strategy')}
+              className={`px-4 py-2 font-semibold transition-all ${
+                activeTab === 'strategy'
+                  ? 'border-b-2 border-int-orange text-int-orange'
+                  : 'text-signal-white/60 hover:text-signal-white'
+              }`}
+            >
+              Content Strategy
+            </button>
+          </div>
         </div>
 
         {activeTab === 'strategy' && <ContentStrategyPlanner />}
@@ -690,6 +715,7 @@ Focus on discoverability and SEO best practices.`,
             )}
           </div>
         </div>
+        )}
       </div>
 
       <style jsx>{`
