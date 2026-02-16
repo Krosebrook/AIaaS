@@ -7,6 +7,7 @@ import DynamicFAQ from '../components/DynamicFAQ';
 import { BehaviorOutreachTrigger, useBehaviorAnalytics } from '../components/BehaviorAnalytics';
 import { CRMFollowUpQueue, usePersonalizedContent } from '../components/CRMIntegration';
 import { AdaptiveHero, PersonalizedCTA, DynamicContentAdapter } from '../components/DynamicContent';
+import GuidedTour from '../components/GuidedTour';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -66,6 +67,7 @@ export default function Home() {
         pageName="Home" 
         content="Enterprise AI implementation with MSP discipline. Discover opportunities, harden infrastructure, ship production systems. Workshops, consulting, and custom AI solutions."
       />
+      <GuidedTour />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 hero-gradient opacity-30"></div>
