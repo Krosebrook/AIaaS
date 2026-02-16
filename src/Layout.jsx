@@ -249,36 +249,45 @@ export default function Layout({ children, currentPageName }) {
         role="banner"
       >
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
-            <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc home">
-              <div className="flex items-center gap-1" aria-hidden="true">
-                <span className="text-2xl font-bold text-int-navy">i</span>
-                <span className="text-2xl font-bold text-int-navy">N</span>
-                <span className="text-2xl font-bold text-int-navy">T</span>
-                <span className="text-sm font-light text-int-navy align-top">™</span>
-              </div>
-              <div className="border-l-2 border-int-navy/30 pl-3">
-                <div className="text-xs font-semibold text-int-navy leading-tight">Our Purpose is</div>
-                <div className="text-xs font-bold text-int-orange leading-tight">YOUR Business</div>
-              </div>
-            </Link>
+                  <div className="flex items-center justify-between">
+                    {/* Logo */}
+                    <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc home">
+                      <div className="flex items-center gap-1" aria-hidden="true">
+                        <span className="text-2xl font-bold text-int-navy">i</span>
+                        <span className="text-2xl font-bold text-int-navy">N</span>
+                        <span className="text-2xl font-bold text-int-navy">T</span>
+                        <span className="text-sm font-light text-int-navy align-top">™</span>
+                      </div>
+                      <div className="border-l-2 border-int-navy/30 pl-3">
+                        <div className="text-xs font-semibold text-int-navy leading-tight">Our Purpose is</div>
+                        <div className="text-xs font-bold text-int-orange leading-tight">YOUR Business</div>
+                      </div>
+                    </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.page}
-                  to={createPageUrl(link.page)}
-                  className={`text-sm font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-void rounded px-2 py-1 ${
-                    currentPageName === link.page ? 'text-int-orange font-bold' : 'text-signal-white/80'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              ))}
-
-            </div>
+                    {/* Desktop Navigation */}
+                    <div className="hidden lg:flex items-center gap-8">
+                      {navLinks.map((link) => (
+                        <Link
+                          key={link.page}
+                          to={createPageUrl(link.page)}
+                          className={`text-sm font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-void rounded px-2 py-1 ${
+                            currentPageName === link.page ? 'text-int-orange font-bold' : 'text-signal-white/80'
+                          }`}
+                        >
+                          {link.name}
+                        </Link>
+                      ))}
+                      <Link
+                        to={createPageUrl('PersonalizedDashboard')}
+                        className={`text-sm font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-void rounded px-3 py-1 ${
+                          currentPageName === 'PersonalizedDashboard' 
+                            ? 'text-int-orange font-bold bg-int-orange/10' 
+                            : 'text-signal-white/80'
+                        }`}
+                      >
+                        Your Dashboard
+                      </Link>
+                    </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -308,7 +317,17 @@ export default function Layout({ children, currentPageName }) {
                     {link.name}
                   </Link>
                 ))}
-
+                <Link
+                  to={createPageUrl('PersonalizedDashboard')}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`text-base font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-carbon-night rounded px-3 py-2 ${
+                    currentPageName === 'PersonalizedDashboard' 
+                      ? 'text-int-orange font-bold bg-int-orange/10 border-l-4 border-int-orange' 
+                      : 'text-signal-white/80'
+                  }`}
+                >
+                  Your Dashboard
+                </Link>
               </div>
             </div>
           )}
