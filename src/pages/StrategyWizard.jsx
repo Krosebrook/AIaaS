@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Loader2, CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Loader2, CheckCircle, ChevronRight, ChevronLeft, Download, FolderPlus } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 export default function StrategyWizard() {
   const [step, setStep] = useState(0);
   const [responses, setResponses] = useState({});
   const [analyzing, setAnalyzing] = useState(false);
   const [strategy, setStrategy] = useState(null);
+  const [suggestedSolutions, setSuggestedSolutions] = useState(null);
+  const [creatingProject, setCreatingProject] = useState(false);
 
   const steps = [
     {
@@ -172,11 +175,208 @@ Generate a JSON response with:
       });
 
       setStrategy(strategyResult);
+
+      // Suggest matching INTinc.com solutions
+      const solutionMatch = await base44.integrations.Core.InvokeLLM({
+        prompt: `Based on this AI strategy, identify which INTinc.com AI solutions would be most relevant:
+
+Recommended Solution: ${strategyResult.recommendedSolution}
+Business Challenge: ${responses.business_challenge}
+Success Metric: ${responses.success_metric}
+
+Available INTinc.com solutions to match:
+- Predictive Risk Scoring (Financial Services)
+- Patient Outcome Prediction (Healthcare)
+- Inventory Optimization (Retail)
+- Fraud Detection Engine (Financial Services)
+- Production Quality Control (Manufacturing)
+- Customer Churn Prediction (Technology)
+- Energy Demand Forecasting (Energy)
+- Supply Chain Optimization (Manufacturing)
+
+Return JSON with:
+1. matchedSolutions: array of 2-3 most relevant solution names
+2. matchRationale: brief explanation why these match the strategy`,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            matchedSolutions: { type: 'array', items: { type: 'string' } },
+            matchRationale: { type: 'string' }
+          }
+        }
+      });
+
+      setSuggestedSolutions(solutionMatch);
       setStep(steps.length);
     } catch (error) {
       console.error('Strategy generation failed:', error);
     } finally {
       setAnalyzing(false);
+    }
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    let yPosition = 20;
+    const lineHeight = 8;
+    const margin = 20;
+    const maxWidth = pageWidth - 2 * margin;
+
+    // Helper to add text with wrapping
+    const addText = (text, fontSize, isBold = false) => {
+      doc.setFontSize(fontSize);
+      doc.setFont(undefined, isBold ? 'bold' : 'normal');
+      const lines = doc.splitTextToSize(text, maxWidth);
+      doc.text(lines, margin, yPosition);
+      yPosition += lines.length * lineHeight;
+      return yPosition;
+    };
+
+    // Title
+    doc.setFont(undefined, 'bold');
+    doc.setFontSize(20);
+    doc.text('AI Implementation Strategy Brief', margin, yPosition);
+    yPosition += 15;
+
+    // Executive Summary
+    addText('EXECUTIVE SUMMARY', 12, true);
+    yPosition += 2;
+    addText(`Recommended Solution: ${strategy.recommendedSolution}`, 10);
+    yPosition += 3;
+
+    // Business Impact
+    addText('EXPECTED BUSINESS IMPACT', 12, true);
+    yPosition += 2;
+    strategy.businessImpact.forEach(impact => {
+      addText(`• ${impact}`, 10);
+      yPosition += 2;
+    });
+    yPosition += 3;
+
+    // Implementation Roadmap
+    if (yPosition > pageHeight - 60) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    addText('IMPLEMENTATION ROADMAP', 12, true);
+    yPosition += 2;
+    strategy.implementationRoadmap.forEach((phase, idx) => {
+      addText(`Phase ${idx + 1}: ${phase.phase} (${phase.duration})`, 10, true);
+      yPosition += 2;
+      phase.deliverables.forEach(d => {
+        addText(`  • ${d}`, 9);
+        yPosition += 2;
+      });
+      yPosition += 2;
+    });
+
+    // Investment & Timeline
+    if (yPosition > pageHeight - 60) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    addText('INVESTMENT & RESOURCES', 12, true);
+    yPosition += 2;
+    addText(`Estimated Investment: ${strategy.estimatedInvestment}`, 10);
+    yPosition += 5;
+
+    addText('REQUIRED CAPABILITIES', 12, true);
+    yPosition += 2;
+    strategy.requiredCapabilities.forEach(cap => {
+      addText(`• ${cap}`, 10);
+      yPosition += 2;
+    });
+
+    // Success Factors & Risks
+    if (yPosition > pageHeight - 60) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    yPosition += 3;
+    addText('SUCCESS FACTORS', 12, true);
+    yPosition += 2;
+    strategy.successFactors.forEach(factor => {
+      addText(`• ${factor}`, 10);
+      yPosition += 2;
+    });
+
+    yPosition += 3;
+    addText('RISK FACTORS', 12, true);
+    yPosition += 2;
+    strategy.riskFactors.forEach(risk => {
+      addText(`• ${risk}`, 10);
+      yPosition += 2;
+    });
+
+    // Next Steps
+    if (yPosition > pageHeight - 50) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    yPosition += 3;
+    addText('IMMEDIATE NEXT STEPS', 12, true);
+    yPosition += 2;
+    strategy.nextSteps.forEach((s, idx) => {
+      addText(`${idx + 1}. ${s}`, 10);
+      yPosition += 3;
+    });
+
+    // Footer
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(8);
+    doc.text(`Generated by INTinc.com AI Strategy Wizard - ${new Date().toLocaleDateString()}`, margin, pageHeight - 10);
+
+    doc.save('AI_Implementation_Strategy_Brief.pdf');
+  };
+
+  const createProject = async () => {
+    setCreatingProject(true);
+    try {
+      const projectDescription = `
+AI Implementation Project - ${strategy.recommendedSolution}
+
+BUSINESS CHALLENGE: ${responses.business_challenge}
+SUCCESS METRIC: ${responses.success_metric}
+TIMELINE: ${responses.timeline}
+BUDGET: ${responses.budget}
+
+STRATEGY SUMMARY:
+${strategy.businessImpact.join('\n')}
+
+IMPLEMENTATION PHASES:
+${strategy.implementationRoadmap.map(p => `- ${p.phase} (${p.duration})`).join('\n')}
+
+RECOMMENDED SOLUTIONS: ${suggestedSolutions?.matchedSolutions?.join(', ') || 'To be determined'}
+`;
+
+      const newProject = await base44.entities.Project.create({
+        name: strategy.recommendedSolution.substring(0, 50),
+        description: projectDescription.substring(0, 500),
+        status: 'planning',
+        priority: responses.budget.includes('$2M+') || responses.budget.includes('Strategic') ? 'high' : 'medium',
+        dueDate: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        startDate: new Date().toISOString().split('T')[0],
+        progress: 0,
+        objectives: [
+          strategy.recommendedSolution,
+          ...strategy.businessImpact.slice(0, 2),
+          ...strategy.successFactors.slice(0, 2)
+        ],
+        notes: projectDescription
+      });
+
+      base44.analytics.track({
+        eventName: 'ai_strategy_project_created',
+        properties: { projectId: newProject.id }
+      });
+
+      alert(`Project "${newProject.name}" created successfully! Go to Projects to manage it.`);
+    } catch (error) {
+      console.error('Project creation failed:', error);
+    } finally {
+      setCreatingProject(false);
     }
   };
 
@@ -290,15 +490,46 @@ Generate a JSON response with:
           </ol>
         </div>
 
+        {suggestedSolutions && (
+          <div className="p-6 bg-slate-900/50 border border-slate-700 rounded-xl">
+            <h3 className="text-xl font-semibold text-white mb-4">Matching INTinc.com Solutions</h3>
+            <p className="text-slate-400 mb-4">{suggestedSolutions.matchRationale}</p>
+            <div className="space-y-2">
+              {suggestedSolutions.matchedSolutions.map((solution, i) => (
+                <div key={i} className="p-3 bg-slate-800/50 border border-int-orange/30 rounded-lg">
+                  <div className="text-white font-semibold">✓ {solution}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="p-6 bg-gradient-to-r from-int-orange/10 to-int-navy/10 border border-int-orange/20 rounded-xl">
-          <h3 className="text-lg font-semibold text-white mb-3">Ready to Get Started?</h3>
-          <p className="text-slate-300 mb-4">Let's schedule a consultation with our AI strategy team to discuss your implementation roadmap in detail.</p>
-          <a
-            href="/contact"
-            className="inline-block px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all"
-          >
-            Schedule Consultation
-          </a>
+          <h3 className="text-lg font-semibold text-white mb-4">Next Steps</h3>
+          <p className="text-slate-300 mb-6">Choose how you'd like to proceed with your AI implementation:</p>
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={generatePDF}
+              className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all"
+            >
+              <Download className="w-4 h-4" />
+              Download Brief (PDF)
+            </button>
+            <button
+              onClick={createProject}
+              disabled={creatingProject}
+              className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition-all disabled:opacity-50"
+            >
+              <FolderPlus className="w-4 h-4" />
+              {creatingProject ? 'Creating...' : 'Create Project'}
+            </button>
+            <a
+              href="/contact"
+              className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg font-semibold transition-all"
+            >
+              Schedule Consultation
+            </a>
+          </div>
         </div>
       </div>
     );
