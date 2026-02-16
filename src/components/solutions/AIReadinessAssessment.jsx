@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { CheckCircle, AlertCircle, TrendingUp, Loader2, Download } from 'lucide-react';
+import { CheckCircle, AlertCircle, TrendingUp, Loader2, Download, Mail, Phone } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '../../utils';
+import jsPDF from 'jspdf';
 
 export default function AIReadinessAssessment() {
+  const navigate = useNavigate();
   const [step, setStep] = useState('intro');
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(false);
   const [assessment, setAssessment] = useState(null);
+  const [userEmail, setUserEmail] = useState('');
 
   const questions = [
     {
@@ -44,14 +49,32 @@ export default function AIReadinessAssessment() {
       title: 'Security & Compliance',
       description: 'How important is data security and compliance?',
       options: ['Standard requirements', 'Industry specific', 'Highly regulated', 'Critical/Top priority']
+    },
+    {
+      id: 'organizational_change',
+      title: 'Organizational Change Readiness',
+      description: 'How does your organization handle change management?',
+      options: ['Resistant to change', 'Cautious adopters', 'Adaptable culture', 'Innovation-driven']
+    },
+    {
+      id: 'integration_complexity',
+      title: 'System Integration Complexity',
+      description: 'How complex is your current IT landscape?',
+      options: ['Legacy systems only', 'Mixed legacy and modern', 'Mostly modern tech stack', 'Cloud-native architecture']
+    },
+    {
+      id: 'roi_expectations',
+      title: 'ROI & Business Metrics',
+      description: 'How mature are your business metrics and KPIs?',
+      options: ['Undefined or unclear', 'Partially defined', 'Well-defined metrics', 'Advanced analytics program']
     }
   ];
 
   const scoreMap = {
-    'No AI yet': 1, 'No': 1, 'Not aligned': 1, 'Scattered/No structure': 1,
-    'Exploring AI': 2, 'Basic understanding': 2, 'Initial interest': 2, 'Partially organized': 2, 'Limited budget': 2, 'Standard requirements': 2,
-    'Piloting AI': 3, 'Experienced': 3, 'Strong commitment': 3, 'Well-organized': 3, 'Moderate budget': 3, 'Industry specific': 3,
-    'AI in production': 4, 'Highly specialized': 4, 'Full strategic alignment': 4, 'Enterprise data warehouse': 4, 'Significant budget': 4, 'Highly regulated': 4, 'Critical/Top priority': 4
+    'No AI yet': 1, 'No': 1, 'Not aligned': 1, 'Scattered/No structure': 1, 'Resistant to change': 1, 'Legacy systems only': 1, 'Undefined or unclear': 1,
+    'Exploring AI': 2, 'Basic understanding': 2, 'Initial interest': 2, 'Partially organized': 2, 'Limited budget': 2, 'Standard requirements': 2, 'Cautious adopters': 2, 'Mixed legacy and modern': 2, 'Partially defined': 2,
+    'Piloting AI': 3, 'Experienced': 3, 'Strong commitment': 3, 'Well-organized': 3, 'Moderate budget': 3, 'Industry specific': 3, 'Adaptable culture': 3, 'Mostly modern tech stack': 3, 'Well-defined metrics': 3,
+    'AI in production': 4, 'Highly specialized': 4, 'Full strategic alignment': 4, 'Enterprise data warehouse': 4, 'Significant budget': 4, 'Highly regulated': 4, 'Critical/Top priority': 4, 'Innovation-driven': 4, 'Cloud-native architecture': 4, 'Advanced analytics program': 4
   };
 
   const handleAnswer = (questionId, answer) => {
@@ -111,6 +134,110 @@ Provide a JSON response with:
     if (score >= 50) return 'from-blue-500 to-cyan-600';
     if (score >= 25) return 'from-yellow-500 to-orange-600';
     return 'from-red-500 to-orange-600';
+  };
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    let yPosition = 20;
+    const lineHeight = 7;
+    const margin = 20;
+    const maxWidth = pageWidth - 2 * margin;
+
+    const addText = (text, fontSize, isBold = false) => {
+      doc.setFontSize(fontSize);
+      doc.setFont(undefined, isBold ? 'bold' : 'normal');
+      const lines = doc.splitTextToSize(text, maxWidth);
+      doc.text(lines, margin, yPosition);
+      yPosition += lines.length * lineHeight;
+    };
+
+    // Title
+    doc.setFont(undefined, 'bold');
+    doc.setFontSize(18);
+    doc.text('AI Readiness Assessment Report', margin, yPosition);
+    yPosition += 12;
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(10);
+    doc.text(`Generated: ${new Date().toLocaleDateString()}`, margin, yPosition);
+    yPosition += 8;
+
+    // Score
+    addText(`Overall Readiness Score: ${assessment.readinessScore}% - ${assessment.overallReadiness}`, 14, true);
+    yPosition += 5;
+    addText(assessment.readinessSummary, 10);
+    yPosition += 5;
+
+    // Strengths
+    if (yPosition > pageHeight - 80) doc.addPage(), yPosition = 20;
+    addText('ORGANIZATIONAL STRENGTHS', 12, true);
+    yPosition += 3;
+    assessment.strengths.forEach(s => {
+      addText(`✓ ${s}`, 9);
+      yPosition += 3;
+    });
+
+    // Gaps
+    yPosition += 2;
+    if (yPosition > pageHeight - 80) doc.addPage(), yPosition = 20;
+    addText('AREAS FOR IMPROVEMENT', 12, true);
+    yPosition += 3;
+    assessment.gaps.forEach(g => {
+      addText(`• ${g}`, 9);
+      yPosition += 3;
+    });
+
+    // Recommendations
+    yPosition += 2;
+    if (yPosition > pageHeight - 80) doc.addPage(), yPosition = 20;
+    addText('RECOMMENDED ACTIONS', 12, true);
+    yPosition += 3;
+    assessment.recommendations.forEach((rec, i) => {
+      addText(`${i + 1}. ${rec}`, 9);
+      yPosition += 3;
+    });
+
+    // Solutions
+    yPosition += 2;
+    if (yPosition > pageHeight - 60) doc.addPage(), yPosition = 20;
+    addText('SUGGESTED AI SOLUTIONS', 12, true);
+    yPosition += 3;
+    assessment.suggestedSolutions.forEach(sol => {
+      addText(`→ ${sol}`, 10);
+      yPosition += 4;
+    });
+
+    addText(`\nEstimated Timeline: ${assessment.implementationTimeline}`, 10);
+
+    // Footer
+    doc.setFont(undefined, 'normal');
+    doc.setFontSize(8);
+    doc.text('INTinc.com - Enterprise AI Implementation Solutions', margin, pageHeight - 10);
+
+    doc.save('AI_Readiness_Assessment_Report.pdf');
+    base44.analytics.track({ eventName: 'readiness_assessment_pdf_downloaded' });
+  };
+
+  const handleContactSales = () => {
+    const assessmentSummary = `
+I completed the INTinc.com AI Readiness Assessment and scored ${assessment.readinessScore}% (${assessment.overallReadiness}).
+
+Key Results:
+- Recommended Focus: ${assessment.suggestedSolutions[0]}
+- Implementation Timeline: ${assessment.implementationTimeline}
+- Priority Areas: ${assessment.recommendations.slice(0, 2).join(', ')}
+
+I'd like to discuss how INTinc.com can help with our AI transformation.
+    `;
+
+    navigate(createPageUrl('Contact'), {
+      state: {
+        prefilled: {
+          message: assessmentSummary
+        }
+      }
+    });
   };
 
   return (
