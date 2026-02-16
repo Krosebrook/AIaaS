@@ -5,8 +5,12 @@ export function usePersonalization() {
   const [userProfile, setUserProfile] = useState({
     interests: [],
     visitedPages: [],
+    assessmentResults: null,
+    exploredSolutions: [],
     recommendations: null,
-    explicitPreferences: null
+    explicitPreferences: null,
+    industry: null,
+    readinessLevel: null
   });
 
   useEffect(() => {
@@ -30,6 +34,32 @@ export function usePersonalization() {
     setUserProfile(prev => {
       const interests = [...new Set([...prev.interests, interest])];
       const updated = { ...prev, interests };
+      localStorage.setItem('userProfile', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const trackAssessmentResult = (assessmentData) => {
+    setUserProfile(prev => {
+      const updated = {
+        ...prev,
+        assessmentResults: assessmentData,
+        industry: assessmentData.industry,
+        readinessLevel: assessmentData.overallReadiness
+      };
+      localStorage.setItem('userProfile', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const trackSolutionExplored = (solutionId, solutionName, solutionType) => {
+    setUserProfile(prev => {
+      const exploredSolutions = [...prev.exploredSolutions];
+      const existing = exploredSolutions.find(s => s.id === solutionId);
+      if (!existing) {
+        exploredSolutions.push({ id: solutionId, name: solutionName, type: solutionType, viewedAt: new Date().toISOString() });
+      }
+      const updated = { ...prev, exploredSolutions };
       localStorage.setItem('userProfile', JSON.stringify(updated));
       return updated;
     });
@@ -114,6 +144,8 @@ Provide specific, actionable recommendations.`,
     userProfile, 
     trackPageVisit, 
     trackInterest, 
+    trackAssessmentResult,
+    trackSolutionExplored,
     getRecommendations,
     updateUserPreferences,
     getUserPreferences
