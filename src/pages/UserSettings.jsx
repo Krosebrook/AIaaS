@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePersonalization } from '../components/PersonalizationEngine';
-import { Save, User, Bell, FileText, CheckCircle } from 'lucide-react';
+import { TourRestartButton } from '../components/GuidedTour';
+import { Save, User, Bell, FileText, CheckCircle, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
@@ -203,6 +204,18 @@ export default function UserSettings() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Guided Tour Section */}
+        <div className="mb-8 p-6 bg-carbon-night rounded-xl border border-int-orange/30">
+          <div className="flex items-center gap-3 mb-4">
+            <Sparkles className="w-6 h-6 text-int-orange" />
+            <h2 className="text-2xl font-bold">Help & Tutorials</h2>
+          </div>
+          <p className="text-signal-white/60 mb-4 text-sm">
+            Need help getting started? Restart the guided tour to learn about key features and accelerate your understanding of the platform.
+          </p>
+          <TourRestartButton />
         </div>
 
         {/* Save Button */}
