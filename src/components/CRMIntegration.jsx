@@ -22,7 +22,7 @@ export function CRMFollowUpQueue() {
         setQueuedSequences(prev => [...prev, sequence]);
         
         // Trigger first touchpoint
-        if (sequence.touchpoints.length > 0) {
+        if (sequence?.touchpoints?.length > 0) {
           await executeTouchpoint(sequence.touchpoints[0], userBehavior);
         }
       }
