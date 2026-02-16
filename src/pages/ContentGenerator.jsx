@@ -716,14 +716,13 @@ Focus on discoverability and SEO best practices.`,
           </div>
         </div>
         )}
-      </div>
-      </div>
 
-      <style jsx>{`
-        .shadow-glow {
-          box-shadow: 0 0 30px rgba(242,101,34,0.6), 0 0 60px rgba(30,58,95,0.4);
-        }
-      `}</style>
+        <style jsx>{`
+          .shadow-glow {
+            box-shadow: 0 0 30px rgba(242,101,34,0.6), 0 0 60px rgba(30,58,95,0.4);
+          }
+        `}</style>
+      </div>
     </div>
   );
 }
