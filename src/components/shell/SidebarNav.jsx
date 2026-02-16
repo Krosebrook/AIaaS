@@ -12,7 +12,8 @@ import {
   Settings,
   Activity,
   Sparkles,
-  BarChart3
+  BarChart3,
+  TrendingUp
 } from 'lucide-react';
 
 export default function SidebarNav({ isOpen, onToggle, currentPage }) {
@@ -28,6 +29,7 @@ export default function SidebarNav({ isOpen, onToggle, currentPage }) {
   const tools = [
     { name: 'Content Generator', page: 'ContentGenerator', icon: Sparkles, section: 'tools' },
     { name: 'SEO Dashboard', page: 'SEODashboard', icon: BarChart3, section: 'tools' },
+    { name: 'Client Health', page: 'ClientHealth', icon: TrendingUp, section: 'tools' },
     { name: 'Settings', page: 'UserSettings', icon: Settings, section: 'tools' },
   ];
 
