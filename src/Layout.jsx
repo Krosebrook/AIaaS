@@ -7,7 +7,7 @@ import { Menu, X } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
   // Check if current page should use AppShell (admin/tool pages)
-  const useAppShell = ['ContentGenerator', 'SEODashboard', 'ClientHealth', 'UserSettings', 'Projects'].includes(currentPageName);
+  const useAppShell = ['ContentGenerator', 'SEODashboard', 'ClientHealth', 'UserSettings', 'Projects', 'Solutions', 'StrategyWizard'].includes(currentPageName);
 
   if (useAppShell) {
     return (
