@@ -13,7 +13,9 @@ export default function ContentGenerator() {
     length: 'medium'
   });
   const [generatedContent, setGeneratedContent] = useState(null);
+  const [contentMetadata, setContentMetadata] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [loadingTags, setLoadingTags] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showGenerateConfirm, setShowGenerateConfirm] = useState(false);
   const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
@@ -194,10 +196,72 @@ Create variations for A/B testing. Focus on click-through optimization.`
       });
 
       setGeneratedContent(result);
+      
+      // Automatically analyze and tag the content
+      await analyzeAndTagContent(result);
     } catch (error) {
       console.error('Content generation failed:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const analyzeAndTagContent = async (content) => {
+    setLoadingTags(true);
+    try {
+      const metadata = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze this content and provide comprehensive SEO and categorization metadata.
+
+Content Title: ${content.title}
+Content Type: ${formData.contentType}
+Content Body: ${content.content.substring(0, 2000)}...
+
+Provide detailed metadata:
+1. Primary Topic/Category (e.g., "AI Security", "Business Transformation", "Technical Implementation")
+2. Sub-Topics (3-5 related themes found in the content)
+3. SEO Keywords (10-15 keywords ranked by relevance: primary, secondary, long-tail)
+4. Content Tags (5-7 tags for categorization)
+5. Target Audience Segments (who would benefit from this content)
+6. Content Difficulty Level (beginner, intermediate, advanced, expert)
+7. Readability Score (1-10, where 10 is most readable)
+8. SEO Score (1-100, assessing SEO optimization)
+9. Suggested Meta Description (155 characters max, compelling and keyword-rich)
+10. Alternative Titles (3 variations optimized for different platforms)
+11. Related Topics (5 topics for content recommendations)
+12. Content Sentiment (positive, neutral, professional, persuasive, etc.)
+
+Focus on discoverability and SEO best practices.`,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            primaryTopic: { type: "string" },
+            subTopics: { type: "array", items: { type: "string" } },
+            seoKeywords: {
+              type: "object",
+              properties: {
+                primary: { type: "array", items: { type: "string" } },
+                secondary: { type: "array", items: { type: "string" } },
+                longTail: { type: "array", items: { type: "string" } }
+              }
+            },
+            tags: { type: "array", items: { type: "string" } },
+            targetAudience: { type: "array", items: { type: "string" } },
+            difficultyLevel: { type: "string" },
+            readabilityScore: { type: "number" },
+            seoScore: { type: "number" },
+            optimizedMetaDescription: { type: "string" },
+            alternativeTitles: { type: "array", items: { type: "string" } },
+            relatedTopics: { type: "array", items: { type: "string" } },
+            sentiment: { type: "string" }
+          }
+        }
+      });
+
+      setContentMetadata(metadata);
+    } catch (error) {
+      console.error('Content tagging failed:', error);
+    } finally {
+      setLoadingTags(false);
     }
   };
 
@@ -442,6 +506,174 @@ Create variations for A/B testing. Focus on click-through optimization.`
                         </li>
                       ))}
                     </ul>
+                  </div>
+                )}
+
+                {/* AI-Generated Metadata & Tags */}
+                {loadingTags && (
+                  <div className="p-6 bg-carbon-night rounded-xl border border-int-teal/30">
+                    <div className="flex items-center justify-center gap-3">
+                      <Loader2 className="w-5 h-5 animate-spin text-int-teal" />
+                      <span className="text-signal-white/70">Analyzing and tagging content...</span>
+                    </div>
+                  </div>
+                )}
+
+                {contentMetadata && !loadingTags && (
+                  <div className="space-y-4">
+                    {/* SEO Score & Readability */}
+                    <div className="p-6 bg-carbon-night rounded-xl border border-int-teal/30">
+                      <h4 className="text-lg font-bold mb-4 text-int-teal">Content Analysis</h4>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <div className="text-sm text-signal-white/60 mb-1">SEO Score</div>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-2 bg-void rounded-full overflow-hidden">
+                              <div 
+                                className={`h-full ${
+                                  contentMetadata.seoScore >= 80 ? 'bg-green-500' :
+                                  contentMetadata.seoScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                                }`}
+                                style={{ width: `${contentMetadata.seoScore}%` }}
+                              />
+                            </div>
+                            <span className="text-lg font-bold">{contentMetadata.seoScore}/100</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm text-signal-white/60 mb-1">Readability</div>
+                          <div className="flex items-center gap-2">
+                            <div className="flex-1 h-2 bg-void rounded-full overflow-hidden">
+                              <div 
+                                className="h-full bg-int-teal"
+                                style={{ width: `${contentMetadata.readabilityScore * 10}%` }}
+                              />
+                            </div>
+                            <span className="text-lg font-bold">{contentMetadata.readabilityScore}/10</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-4 p-3 bg-void rounded-lg">
+                        <div className="text-xs text-signal-white/60 mb-1">Difficulty Level</div>
+                        <div className="font-semibold capitalize">{contentMetadata.difficultyLevel}</div>
+                      </div>
+                    </div>
+
+                    {/* Primary Topic & Categories */}
+                    <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
+                      <h4 className="text-lg font-bold mb-4">Topic & Categorization</h4>
+                      <div className="mb-4">
+                        <div className="text-sm text-signal-white/60 mb-2">Primary Topic</div>
+                        <div className="inline-block px-4 py-2 bg-int-orange/20 border border-int-orange/30 rounded-lg text-int-orange font-semibold">
+                          {contentMetadata.primaryTopic}
+                        </div>
+                      </div>
+                      <div className="mb-4">
+                        <div className="text-sm text-signal-white/60 mb-2">Sub-Topics</div>
+                        <div className="flex flex-wrap gap-2">
+                          {contentMetadata.subTopics.map((topic, i) => (
+                            <span key={i} className="px-3 py-1 bg-int-navy/20 border border-int-navy/30 rounded-full text-sm">
+                              {topic}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-sm text-signal-white/60 mb-2">Content Tags</div>
+                        <div className="flex flex-wrap gap-2">
+                          {contentMetadata.tags.map((tag, i) => (
+                            <span key={i} className="px-3 py-1 bg-int-teal/20 border border-int-teal/30 rounded-full text-sm text-int-teal">
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* SEO Keywords */}
+                    <div className="p-6 bg-carbon-night rounded-xl border border-int-orange/30">
+                      <h4 className="text-lg font-bold mb-4 text-int-orange">SEO Keywords</h4>
+                      <div className="space-y-4">
+                        <div>
+                          <div className="text-sm font-semibold text-signal-white/80 mb-2">Primary Keywords</div>
+                          <div className="flex flex-wrap gap-2">
+                            {contentMetadata.seoKeywords.primary.map((kw, i) => (
+                              <span key={i} className="px-3 py-1 bg-int-orange/30 border border-int-orange rounded-full text-sm font-medium">
+                                {kw}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-signal-white/80 mb-2">Secondary Keywords</div>
+                          <div className="flex flex-wrap gap-2">
+                            {contentMetadata.seoKeywords.secondary.map((kw, i) => (
+                              <span key={i} className="px-3 py-1 bg-int-navy/30 border border-int-navy rounded-full text-xs">
+                                {kw}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-signal-white/80 mb-2">Long-tail Keywords</div>
+                          <div className="flex flex-wrap gap-2">
+                            {contentMetadata.seoKeywords.longTail.map((kw, i) => (
+                              <span key={i} className="px-3 py-1 bg-void border border-int-navy/30 rounded-full text-xs text-signal-white/70">
+                                {kw}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Optimized Meta Description */}
+                    <div className="p-6 bg-carbon-night rounded-xl border border-int-teal/30">
+                      <h4 className="text-lg font-bold mb-3 text-int-teal">Optimized Meta Description</h4>
+                      <div className="p-4 bg-void rounded-lg border border-int-teal/30">
+                        <p className="text-sm text-signal-white/90">{contentMetadata.optimizedMetaDescription}</p>
+                        <div className="text-xs text-signal-white/50 mt-2">
+                          {contentMetadata.optimizedMetaDescription.length} characters
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Alternative Titles */}
+                    <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
+                      <h4 className="text-lg font-bold mb-3">Alternative Titles</h4>
+                      <div className="space-y-2">
+                        {contentMetadata.alternativeTitles.map((title, i) => (
+                          <div key={i} className="p-3 bg-void rounded-lg border border-int-navy/30">
+                            <div className="text-sm font-medium">{title}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Target Audience & Related Topics */}
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
+                        <h4 className="text-sm font-bold mb-3">Target Audience</h4>
+                        <div className="space-y-2">
+                          {contentMetadata.targetAudience.map((aud, i) => (
+                            <div key={i} className="flex items-center gap-2 text-sm">
+                              <span className="text-int-orange">•</span>
+                              {aud}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="p-6 bg-carbon-night rounded-xl border border-int-navy/30">
+                        <h4 className="text-sm font-bold mb-3">Related Topics</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {contentMetadata.relatedTopics.map((topic, i) => (
+                            <span key={i} className="px-2 py-1 bg-int-teal/20 rounded text-xs">
+                              {topic}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </>
