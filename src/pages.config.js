@@ -66,6 +66,7 @@ import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
 import StrategyWizard from './pages/StrategyWizard';
 import Solutions from './pages/Solutions';
+import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -89,6 +90,7 @@ export const PAGES = {
     "Workshops": Workshops,
     "StrategyWizard": StrategyWizard,
     "Solutions": Solutions,
+    "PersonalizedDashboard": PersonalizedDashboard,
 }
 
 export const pagesConfig = {
