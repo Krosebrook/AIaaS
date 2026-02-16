@@ -5,6 +5,8 @@ import ConfirmationDialog from '../components/shell/ConfirmationDialog';
 import ContentEditor from '../components/ContentEditor';
 import ContentStrategyPlanner from '../components/ContentStrategyPlanner';
 import Tooltip from '../components/onboarding/Tooltip';
+import AIReportGenerator from '../components/AIReportGenerator';
+import { PersonalizedContentBanner } from '../components/PersonalizedContentEngine';
 
 export default function ContentGenerator() {
   const [formData, setFormData] = useState({
@@ -539,6 +541,16 @@ Provide:
             >
               Content Strategy
             </button>
+            <button
+              onClick={() => setActiveTab('reports')}
+              className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
+                activeTab === 'reports'
+                  ? 'border-b-2 border-int-orange text-int-orange'
+                  : 'text-signal-white/60 hover:text-signal-white'
+              }`}
+            >
+              AI Reports
+            </button>
             {generatedContent && (
               <>
                 <button
@@ -567,6 +579,19 @@ Provide:
         </div>
 
         {activeTab === 'strategy' && <ContentStrategyPlanner />}
+
+        {activeTab === 'reports' && (
+          <AIReportGenerator 
+            contentData={{
+              generatedPieces: generatedContent ? 1 : 0,
+              contentType: formData.contentType,
+              topics: [formData.topic],
+              metadata: generatedContent?.metadata
+            }}
+            seoData={seoSuggestions}
+            strategyData={contentOutline}
+          />
+        )}
 
         {activeTab === 'variations' && (
           <div className="space-y-6">

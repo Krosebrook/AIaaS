@@ -9,6 +9,14 @@ export default function ContentStrategyPlanner() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [businessContext, setBusinessContext] = useState('');
   const [currentGoals, setCurrentGoals] = useState('');
+  const [optimizationSuggestions, setOptimizationSuggestions] = useState(null);
+  const [loadingOptimization, setLoadingOptimization] = useState(false);
+  const [performanceData, setPerformanceData] = useState({
+    contentViews: 1250,
+    engagement: 68,
+    conversionRate: 3.2,
+    topPerformingTopics: ['AI Implementation', 'Security', 'Workshops']
+  });
 
   const generateStrategy = async () => {
     setShowConfirm(false);
@@ -164,6 +172,135 @@ Be specific, actionable, and data-driven.`,
     return 'text-red-400 bg-red-400/20';
   };
 
+  const optimizeStrategy = async () => {
+    if (!strategy) return;
+    
+    setLoadingOptimization(true);
+    try {
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze current content strategy performance and provide AI-powered optimization recommendations.
+
+Current Strategy:
+${JSON.stringify(strategy, null, 2)}
+
+Performance Data:
+- Total Content Views: ${performanceData.contentViews}
+- Average Engagement Rate: ${performanceData.engagement}%
+- Conversion Rate: ${performanceData.conversionRate}%
+- Top Performing Topics: ${performanceData.topPerformingTopics.join(', ')}
+
+Based on this data and current industry trends (2026), provide:
+
+1. Strategy Health Assessment (0-100 score)
+   - What's working well
+   - What needs improvement
+   - Overall strategic alignment
+
+2. Quick Wins (3-5 actionable improvements)
+   - Low effort, high impact changes
+   - Specific implementation steps
+   - Expected results
+
+3. Content Gap Analysis
+   - Missing topics that competitors are covering
+   - Underserved audience segments
+   - Opportunities in the buyer journey
+
+4. Topic Performance Predictions
+   - Which recommended topics will likely perform best
+   - Why (backed by data and trends)
+   - Suggested priority order
+
+5. Channel Optimization
+   - Best distribution channels for each content type
+   - Timing and frequency recommendations
+
+6. Resource Allocation Advice
+   - Where to invest more effort
+   - What to deprioritize
+   - Optimal content mix
+
+Be specific, data-driven, and actionable.`,
+        add_context_from_internet: true,
+        response_json_schema: {
+          type: "object",
+          properties: {
+            healthScore: { type: "number" },
+            assessment: {
+              type: "object",
+              properties: {
+                strengths: { type: "array", items: { type: "string" } },
+                weaknesses: { type: "array", items: { type: "string" } },
+                overallAlignment: { type: "string" }
+              }
+            },
+            quickWins: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  action: { type: "string" },
+                  implementation: { type: "string" },
+                  expectedResult: { type: "string" },
+                  effort: { type: "string" },
+                  impact: { type: "string" }
+                }
+              }
+            },
+            contentGaps: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  gap: { type: "string" },
+                  opportunity: { type: "string" },
+                  competitorActivity: { type: "string" }
+                }
+              }
+            },
+            topicPredictions: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  topic: { type: "string" },
+                  predictedPerformance: { type: "string" },
+                  reasoning: { type: "string" },
+                  priority: { type: "string" }
+                }
+              }
+            },
+            channelOptimization: {
+              type: "array",
+              items: {
+                type: "object",
+                properties: {
+                  contentType: { type: "string" },
+                  bestChannels: { type: "array", items: { type: "string" } },
+                  timing: { type: "string" }
+                }
+              }
+            },
+            resourceAllocation: {
+              type: "object",
+              properties: {
+                increaseEffort: { type: "array", items: { type: "string" } },
+                decreaseEffort: { type: "array", items: { type: "string" } },
+                optimalMix: { type: "string" }
+              }
+            }
+          }
+        }
+      });
+      
+      setOptimizationSuggestions(result);
+    } catch (error) {
+      console.error('Optimization failed:', error);
+    } finally {
+      setLoadingOptimization(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 border border-purple-500/30 rounded-xl">
@@ -242,7 +379,24 @@ Be specific, actionable, and data-driven.`,
 
       {strategy && (
         <div className="space-y-6">
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={optimizeStrategy}
+              disabled={loadingOptimization}
+              className="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg font-semibold hover:from-green-500 hover:to-blue-500 transition-all disabled:opacity-50 flex items-center gap-2"
+            >
+              {loadingOptimization ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Optimizing...
+                </>
+              ) : (
+                <>
+                  <TrendingUp className="w-5 h-5" />
+                  AI Strategy Optimization
+                </>
+              )}
+            </button>
             <button
               onClick={exportStrategy}
               className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg font-semibold transition-all flex items-center gap-2"
@@ -251,6 +405,102 @@ Be specific, actionable, and data-driven.`,
               Export Strategy
             </button>
           </div>
+
+          {optimizationSuggestions && (
+            <div className="p-6 bg-gradient-to-br from-green-900/20 to-blue-900/20 border-2 border-green-500/40 rounded-xl space-y-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-2xl font-bold text-green-400">AI Strategy Optimization</h3>
+                <div className="text-right">
+                  <div className="text-sm text-slate-400">Strategy Health Score</div>
+                  <div className="text-4xl font-bold text-green-400">{optimizationSuggestions.healthScore}/100</div>
+                </div>
+              </div>
+
+              {/* Assessment */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
+                  <h4 className="font-semibold text-green-400 mb-3">✓ Strengths</h4>
+                  <ul className="space-y-2 text-sm text-slate-300">
+                    {optimizationSuggestions.assessment.strengths.map((s, i) => (
+                      <li key={i}>• {s}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="p-4 bg-orange-500/10 rounded-lg border border-orange-500/30">
+                  <h4 className="font-semibold text-orange-400 mb-3">⚠ Areas to Improve</h4>
+                  <ul className="space-y-2 text-sm text-slate-300">
+                    {optimizationSuggestions.assessment.weaknesses.map((w, i) => (
+                      <li key={i}>• {w}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Quick Wins */}
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-blue-500/30">
+                <h4 className="font-semibold text-blue-400 mb-4 flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5" />
+                  Quick Wins
+                </h4>
+                <div className="space-y-3">
+                  {optimizationSuggestions.quickWins.map((win, i) => (
+                    <div key={i} className="p-3 bg-slate-800/50 rounded">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="font-semibold text-blue-300">{win.action}</div>
+                        <div className="flex gap-2">
+                          <span className={`text-xs px-2 py-1 rounded ${getEffortColor(win.effort)}`}>
+                            {win.effort} effort
+                          </span>
+                          <span className={`text-xs px-2 py-1 rounded ${getImpactColor(win.impact)}`}>
+                            {win.impact} impact
+                          </span>
+                        </div>
+                      </div>
+                      <p className="text-sm text-slate-400 mb-2">{win.implementation}</p>
+                      <p className="text-xs text-green-400">→ {win.expectedResult}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Content Gaps */}
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-purple-500/30">
+                <h4 className="font-semibold text-purple-400 mb-4">Content Gap Analysis</h4>
+                <div className="space-y-3">
+                  {optimizationSuggestions.contentGaps.map((gap, i) => (
+                    <div key={i} className="p-3 bg-slate-800/50 rounded">
+                      <div className="font-semibold text-purple-300 mb-1">{gap.gap}</div>
+                      <p className="text-sm text-slate-400 mb-2">{gap.opportunity}</p>
+                      <p className="text-xs text-slate-500">Competitor Activity: {gap.competitorActivity}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Topic Predictions */}
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-green-500/30">
+                <h4 className="font-semibold text-green-400 mb-4">AI Performance Predictions</h4>
+                <div className="space-y-3">
+                  {optimizationSuggestions.topicPredictions.map((pred, i) => (
+                    <div key={i} className="p-3 bg-slate-800/50 rounded">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="font-semibold text-white">{pred.topic}</div>
+                        <span className={`text-xs px-2 py-1 rounded ${
+                          pred.priority === 'High' ? 'bg-red-500/20 text-red-400' :
+                          pred.priority === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                          'bg-green-500/20 text-green-400'
+                        }`}>
+                          {pred.priority} Priority
+                        </span>
+                      </div>
+                      <div className="text-sm text-green-400 mb-2">{pred.predictedPerformance}</div>
+                      <p className="text-xs text-slate-400">{pred.reasoning}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Audience Segments */}
           <div className="p-6 bg-slate-800/50 border border-slate-700 rounded-xl">
