@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useLocation } from 'react-router-dom';
 import SEOMetadata from '../components/SEOMetadata';
 import { Mail, MessageSquare, Send, Loader2 } from 'lucide-react';
 
 export default function Contact() {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -14,7 +16,7 @@ export default function Contact() {
   const [inquiryCategory, setInquiryCategory] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const workshop = urlParams.get('workshop');
     const price = urlParams.get('price');
@@ -25,7 +27,15 @@ export default function Contact() {
         message: `I'm interested in the ${workshop} workshop (${price || 'pricing inquiry'}). Please provide more information about availability and next steps.`
       }));
     }
-  }, []);
+
+    // Handle pre-filled data from other pages (e.g., assessment results)
+    if (location.state?.prefilled?.message) {
+      setFormData(prev => ({
+        ...prev,
+        message: location.state.prefilled.message
+      }));
+    }
+  }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
