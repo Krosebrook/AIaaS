@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Search, AlertCircle, CheckCircle, Loader2, Download, Users, Lightbulb, Link2 } from 'lucide-react';
 import ConfirmationDialog from './shell/ConfirmationDialog';
+import SEOAnalytics from './SEOAnalytics';
 
 export default function SEOAuditSystem() {
   const [auditResults, setAuditResults] = useState(null);
@@ -848,7 +849,12 @@ Focus on realistic, achievable opportunities.`,
             </div>
           </div>
         )}
-      </div>
-    </div>
-  );
-}
+
+        {/* Advanced Analytics */}
+        {auditResults && (
+          <SEOAnalytics auditResults={auditResults} />
+        )}
+        </div>
+        </div>
+        );
+        }
