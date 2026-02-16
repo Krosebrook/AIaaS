@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { AlertTriangle, Info, Trash2, Send, Play, Download, X } from 'lucide-react';
 
 export default function ConfirmationDialog({ 
@@ -7,13 +7,16 @@ export default function ConfirmationDialog({
   onConfirm,
   title,
   description,
-  actionType = 'warning', // 'warning', 'danger', 'info'
+  actionType = 'warning',
   actionLabel = 'Confirm',
   previewData = null,
   children
 }) {
-  const [step, setStep] = useState(1); // 1 = Preview, 2 = Confirm
+  const [step, setStep] = useState(1);
   const [isProcessing, setIsProcessing] = useState(false);
+  const dialogRef = useRef(null);
+  const closeButtonRef = useRef(null);
+  const previousActiveElement = useRef(null);
 
   const handleConfirm = async () => {
     if (step === 1 && previewData) {
@@ -37,13 +40,55 @@ export default function ConfirmationDialog({
     onClose();
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      previousActiveElement.current = document.activeElement;
+      setTimeout(() => closeButtonRef.current?.focus(), 100);
+    } else {
+      previousActiveElement.current?.focus();
+    }
+  }, [isOpen]);
+
+  // Focus trap
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        handleClose();
+      }
+
+      if (e.key === 'Tab') {
+        const focusableElements = dialogRef.current?.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements?.[0];
+        const lastElement = focusableElements?.[focusableElements.length - 1];
+
+        if (!e.shiftKey && document.activeElement === lastElement) {
+          e.preventDefault();
+          firstElement?.focus();
+        }
+
+        if (e.shiftKey && document.activeElement === firstElement) {
+          e.preventDefault();
+          lastElement?.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen]);
+
   const icons = {
     warning: AlertTriangle,
     danger: Trash2,
     info: Info,
     send: Send,
     play: Play,
-    download: Download
+    download: Download,
+    edit: Send
   };
 
   const colors = {
@@ -52,7 +97,8 @@ export default function ConfirmationDialog({
     info: 'text-blue-600 bg-blue-50',
     send: 'text-orange-600 bg-orange-50',
     play: 'text-green-600 bg-green-50',
-    download: 'text-blue-600 bg-blue-50'
+    download: 'text-blue-600 bg-blue-50',
+    edit: 'text-purple-600 bg-purple-50'
   };
 
   const buttonColors = {
@@ -61,7 +107,8 @@ export default function ConfirmationDialog({
     info: 'bg-blue-600 hover:bg-blue-700',
     send: 'bg-orange-600 hover:bg-orange-700',
     play: 'bg-green-600 hover:bg-green-700',
-    download: 'bg-blue-600 hover:bg-blue-700'
+    download: 'bg-blue-600 hover:bg-blue-700',
+    edit: 'bg-purple-600 hover:bg-purple-700'
   };
 
   const Icon = icons[actionType] || Info;
@@ -70,40 +117,46 @@ export default function ConfirmationDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"
         onClick={handleClose}
+        aria-hidden="true"
       />
 
-      {/* Dialog */}
-      <div className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden">
-        {/* Header */}
+      <div 
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="dialog-title"
+        aria-describedby="dialog-description"
+        className="relative w-full max-w-2xl bg-white rounded-xl shadow-2xl overflow-hidden"
+      >
         <div className="flex items-start justify-between p-6 border-b border-slate-200">
           <div className="flex items-start gap-4">
             <div className={`w-12 h-12 rounded-lg ${colors[actionType]} flex items-center justify-center flex-shrink-0`}>
               <Icon className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-900">
+              <h2 id="dialog-title" className="text-xl font-bold text-slate-900">
                 {step === 1 ? 'Preview & Validate' : 'Confirm Action'}
               </h2>
               <p className="text-sm text-slate-600 mt-1">{title}</p>
             </div>
           </div>
           <button
+            ref={closeButtonRef}
             onClick={handleClose}
-            className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-orange-500"
+            aria-label="Close dialog"
           >
             <X className="w-5 h-5 text-slate-400" />
           </button>
         </div>
 
-        {/* Content */}
         <div className="p-6 max-h-96 overflow-y-auto">
           {step === 1 && (
             <>
-              <p className="text-slate-700 mb-4">{description}</p>
+              <p id="dialog-description" className="text-slate-700 mb-4">{description}</p>
               
               {previewData && (
                 <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
@@ -143,7 +196,6 @@ export default function ConfirmationDialog({
           )}
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between gap-3 p-6 border-t border-slate-200 bg-slate-50">
           <div className="text-sm text-slate-500">
             {step === 1 && previewData ? 'Step 1 of 2: Review' : step === 2 ? 'Step 2 of 2: Confirm' : 'Confirmation Required'}
@@ -151,7 +203,7 @@ export default function ConfirmationDialog({
           <div className="flex gap-3">
             <button
               onClick={handleClose}
-              className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors font-medium text-slate-700"
+              className="px-4 py-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors font-medium text-slate-700 focus:outline-none focus:ring-2 focus:ring-orange-500"
               disabled={isProcessing}
             >
               Cancel
@@ -159,7 +211,7 @@ export default function ConfirmationDialog({
             <button
               onClick={handleConfirm}
               disabled={isProcessing}
-              className={`px-6 py-2 ${buttonColors[actionType]} text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2`}
+              className={`px-6 py-2 ${buttonColors[actionType]} text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500`}
             >
               {isProcessing ? (
                 <>
