@@ -59,11 +59,13 @@ import ClientHealth from './pages/ClientHealth';
 import Contact from './pages/Contact';
 import ContentGenerator from './pages/ContentGenerator';
 import Home from './pages/Home';
+import Projects from './pages/Projects';
 import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
-import Projects from './pages/Projects';
+import StrategyWizard from './pages/StrategyWizard';
+import Solutions from './pages/Solutions';
 import __Layout from './Layout.jsx';
 
 
@@ -80,11 +82,13 @@ export const PAGES = {
     "Contact": Contact,
     "ContentGenerator": ContentGenerator,
     "Home": Home,
+    "Projects": Projects,
     "SEODashboard": SEODashboard,
     "Services": Services,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
-    "Projects": Projects,
+    "StrategyWizard": StrategyWizard,
+    "Solutions": Solutions,
 }
 
 export const pagesConfig = {
