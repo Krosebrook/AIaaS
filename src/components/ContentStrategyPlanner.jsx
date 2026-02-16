@@ -11,6 +11,7 @@ export default function ContentStrategyPlanner() {
   const [currentGoals, setCurrentGoals] = useState('');
   const [optimizationSuggestions, setOptimizationSuggestions] = useState(null);
   const [loadingOptimization, setLoadingOptimization] = useState(false);
+  const [showPerformanceInput, setShowPerformanceInput] = useState(false);
   const [performanceData, setPerformanceData] = useState({
     contentViews: 1250,
     engagement: 68,
@@ -379,42 +380,143 @@ Be specific, data-driven, and actionable.`,
 
       {strategy && (
         <div className="space-y-6">
-          <div className="flex justify-between items-center">
+          {/* AI Optimization Module */}
+          <div className="p-6 bg-gradient-to-br from-green-900/30 to-blue-900/30 border-2 border-green-500/40 rounded-xl">
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-2xl font-bold text-green-400 mb-2 flex items-center gap-2">
+                  <TrendingUp className="w-7 h-7" />
+                  Real-Time AI Optimization
+                </h3>
+                <p className="text-slate-300 text-sm">
+                  Analyze performance data and industry trends for strategic recommendations
+                </p>
+              </div>
+              <button
+                onClick={exportStrategy}
+                className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg font-semibold transition-all flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Export
+              </button>
+            </div>
+
+            {/* Performance Data Input */}
+            <div className="mb-6 p-4 bg-slate-900/50 rounded-lg border border-green-500/30">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="font-semibold text-white">Current Performance Metrics</h4>
+                <button
+                  onClick={() => setShowPerformanceInput(!showPerformanceInput)}
+                  className="text-sm text-green-400 hover:text-green-300 transition-colors"
+                >
+                  {showPerformanceInput ? 'Hide' : 'Edit Metrics'}
+                </button>
+              </div>
+
+              {showPerformanceInput ? (
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-2">Total Content Views</label>
+                    <input
+                      type="number"
+                      value={performanceData.contentViews}
+                      onChange={(e) => setPerformanceData({...performanceData, contentViews: parseInt(e.target.value) || 0})}
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white focus:border-green-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-2">Engagement Rate (%)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={performanceData.engagement}
+                      onChange={(e) => setPerformanceData({...performanceData, engagement: parseFloat(e.target.value) || 0})}
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white focus:border-green-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-2">Conversion Rate (%)</label>
+                    <input
+                      type="number"
+                      step="0.1"
+                      value={performanceData.conversionRate}
+                      onChange={(e) => setPerformanceData({...performanceData, conversionRate: parseFloat(e.target.value) || 0})}
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white focus:border-green-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-slate-400 mb-2">Top Performing Topics (comma-separated)</label>
+                    <input
+                      type="text"
+                      value={performanceData.topPerformingTopics.join(', ')}
+                      onChange={(e) => setPerformanceData({...performanceData, topPerformingTopics: e.target.value.split(',').map(t => t.trim())})}
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded text-white focus:border-green-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div className="grid md:grid-cols-4 gap-4">
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-slate-500 mb-1">Content Views</div>
+                    <div className="text-xl font-bold text-white">{performanceData.contentViews.toLocaleString()}</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-slate-500 mb-1">Engagement</div>
+                    <div className="text-xl font-bold text-white">{performanceData.engagement}%</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-slate-500 mb-1">Conversion</div>
+                    <div className="text-xl font-bold text-white">{performanceData.conversionRate}%</div>
+                  </div>
+                  <div className="p-3 bg-slate-800/50 rounded">
+                    <div className="text-xs text-slate-500 mb-1">Top Topics</div>
+                    <div className="text-sm font-semibold text-white truncate">{performanceData.topPerformingTopics[0]}</div>
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={optimizeStrategy}
               disabled={loadingOptimization}
-              className="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg font-semibold hover:from-green-500 hover:to-blue-500 transition-all disabled:opacity-50 flex items-center gap-2"
+              className="w-full px-6 py-4 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg font-semibold hover:from-green-500 hover:to-blue-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {loadingOptimization ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  Optimizing...
+                  Analyzing Performance & Trends...
                 </>
               ) : (
                 <>
                   <TrendingUp className="w-5 h-5" />
-                  AI Strategy Optimization
+                  Run AI Optimization Analysis
                 </>
               )}
-            </button>
-            <button
-              onClick={exportStrategy}
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg font-semibold transition-all flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Export Strategy
             </button>
           </div>
 
           {optimizationSuggestions && (
             <div className="p-6 bg-gradient-to-br from-green-900/20 to-blue-900/20 border-2 border-green-500/40 rounded-xl space-y-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-2xl font-bold text-green-400">AI Strategy Optimization</h3>
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-2xl font-bold text-green-400">AI Optimization Results</h3>
                 <div className="text-right">
-                  <div className="text-sm text-slate-400">Strategy Health Score</div>
-                  <div className="text-4xl font-bold text-green-400">{optimizationSuggestions.healthScore}/100</div>
+                  <div className="text-sm text-slate-400">Strategy Health</div>
+                  <div className={`text-4xl font-bold ${
+                    optimizationSuggestions.healthScore >= 80 ? 'text-green-400' :
+                    optimizationSuggestions.healthScore >= 60 ? 'text-yellow-400' : 'text-red-400'
+                  }`}>{optimizationSuggestions.healthScore}/100</div>
                 </div>
               </div>
+              <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div 
+                  className={`h-full transition-all ${
+                    optimizationSuggestions.healthScore >= 80 ? 'bg-green-500' :
+                    optimizationSuggestions.healthScore >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                  }`}
+                  style={{ width: `${optimizationSuggestions.healthScore}%` }}
+                />
+              </div>
+              <p className="text-sm text-slate-300">{optimizationSuggestions.assessment.overallAlignment}</p>
 
               {/* Assessment */}
               <div className="grid md:grid-cols-2 gap-4">
@@ -479,7 +581,7 @@ Be specific, data-driven, and actionable.`,
 
               {/* Topic Predictions */}
               <div className="p-4 bg-slate-900/50 rounded-lg border border-green-500/30">
-                <h4 className="font-semibold text-green-400 mb-4">AI Performance Predictions</h4>
+                <h4 className="font-semibold text-green-400 mb-4">🎯 AI Performance Predictions</h4>
                 <div className="space-y-3">
                   {optimizationSuggestions.topicPredictions.map((pred, i) => (
                     <div key={i} className="p-3 bg-slate-800/50 rounded">
@@ -497,6 +599,53 @@ Be specific, data-driven, and actionable.`,
                       <p className="text-xs text-slate-400">{pred.reasoning}</p>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Channel Optimization */}
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-blue-500/30">
+                <h4 className="font-semibold text-blue-400 mb-4">📢 Channel Optimization</h4>
+                <div className="space-y-3">
+                  {optimizationSuggestions.channelOptimization.map((channel, i) => (
+                    <div key={i} className="p-3 bg-slate-800/50 rounded">
+                      <div className="font-semibold text-white mb-2">{channel.contentType}</div>
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {channel.bestChannels.map((ch, j) => (
+                          <span key={j} className="text-xs px-2 py-1 bg-blue-500/20 text-blue-300 rounded">
+                            {ch}
+                          </span>
+                        ))}
+                      </div>
+                      <p className="text-xs text-slate-400">⏰ {channel.timing}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Resource Allocation */}
+              <div className="p-4 bg-slate-900/50 rounded-lg border border-purple-500/30">
+                <h4 className="font-semibold text-purple-400 mb-4">📊 Resource Allocation Recommendations</h4>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="p-3 bg-green-500/10 rounded">
+                    <div className="text-sm font-semibold text-green-400 mb-2">↗ Increase Effort</div>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      {optimizationSuggestions.resourceAllocation.increaseEffort.map((item, i) => (
+                        <li key={i}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-red-500/10 rounded">
+                    <div className="text-sm font-semibold text-red-400 mb-2">↘ Decrease Effort</div>
+                    <ul className="space-y-1 text-sm text-slate-300">
+                      {optimizationSuggestions.resourceAllocation.decreaseEffort.map((item, i) => (
+                        <li key={i}>• {item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-purple-500/10 rounded">
+                  <div className="text-xs text-slate-400 mb-1">Optimal Content Mix</div>
+                  <div className="text-sm text-white">{optimizationSuggestions.resourceAllocation.optimalMix}</div>
                 </div>
               </div>
             </div>
