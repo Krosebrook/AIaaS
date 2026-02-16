@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { usePersonalization } from '../PersonalizationEngine';
 import { CheckCircle, AlertCircle, TrendingUp, Loader2, Download, Mail, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../../utils';
@@ -7,6 +8,7 @@ import jsPDF from 'jspdf';
 
 export default function AIReadinessAssessment() {
   const navigate = useNavigate();
+  const { trackAssessmentResult } = usePersonalization();
   const [step, setStep] = useState('intro');
   const [answers, setAnswers] = useState({});
   const [loading, setLoading] = useState(false);
@@ -117,10 +119,13 @@ Provide a JSON response with:
         }
       });
 
-      setAssessment({
+      const assessmentData = {
         ...result,
-        readinessScore: readinessPercent
-      });
+        readinessScore: readinessPercent,
+        industry: extractIndustryFromAnswers(answers)
+      };
+      setAssessment(assessmentData);
+      trackAssessmentResult(assessmentData);
       setStep('results');
     } catch (error) {
       console.error('Assessment failed:', error);
@@ -217,6 +222,19 @@ Provide a JSON response with:
 
     doc.save('AI_Readiness_Assessment_Report.pdf');
     base44.analytics.track({ eventName: 'readiness_assessment_pdf_downloaded' });
+  };
+
+  const extractIndustryFromAnswers = (answers) => {
+    const industryMap = {
+      'technology': 'Technology',
+      'healthcare': 'Healthcare',
+      'finance': 'Financial Services',
+      'manufacturing': 'Manufacturing',
+      'retail': 'Retail',
+      'energy': 'Energy'
+    };
+    // Default to generic industry for now
+    return 'Enterprise';
   };
 
   const handleContactSales = () => {
