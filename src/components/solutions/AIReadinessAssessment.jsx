@@ -336,11 +336,11 @@ I'd like to discuss how INTinc.com can help with our AI transformation.
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-3xl font-bold text-white">Your AI Readiness Score</h2>
               <button
-                onClick={() => base44.analytics.track({ eventName: 'assessment_downloaded' })}
-                className="px-4 py-2 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 flex items-center gap-2"
+                onClick={generatePDF}
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold flex items-center gap-2 transition-all"
               >
                 <Download className="w-4 h-4" />
-                Download Report
+                Download Full Report
               </button>
             </div>
 
@@ -413,17 +413,30 @@ I'd like to discuss how INTinc.com can help with our AI transformation.
             </ul>
           </div>
 
-          <div className="flex gap-3">
-            <button
-              onClick={() => {
-                setStep('intro');
-                setAnswers({});
-                setAssessment(null);
-              }}
-              className="flex-1 px-6 py-3 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-all"
-            >
-              Restart Assessment
-            </button>
+          <div className="p-6 bg-gradient-to-r from-int-orange/10 to-int-navy/10 border border-int-orange/20 rounded-xl">
+            <h3 className="text-lg font-semibold text-white mb-2">Ready to Transform Your Organization with AI?</h3>
+            <p className="text-slate-300 mb-4">
+              Our AI strategy experts can help you address these gaps and accelerate your AI journey. Let's discuss a personalized implementation plan.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={handleContactSales}
+                className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all"
+              >
+                <Mail className="w-4 h-4" />
+                Contact Sales (Pre-filled)
+              </button>
+              <button
+                onClick={() => {
+                  setStep('intro');
+                  setAnswers({});
+                  setAssessment(null);
+                }}
+                className="px-6 py-3 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-all"
+              >
+                Restart Assessment
+              </button>
+            </div>
           </div>
         </div>
       )}
