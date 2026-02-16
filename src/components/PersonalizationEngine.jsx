@@ -5,7 +5,8 @@ export function usePersonalization() {
   const [userProfile, setUserProfile] = useState({
     interests: [],
     visitedPages: [],
-    recommendations: null
+    recommendations: null,
+    explicitPreferences: null
   });
 
   useEffect(() => {
@@ -34,8 +35,36 @@ export function usePersonalization() {
     });
   };
 
+  const updateUserPreferences = (preferences) => {
+    setUserProfile(prev => {
+      const updated = {
+        ...prev,
+        explicitPreferences: preferences
+      };
+      localStorage.setItem('userProfile', JSON.stringify(updated));
+      localStorage.setItem('userPreferences', JSON.stringify(preferences));
+      return updated;
+    });
+  };
+
+  const getUserPreferences = () => {
+    const saved = localStorage.getItem('userPreferences');
+    return saved ? JSON.parse(saved) : {
+      interests: [],
+      contentTypes: [],
+      communicationPreferences: {
+        emailUpdates: true,
+        personalization: true,
+        outreachTriggers: true
+      }
+    };
+  };
+
   const getRecommendations = async () => {
     if (userProfile.visitedPages.length === 0) return null;
+
+    const preferences = getUserPreferences();
+    const hasExplicitPrefs = preferences.interests.length > 0 || preferences.contentTypes.length > 0;
 
     try {
       const result = await base44.integrations.Core.InvokeLLM({
@@ -43,13 +72,18 @@ export function usePersonalization() {
 
 User Profile:
 - Visited pages: ${userProfile.visitedPages.join(', ')}
-- Interests: ${userProfile.interests.join(', ') || 'none yet'}
+- Tracked interests: ${userProfile.interests.join(', ') || 'none yet'}
+${hasExplicitPrefs ? `\nExplicit User Preferences:
+- Selected interests: ${preferences.interests.join(', ')}
+- Preferred content types: ${preferences.contentTypes.join(', ')}
+- Personalization enabled: ${preferences.communicationPreferences.personalization}` : ''}
 
-Based on this behavior, identify the user's primary interest area and recommend:
+Based on this behavior ${hasExplicitPrefs ? 'and explicit preferences' : ''}, identify the user's primary interest area and recommend:
 1. Most relevant case study (1-6)
 2. Most relevant service focus (Security, Speed, Training, Custom Engineering)
 3. Content emphasis (security, roi, training, technical)
 
+${hasExplicitPrefs ? 'Prioritize the user\'s explicit preferences over inferred behavior.' : ''}
 Provide specific, actionable recommendations.`,
         response_json_schema: {
           type: "object",
@@ -76,5 +110,12 @@ Provide specific, actionable recommendations.`,
     }
   };
 
-  return { userProfile, trackPageVisit, trackInterest, getRecommendations };
+  return { 
+    userProfile, 
+    trackPageVisit, 
+    trackInterest, 
+    getRecommendations,
+    updateUserPreferences,
+    getUserPreferences
+  };
 }
