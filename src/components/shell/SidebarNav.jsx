@@ -28,6 +28,7 @@ export default function SidebarNav({ isOpen, onToggle, currentPage }) {
   const tools = [
     { name: 'Content Generator', page: 'ContentGenerator', icon: Sparkles, section: 'tools' },
     { name: 'SEO Dashboard', page: 'SEODashboard', icon: BarChart3, section: 'tools' },
+    { name: 'Settings', page: 'UserSettings', icon: Settings, section: 'tools' },
   ];
 
   return (
