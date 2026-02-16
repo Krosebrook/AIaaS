@@ -523,7 +523,8 @@ Provide:
 
         <PersonalizedContentBanner pageName="ContentGenerator" />
           
-        <div className="flex gap-2 mt-6 border-b border-slate-700 overflow-x-auto">
+        <div>
+          <div className="flex gap-2 mt-6 border-b border-slate-700 overflow-x-auto">
             <button
               onClick={() => setActiveTab('generator')}
               className={`px-4 py-2 font-semibold transition-all whitespace-nowrap ${
@@ -1294,6 +1295,7 @@ Provide:
           </div>
         </div>
         )}
+        </div>
 
         <style jsx>{`
           .shadow-glow {
