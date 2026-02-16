@@ -717,6 +717,7 @@ Focus on discoverability and SEO best practices.`,
         </div>
         )}
       </div>
+      </div>
 
       <style jsx>{`
         .shadow-glow {
