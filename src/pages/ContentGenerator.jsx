@@ -300,6 +300,9 @@ Focus on discoverability and SEO best practices.`,
           <p className="text-signal-white/70">Create professional content for YOUR business in seconds</p>
         </div>
 
+        {activeTab === 'strategy' && <ContentStrategyPlanner />}
+
+        {activeTab === 'generator' && (
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Input Form */}
           <div className="space-y-6">
