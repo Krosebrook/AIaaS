@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Sparkles, FileText, Share2, Copy, Download, Loader2 } from 'lucide-react';
 import ConfirmationDialog from '../components/shell/ConfirmationDialog';
+import ContentEditor from '../components/ContentEditor';
+import ContentStrategyPlanner from '../components/ContentStrategyPlanner';
 
 export default function ContentGenerator() {
   const [formData, setFormData] = useState({
@@ -19,6 +21,8 @@ export default function ContentGenerator() {
   const [copied, setCopied] = useState(false);
   const [showGenerateConfirm, setShowGenerateConfirm] = useState(false);
   const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
+  const [editHistory, setEditHistory] = useState([]);
+  const [showEditor, setShowEditor] = useState(false);
 
   const contentTypes = [
     { value: 'blog', label: 'Blog Post', icon: FileText },
@@ -290,6 +294,21 @@ Focus on discoverability and SEO best practices.`,
     await generateContent();
   };
 
+  const handleContentUpdate = (newContent, changesSummary) => {
+    // Save current content to history
+    setEditHistory([...editHistory, {
+      content: generatedContent.content,
+      timestamp: Date.now(),
+      summary: changesSummary
+    }]);
+    
+    // Update content
+    setGeneratedContent({
+      ...generatedContent,
+      content: newContent
+    });
+  };
+
   const [activeTab, setActiveTab] = useState('generator');
 
   return (
@@ -467,6 +486,17 @@ Focus on discoverability and SEO best practices.`,
                     <h3 className="text-xl font-bold text-int-teal">Generated Content</h3>
                     <div className="flex gap-2">
                       <button
+                        onClick={() => setShowEditor(!showEditor)}
+                        className={`px-4 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                          showEditor 
+                            ? 'bg-int-orange text-white' 
+                            : 'bg-void border border-int-navy/30 hover:border-int-orange'
+                        }`}
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        {showEditor ? 'Hide Editor' : 'Edit with AI'}
+                      </button>
+                      <button
                         onClick={copyToClipboard}
                         className="px-4 py-2 bg-void border border-int-navy/30 rounded-lg hover:border-int-orange transition-all flex items-center gap-2"
                       >
@@ -508,7 +538,27 @@ Focus on discoverability and SEO best practices.`,
                       {generatedContent.content}
                     </div>
                   </div>
+
+                  {editHistory.length > 0 && (
+                    <div className="mt-4 p-3 bg-int-teal/10 rounded-lg border border-int-teal/30">
+                      <div className="text-xs text-signal-white/60 mb-1">
+                        {editHistory.length} edit{editHistory.length !== 1 ? 's' : ''} applied
+                      </div>
+                      <div className="text-sm text-int-teal">
+                        Latest: {editHistory[editHistory.length - 1].summary}
+                      </div>
+                    </div>
+                  )}
                 </div>
+
+                {showEditor && (
+                  <div className="p-6 bg-carbon-night rounded-xl border border-int-orange/30">
+                    <ContentEditor 
+                      content={generatedContent.content}
+                      onContentUpdate={handleContentUpdate}
+                    />
+                  </div>
+                )}
 
                 {generatedContent.suggestedHashtags && (
                   <div className="p-4 bg-carbon-night rounded-xl border border-int-navy/30">
