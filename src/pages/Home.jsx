@@ -19,7 +19,9 @@ import {
   TrendingUp,
   Users,
   Zap,
-  Award
+  Award,
+  Brain,
+  CheckCircle
 } from 'lucide-react';
 
 export default function Home() {
@@ -327,6 +329,60 @@ export default function Home() {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* AI Readiness Assessment CTA */}
+      <section className="py-24 px-6 bg-gradient-to-br from-int-navy/20 via-void to-int-orange/20 border-y border-int-orange/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-block px-4 py-2 bg-int-orange/20 border border-int-orange/30 rounded-full text-sm font-semibold text-int-orange mb-6">
+              FREE INTERACTIVE TOOL
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Discover Your AI Readiness Score
+            </h2>
+            <p className="text-xl text-signal-white/90 max-w-3xl mx-auto">
+              Take our 5-minute AI readiness assessment and receive a personalized report with service recommendations, estimated timeline, and actionable next steps tailored to YOUR business.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="p-6 bg-slate-900/50 border border-int-orange/30 rounded-xl text-center">
+              <div className="w-12 h-12 bg-int-orange/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle className="w-6 h-6 text-int-orange" />
+              </div>
+              <h3 className="font-bold mb-2">6 Targeted Questions</h3>
+              <p className="text-sm text-signal-white/70">About your challenges, team, timeline, and budget</p>
+            </div>
+            <div className="p-6 bg-slate-900/50 border border-int-navy/30 rounded-xl text-center">
+              <div className="w-12 h-12 bg-int-navy/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Brain className="w-6 h-6 text-int-navy" />
+              </div>
+              <h3 className="font-bold mb-2">AI-Powered Analysis</h3>
+              <p className="text-sm text-signal-white/70">Instant personalized readiness score and insights</p>
+            </div>
+            <div className="p-6 bg-slate-900/50 border border-int-teal/30 rounded-xl text-center">
+              <div className="w-12 h-12 bg-int-teal/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Rocket className="w-6 h-6 text-int-teal" />
+              </div>
+              <h3 className="font-bold mb-2">Custom Recommendations</h3>
+              <p className="text-sm text-signal-white/70">Services, workshops, and timeline for your needs</p>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link 
+              to={createPageUrl('AIReadinessAssessment')}
+              onClick={() => trackInteraction('click', 'assessment-cta', { source: 'home-page' })}
+              className="inline-block px-10 py-5 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-xl hover:shadow-glow transition-all duration-300 transform hover:scale-105"
+            >
+              START YOUR FREE ASSESSMENT
+            </Link>
+            <p className="text-sm text-signal-white/60 mt-4">
+              No email required • Results in 5 minutes • Downloadable report
+            </p>
           </div>
         </div>
       </section>
