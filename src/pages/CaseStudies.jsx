@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
 import { usePersonalization } from '../components/PersonalizationEngine';
 import { useScrollRestoration } from '../components/utils/useScrollRestoration';
-import { Database, TrendingUp, FileText, Users, DollarSign, Zap } from 'lucide-react';
+import { Database, TrendingUp, FileText, Users, DollarSign, Zap, Filter } from 'lucide-react';
 
 export default function CaseStudies() {
   const { trackPageVisit, trackInterest } = usePersonalization();
   useScrollRestoration('case-studies');
+  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [selectedService, setSelectedService] = useState('all');
 
   useEffect(() => {
     trackPageVisit('CaseStudies');
@@ -19,6 +21,7 @@ export default function CaseStudies() {
       title: 'Knowledge at Your Fingertips',
       industry: 'Consumer Goods',
       category: 'Product Enablement',
+      aiService: 'Custom AI Solution Design',
       challenge: 'Scattered product expertise across multiple teams and documents led to hours of manual searching and inconsistent customer support.',
       solution: 'Deployed AI-powered knowledge base with natural language search and automated documentation extraction.',
       results: [
@@ -38,6 +41,7 @@ export default function CaseStudies() {
       title: 'Automated Prospecting Engine',
       industry: 'Professional Services',
       category: 'Business Development',
+      aiService: 'Custom AI Solution Design',
       challenge: 'Manual research of 30,000+ potential clients quarterly consumed significant BD resources and delivered stale data.',
       solution: 'Built AI agent for automated prospect research, qualification, and enrichment with real-time data validation.',
       results: [
@@ -57,6 +61,7 @@ export default function CaseStudies() {
       title: 'Instant Marketing Intelligence',
       industry: 'Marketing & Advertising',
       category: 'Performance Reporting',
+      aiService: 'ML Operations (MLOps)',
       challenge: 'Managing 80 brands with manual spreadsheet reporting consumed 150 hours weekly and delayed decision-making.',
       solution: 'Engineered automated reporting pipeline with AI-powered analysis and anomaly detection.',
       results: [
@@ -76,6 +81,7 @@ export default function CaseStudies() {
       title: 'Voice-to-Documentation Pipeline',
       industry: 'Nonprofit & Associations',
       category: 'Operations',
+      aiService: 'AI Strategy Development',
       challenge: 'Critical operational knowledge trapped in meetings with no systematic documentation process.',
       solution: 'Implemented voice AI for meeting transcription, analysis, and automated SOP generation.',
       results: [
@@ -95,6 +101,7 @@ export default function CaseStudies() {
       title: 'Smart AR Collections',
       industry: 'B2B SaaS',
       category: 'Accounts Receivable',
+      aiService: 'Custom AI Solution Design',
       challenge: 'AR team overwhelmed with manual follow-ups, inconsistent messaging, and poor collection rates.',
       solution: 'Deployed AI-powered AR automation with personalized messaging and payment prediction.',
       results: [
@@ -114,6 +121,7 @@ export default function CaseStudies() {
       title: 'Enterprise AI Training Program',
       industry: 'Nonprofit',
       category: 'Org-Wide Enablement',
+      aiService: 'AI Governance Frameworks',
       challenge: 'Organization of 30 staff members anxious about AI with no structured training or adoption strategy.',
       solution: 'Delivered comprehensive AI enablement program with hands-on workshops, use case development, and ongoing support.',
       results: [
@@ -149,11 +157,69 @@ export default function CaseStudies() {
         </div>
       </section>
 
+      {/* Filters */}
+      <section className="py-12 px-6 bg-void border-b border-flash-purple/30">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <Filter className="w-5 h-5 text-flash-purple" />
+            <h2 className="text-xl font-semibold">Filter Case Studies</h2>
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-2 text-signal-white/80">Industry</label>
+              <select
+                value={selectedIndustry}
+                onChange={(e) => setSelectedIndustry(e.target.value)}
+                className="px-4 py-2 bg-carbon-night border border-flash-purple/30 rounded-lg text-signal-white focus:outline-none focus:border-flash-purple transition-colors"
+              >
+                <option value="all">All Industries</option>
+                <option value="Consumer Goods">Consumer Goods</option>
+                <option value="Professional Services">Professional Services</option>
+                <option value="Marketing & Advertising">Marketing & Advertising</option>
+                <option value="Nonprofit & Associations">Nonprofit & Associations</option>
+                <option value="B2B SaaS">B2B SaaS</option>
+                <option value="Nonprofit">Nonprofit</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2 text-signal-white/80">AI Service</label>
+              <select
+                value={selectedService}
+                onChange={(e) => setSelectedService(e.target.value)}
+                className="px-4 py-2 bg-carbon-night border border-flash-purple/30 rounded-lg text-signal-white focus:outline-none focus:border-flash-purple transition-colors"
+              >
+                <option value="all">All Services</option>
+                <option value="AI Strategy Development">AI Strategy Development</option>
+                <option value="Custom AI Solution Design">Custom AI Solution Design</option>
+                <option value="AI Governance Frameworks">AI Governance Frameworks</option>
+                <option value="ML Operations (MLOps)">ML Operations (MLOps)</option>
+              </select>
+            </div>
+            {(selectedIndustry !== 'all' || selectedService !== 'all') && (
+              <button
+                onClick={() => {
+                  setSelectedIndustry('all');
+                  setSelectedService('all');
+                }}
+                className="px-4 py-2 bg-flash-purple/20 hover:bg-flash-purple/30 border border-flash-purple/30 rounded-lg text-sm font-semibold transition-colors self-end"
+              >
+                Clear Filters
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Case Studies Grid */}
       <section className="py-24 px-6 bg-carbon-night">
         <div className="max-w-7xl mx-auto">
           <div className="space-y-16">
-            {caseStudies.map((study, i) => {
+            {caseStudies
+              .filter(study => 
+                (selectedIndustry === 'all' || study.industry === selectedIndustry) &&
+                (selectedService === 'all' || study.aiService === selectedService)
+              )
+              .map((study, i) => {
               const Icon = study.icon;
               return (
                 <Link
@@ -175,8 +241,13 @@ export default function CaseStudies() {
                         </div>
                       </div>
 
-                      <div className="inline-block px-3 py-1 bg-flash-purple/20 border border-flash-purple/30 rounded-full text-xs font-semibold text-flash-purple mb-6">
-                        {study.category}
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        <div className="inline-block px-3 py-1 bg-flash-purple/20 border border-flash-purple/30 rounded-full text-xs font-semibold text-flash-purple">
+                          {study.category}
+                        </div>
+                        <div className="inline-block px-3 py-1 bg-fusion-pink/20 border border-fusion-pink/30 rounded-full text-xs font-semibold text-fusion-pink">
+                          {study.aiService}
+                        </div>
                       </div>
 
                       <div className="space-y-4 mb-6">
@@ -225,6 +296,23 @@ export default function CaseStudies() {
                 </Link>
               );
             })}
+            {caseStudies.filter(study => 
+              (selectedIndustry === 'all' || study.industry === selectedIndustry) &&
+              (selectedService === 'all' || study.aiService === selectedService)
+            ).length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-xl text-signal-white/60">No case studies match your filters.</p>
+                <button
+                  onClick={() => {
+                    setSelectedIndustry('all');
+                    setSelectedService('all');
+                  }}
+                  className="mt-4 px-6 py-2 bg-flash-purple/20 hover:bg-flash-purple/30 border border-flash-purple/30 rounded-lg font-semibold transition-colors"
+                >
+                  Clear Filters
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -47,6 +47,8 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AIConsultingServices from './pages/AIConsultingServices';
+import AIReadinessAssessment from './pages/AIReadinessAssessment';
 import About from './pages/About';
 import CaseStudies from './pages/CaseStudies';
 import CaseStudy1 from './pages/CaseStudy1';
@@ -59,23 +61,23 @@ import ClientHealth from './pages/ClientHealth';
 import Contact from './pages/Contact';
 import ContentGenerator from './pages/ContentGenerator';
 import Home from './pages/Home';
+import InteractiveDemo from './pages/InteractiveDemo';
 import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import Projects from './pages/Projects';
+import ResourceView from './pages/ResourceView';
+import Resources from './pages/Resources';
 import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
 import Solutions from './pages/Solutions';
 import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
-import AIReadinessAssessment from './pages/AIReadinessAssessment';
-import Resources from './pages/Resources';
-import ResourceView from './pages/ResourceView';
-import InteractiveDemo from './pages/InteractiveDemo';
-import AIConsultingServices from './pages/AIConsultingServices';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AIConsultingServices": AIConsultingServices,
+    "AIReadinessAssessment": AIReadinessAssessment,
     "About": About,
     "CaseStudies": CaseStudies,
     "CaseStudy1": CaseStudy1,
@@ -88,19 +90,17 @@ export const PAGES = {
     "Contact": Contact,
     "ContentGenerator": ContentGenerator,
     "Home": Home,
+    "InteractiveDemo": InteractiveDemo,
     "PersonalizedDashboard": PersonalizedDashboard,
     "Projects": Projects,
+    "ResourceView": ResourceView,
+    "Resources": Resources,
     "SEODashboard": SEODashboard,
     "Services": Services,
     "Solutions": Solutions,
     "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
-    "AIReadinessAssessment": AIReadinessAssessment,
-    "Resources": Resources,
-    "ResourceView": ResourceView,
-    "InteractiveDemo": InteractiveDemo,
-    "AIConsultingServices": AIConsultingServices,
 }
 
 export const pagesConfig = {

@@ -165,6 +165,31 @@ export default function CaseStudy3() {
         </div>
       </section>
 
+      <section className="py-16 px-6 bg-gradient-to-r from-int-orange/10 to-int-navy/10 border-y border-int-orange/30">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold mb-3">Interested in This Type of Solution?</h2>
+            <p className="text-signal-white/80">
+              This project leveraged our <span className="font-semibold text-int-orange">ML Operations (MLOps)</span> service
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to={createPageUrl('AIConsultingServices')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-int-orange hover:bg-int-orange/80 rounded-lg font-semibold transition-all"
+            >
+              View Service Details
+            </Link>
+            <Link
+              to={createPageUrl('Contact?service=ML Operations (MLOps)')}
+              className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-void border-2 border-int-navy hover:bg-int-navy/20 rounded-lg font-semibold transition-all"
+            >
+              Schedule Discovery Call
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-6 bg-carbon-night">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold mb-8">Ready for Similar Results?</h2>
