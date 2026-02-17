@@ -59,14 +59,15 @@ import ClientHealth from './pages/ClientHealth';
 import Contact from './pages/Contact';
 import ContentGenerator from './pages/ContentGenerator';
 import Home from './pages/Home';
+import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import Projects from './pages/Projects';
 import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
+import Solutions from './pages/Solutions';
+import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
-import StrategyWizard from './pages/StrategyWizard';
-import Solutions from './pages/Solutions';
-import PersonalizedDashboard from './pages/PersonalizedDashboard';
+import AIReadinessAssessment from './pages/AIReadinessAssessment';
 import __Layout from './Layout.jsx';
 
 
@@ -83,14 +84,15 @@ export const PAGES = {
     "Contact": Contact,
     "ContentGenerator": ContentGenerator,
     "Home": Home,
+    "PersonalizedDashboard": PersonalizedDashboard,
     "Projects": Projects,
     "SEODashboard": SEODashboard,
     "Services": Services,
+    "Solutions": Solutions,
+    "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
-    "StrategyWizard": StrategyWizard,
-    "Solutions": Solutions,
-    "PersonalizedDashboard": PersonalizedDashboard,
+    "AIReadinessAssessment": AIReadinessAssessment,
 }
 
 export const pagesConfig = {
