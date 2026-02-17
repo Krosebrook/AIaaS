@@ -20,11 +20,19 @@ export default function Contact() {
     const urlParams = new URLSearchParams(window.location.search);
     const workshop = urlParams.get('workshop');
     const price = urlParams.get('price');
+    const service = urlParams.get('service');
     
     if (workshop) {
       setFormData(prev => ({
         ...prev,
         message: `I'm interested in the ${workshop} workshop (${price || 'pricing inquiry'}). Please provide more information about availability and next steps.`
+      }));
+    }
+
+    if (service) {
+      setFormData(prev => ({
+        ...prev,
+        message: `I'd like to schedule a discovery call to discuss ${service}. Please let me know available times and what to prepare for our consultation.`
       }));
     }
 
