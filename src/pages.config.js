@@ -68,6 +68,8 @@ import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
 import AIReadinessAssessment from './pages/AIReadinessAssessment';
+import Resources from './pages/Resources';
+import ResourceView from './pages/ResourceView';
 import __Layout from './Layout.jsx';
 
 
@@ -93,6 +95,8 @@ export const PAGES = {
     "UserSettings": UserSettings,
     "Workshops": Workshops,
     "AIReadinessAssessment": AIReadinessAssessment,
+    "Resources": Resources,
+    "ResourceView": ResourceView,
 }
 
 export const pagesConfig = {
