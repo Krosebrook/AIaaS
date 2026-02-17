@@ -21,7 +21,8 @@ import {
   Zap,
   Award,
   Brain,
-  CheckCircle
+  CheckCircle,
+  Play
 } from 'lucide-react';
 
 export default function Home() {
@@ -333,42 +334,53 @@ export default function Home() {
         </div>
       </section>
 
-      {/* AI Readiness Assessment CTA */}
+      {/* Interactive Demo Section */}
       <section className="py-24 px-6 bg-gradient-to-br from-int-navy/20 via-void to-int-orange/20 border-y border-int-orange/30">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <div className="inline-block px-4 py-2 bg-int-orange/20 border border-int-orange/30 rounded-full text-sm font-semibold text-int-orange mb-6">
-              FREE INTERACTIVE TOOL
+              EXPERIENCE AI IN ACTION
             </div>
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Discover Your AI Readiness Score
+              See What We Build For YOUR Business
             </h2>
             <p className="text-xl text-signal-white/90 max-w-3xl mx-auto">
-              Take our 5-minute AI readiness assessment and receive a personalized report with service recommendations, estimated timeline, and actionable next steps tailored to YOUR business.
+              Try our live AI business analyzer or watch a step-by-step walkthrough of a successful AI implementation—no sales pitch, just real technology.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="p-6 bg-slate-900/50 border border-int-orange/30 rounded-xl text-center">
-              <div className="w-12 h-12 bg-int-orange/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-6 h-6 text-int-orange" />
+          <div className="grid md:grid-cols-2 gap-6 mb-12">
+            <div className="p-8 bg-slate-900/50 border border-int-orange/30 rounded-xl hover:border-int-orange transition-all group">
+              <div className="w-16 h-16 bg-int-orange/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <Zap className="w-8 h-8 text-int-orange" />
               </div>
-              <h3 className="font-bold mb-2">6 Targeted Questions</h3>
-              <p className="text-sm text-signal-white/70">About your challenges, team, timeline, and budget</p>
+              <h3 className="font-bold text-2xl mb-3 text-center">Live AI Demo</h3>
+              <p className="text-signal-white/70 text-center mb-6">
+                Describe your business challenge and get instant AI-powered recommendations using the same technology we deploy for clients
+              </p>
+              <Link
+                to={createPageUrl('InteractiveDemo')}
+                onClick={() => trackInteraction('click', 'demo-cta', { type: 'analyzer' })}
+                className="w-full block text-center px-6 py-3 bg-int-orange hover:bg-int-orange/80 rounded-lg font-semibold transition-all"
+              >
+                Try It Now →
+              </Link>
             </div>
-            <div className="p-6 bg-slate-900/50 border border-int-navy/30 rounded-xl text-center">
-              <div className="w-12 h-12 bg-int-navy/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Brain className="w-6 h-6 text-int-navy" />
+            <div className="p-8 bg-slate-900/50 border border-int-navy/30 rounded-xl hover:border-int-navy transition-all group">
+              <div className="w-16 h-16 bg-int-navy/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <Play className="w-8 h-8 text-int-navy" />
               </div>
-              <h3 className="font-bold mb-2">AI-Powered Analysis</h3>
-              <p className="text-sm text-signal-white/70">Instant personalized readiness score and insights</p>
-            </div>
-            <div className="p-6 bg-slate-900/50 border border-int-teal/30 rounded-xl text-center">
-              <div className="w-12 h-12 bg-int-teal/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Rocket className="w-6 h-6 text-int-teal" />
-              </div>
-              <h3 className="font-bold mb-2">Custom Recommendations</h3>
-              <p className="text-sm text-signal-white/70">Services, workshops, and timeline for your needs</p>
+              <h3 className="font-bold text-2xl mb-3 text-center">Success Story</h3>
+              <p className="text-signal-white/70 text-center mb-6">
+                Watch an interactive walkthrough of a real client project from discovery to deployment with measurable results
+              </p>
+              <Link
+                to={createPageUrl('InteractiveDemo')}
+                onClick={() => trackInteraction('click', 'demo-cta', { type: 'walkthrough' })}
+                className="w-full block text-center px-6 py-3 bg-int-navy hover:bg-int-navy/80 rounded-lg font-semibold transition-all"
+              >
+                See How It Works →
+              </Link>
             </div>
           </div>
 
@@ -378,10 +390,10 @@ export default function Home() {
               onClick={() => trackInteraction('click', 'assessment-cta', { source: 'home-page' })}
               className="inline-block px-10 py-5 bg-gradient-to-r from-int-orange to-int-navy rounded-full font-semibold text-xl hover:shadow-glow transition-all duration-300 transform hover:scale-105"
             >
-              START YOUR FREE ASSESSMENT
+              Or Take Your Free AI Readiness Assessment
             </Link>
             <p className="text-sm text-signal-white/60 mt-4">
-              No email required • Results in 5 minutes • Downloadable report
+              6 questions • 5 minutes • Personalized recommendations
             </p>
           </div>
         </div>

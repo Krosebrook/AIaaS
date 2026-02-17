@@ -70,6 +70,7 @@ import Workshops from './pages/Workshops';
 import AIReadinessAssessment from './pages/AIReadinessAssessment';
 import Resources from './pages/Resources';
 import ResourceView from './pages/ResourceView';
+import InteractiveDemo from './pages/InteractiveDemo';
 import __Layout from './Layout.jsx';
 
 
@@ -97,6 +98,7 @@ export const PAGES = {
     "AIReadinessAssessment": AIReadinessAssessment,
     "Resources": Resources,
     "ResourceView": ResourceView,
+    "InteractiveDemo": InteractiveDemo,
 }
 
 export const pagesConfig = {
