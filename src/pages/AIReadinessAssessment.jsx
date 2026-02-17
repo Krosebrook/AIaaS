@@ -514,3 +514,41 @@ Visit intinc.com to schedule a consultation`;
           <button
             onClick={handleBack}
             disabled={currentStep === 0}
+            className="flex items-center gap-2 px-6 py-3 bg-slate-700 rounded-lg font-semibold hover:bg-slate-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Back
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={!isAnswered || analyzing}
+            className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {analyzing ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                Analyzing Your Readiness...
+              </>
+            ) : currentStep === questions.length - 1 ? (
+              <>
+                Generate Assessment
+                <CheckCircle className="w-5 h-5" />
+              </>
+            ) : (
+              <>
+                Continue
+                <ArrowRight className="w-5 h-5" />
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
+      <style jsx>{`
+        .shadow-glow {
+          box-shadow: 0 0 30px rgba(242,101,34,0.6);
+        }
+      `}</style>
+    </div>
+  );
+}
