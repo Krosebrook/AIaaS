@@ -22,7 +22,36 @@ export function useSmartRecommendations() {
       const downloadedResources = JSON.parse(localStorage.getItem('downloaded_resources') || '[]');
       const exploreHistory = JSON.parse(localStorage.getItem('explored_solutions') || '[]');
 
-      // Call AI to generate recommendations
+      // Analyze current industry trends using web search
+      const trendAnalysis = await base44.integrations.Core.InvokeLLM({
+        prompt: `Analyze current AI industry trends (as of early 2026) relevant to enterprise AI implementation, AI consulting, and business transformation. Focus on:
+- Emerging AI technologies and frameworks
+- Regulatory changes (AI governance, compliance)
+- Industry adoption patterns
+- Security and privacy concerns
+- ROI and implementation challenges
+
+Provide 3-5 key trends with business impact.`,
+        add_context_from_internet: true,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            trends: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  trend: { type: 'string' },
+                  impact: { type: 'string' },
+                  relevantContent: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Call AI to generate recommendations with trend context
       const recs = await base44.integrations.Core.InvokeLLM({
         prompt: `You are an AI content recommendation engine for INTinc.com, an AI consulting company.
 
@@ -33,21 +62,29 @@ User Behavior Data:
 - Downloaded Resources: ${downloadedResources.join(', ')}
 - Explored Solutions: ${exploreHistory.join(', ')}
 
-Available Content Types:
-1. Resources: "AI Strategy Whitepaper", "Security Best Practices Guide", "ROI Calculator Guide", "Compliance Checklist"
-2. Workshops: "AI Discovery Workshop", "Technical Bootcamp", "Use Case Ideation"
-3. Consulting Services: "AI Strategy Development", "Custom AI Solution Design", "AI Governance Frameworks", "ML Operations"
-4. Case Studies: Filter by industry or service type
+Current Industry Trends:
+${trendAnalysis.trends.map(t => `- ${t.trend}: ${t.impact}`).join('\n')}
 
-Based on this user's behavior, recommend 3-4 pieces of content that would be most valuable to them RIGHT NOW.
+Available Content Types:
+1. Blog Posts: "AI Implementation Best Practices", "Navigating AI Regulations 2026", "Enterprise AI Security", "AI ROI Measurement"
+2. Whitepapers: "AI Strategy Framework", "Security-First AI Architecture", "AI Governance Guide", "ML Operations Playbook"
+3. Case Studies: Healthcare AI, Financial Services AI, Manufacturing AI, Retail AI
+4. Workshops: "AI Discovery Workshop", "Technical Bootcamp", "Governance & Ethics"
+5. Consulting Services: "AI Strategy Development", "Custom AI Solution Design", "AI Governance Frameworks"
+
+Based on user behavior AND current industry trends, recommend 4-5 pieces of content including:
+- At least 1 proactive suggestion based on trends (even if user hasn't shown explicit interest)
+- Content that aligns with their journey stage
+- Mix of educational and actionable content
 
 Return JSON with:
 - recommendations: array of objects with:
-  - type: "resource" | "workshop" | "service" | "case_study"
+  - type: "blog" | "whitepaper" | "case_study" | "workshop" | "service"
   - title: string
-  - reason: brief explanation why this is relevant
+  - reason: brief explanation (mention if trend-driven)
   - priority: "high" | "medium" | "low"
-  - cta: call to action text`,
+  - cta: call to action text
+  - trendRelevance: boolean (true if based on industry trends)`,
         response_json_schema: {
           type: 'object',
           properties: {
@@ -60,7 +97,8 @@ Return JSON with:
                   title: { type: 'string' },
                   reason: { type: 'string' },
                   priority: { type: 'string' },
-                  cta: { type: 'string' }
+                  cta: { type: 'string' },
+                  trendRelevance: { type: 'boolean' }
                 }
               }
             }
@@ -181,6 +219,7 @@ export default function SmartRecommendations({ compact = false, limit = 4 }) {
         {displayRecs.map((rec, i) => {
           const Icon = getIcon(rec.type);
           const isPriority = rec.priority === 'high';
+          const isTrendBased = rec.trendRelevance;
 
           return (
             <Link
@@ -209,7 +248,12 @@ export default function SmartRecommendations({ compact = false, limit = 4 }) {
                         Priority
                       </span>
                     )}
-                  </div>
+                    {isTrendBased && (
+                      <span className="px-2 py-1 bg-green-500/20 border border-green-500/30 rounded text-xs font-semibold text-green-400 flex-shrink-0">
+                        🔥 Trending
+                      </span>
+                    )}
+                    </div>
                   <p className="text-sm text-signal-white/80 mb-3">{rec.reason}</p>
                   <div className="flex items-center gap-2 text-sm font-semibold text-int-orange">
                     {rec.cta}
