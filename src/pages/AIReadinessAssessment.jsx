@@ -528,6 +528,8 @@ Visit intinc.com to schedule a consultation`;
           </div>
 
           {/* Timeline & Investment */}
+
+          {/* Timeline & Investment */}
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-6 bg-blue-500/10 border border-blue-500/30 rounded-xl">
               <div className="flex items-center gap-3 mb-4">
