@@ -14,7 +14,8 @@ import {
   Sparkles,
   BarChart3,
   TrendingUp,
-  Folder
+  Folder,
+  Target
 } from 'lucide-react';
 
 export default function SidebarNav({ isOpen, onToggle, currentPage }) {
@@ -32,6 +33,7 @@ export default function SidebarNav({ isOpen, onToggle, currentPage }) {
     { name: 'Strategy Wizard', page: 'StrategyWizard', icon: BarChart3, section: 'tools' },
     { name: 'Projects', page: 'Projects', icon: Folder, section: 'tools' },
     { name: 'Content Generator', page: 'ContentGenerator', icon: FileText, section: 'tools' },
+    { name: 'Content Strategy', page: 'ContentStrategy', icon: Target, section: 'tools' },
     { name: 'SEO Dashboard', page: 'SEODashboard', icon: TrendingUp, section: 'tools' },
     { name: 'Settings', page: 'UserSettings', icon: Settings, section: 'tools' },
   ];
