@@ -60,8 +60,10 @@ import CaseStudy6 from './pages/CaseStudy6';
 import ClientHealth from './pages/ClientHealth';
 import Contact from './pages/Contact';
 import ContentGenerator from './pages/ContentGenerator';
+import ContentStrategy from './pages/ContentStrategy';
 import Home from './pages/Home';
 import InteractiveDemo from './pages/InteractiveDemo';
+import OnboardingDashboard from './pages/OnboardingDashboard';
 import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import Projects from './pages/Projects';
 import ResourceView from './pages/ResourceView';
@@ -72,8 +74,6 @@ import Solutions from './pages/Solutions';
 import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
-import OnboardingDashboard from './pages/OnboardingDashboard';
-import ContentStrategy from './pages/ContentStrategy';
 import __Layout from './Layout.jsx';
 
 
@@ -91,8 +91,10 @@ export const PAGES = {
     "ClientHealth": ClientHealth,
     "Contact": Contact,
     "ContentGenerator": ContentGenerator,
+    "ContentStrategy": ContentStrategy,
     "Home": Home,
     "InteractiveDemo": InteractiveDemo,
+    "OnboardingDashboard": OnboardingDashboard,
     "PersonalizedDashboard": PersonalizedDashboard,
     "Projects": Projects,
     "ResourceView": ResourceView,
@@ -103,8 +105,6 @@ export const PAGES = {
     "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
-    "OnboardingDashboard": OnboardingDashboard,
-    "ContentStrategy": ContentStrategy,
 }
 
 export const pagesConfig = {

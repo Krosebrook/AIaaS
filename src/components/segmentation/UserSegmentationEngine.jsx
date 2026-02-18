@@ -32,6 +32,21 @@ export function useUserSegmentation() {
       const downloadedResources = JSON.parse(localStorage.getItem('downloaded_resources') || '[]');
       const exploredSolutions = JSON.parse(localStorage.getItem('explored_solutions') || '[]');
       const timeOnSite = JSON.parse(localStorage.getItem('time_on_pages') || '{}');
+      
+      // Store visitor segment for content gap analysis
+      if (assessmentResults) {
+        const visitorSegments = JSON.parse(localStorage.getItem('visitor_segments') || '[]');
+        const segmentSnapshot = {
+          timestamp: Date.now(),
+          readiness: assessmentResults.readinessLevel,
+          score: assessmentResults.readinessScore,
+          interests: userProfile.interests || []
+        };
+        visitorSegments.push(segmentSnapshot);
+        // Keep only last 50 visitor segments
+        if (visitorSegments.length > 50) visitorSegments.shift();
+        localStorage.setItem('visitor_segments', JSON.stringify(visitorSegments));
+      }
 
       // AI segmentation
       const segmentAnalysis = await base44.integrations.Core.InvokeLLM({

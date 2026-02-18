@@ -274,11 +274,18 @@ Provide a DEEPLY SPECIFIC JSON response with:
         }
       });
 
+      // Store results for segmentation
+      localStorage.setItem('ai_assessment_results', JSON.stringify(analysis));
+
       // Prompt for email to trigger onboarding
       const userEmail = prompt('Enter your email to receive detailed results and personalized recommendations:');
       if (userEmail && userEmail.includes('@')) {
         await OnboardingWorkflow.triggerFromAssessment(analysis, userEmail);
       }
+
+      // Refresh user segment based on assessment
+      localStorage.removeItem('user_segment');
+      localStorage.removeItem('user_segment_time');
     } catch (error) {
       console.error('Analysis failed:', error);
     } finally {
