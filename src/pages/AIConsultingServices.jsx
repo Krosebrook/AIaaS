@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import SEOMetadata from '../components/SEOMetadata';
 import { base44 } from '@/api/base44Client';
+import SmartRecommendations from '../components/SmartRecommendations';
 import { 
   Target, 
   Wrench, 
@@ -380,6 +381,13 @@ Respond with the service name and a personalized reason why it's recommended.`,
               </tbody>
             </table>
           </div>
+        </div>
+      </section>
+
+      {/* Smart Recommendations */}
+      <section className="py-16 px-6 bg-carbon-night border-y border-int-orange/30">
+        <div className="max-w-5xl mx-auto">
+          <SmartRecommendations limit={3} />
         </div>
       </section>
 

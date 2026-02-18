@@ -11,6 +11,7 @@ import GuidedTour from '../components/GuidedTour';
 import { useScrollRestoration } from '../components/utils/useScrollRestoration';
 import OnboardingChecklist from '../components/onboarding/OnboardingChecklist';
 import InteractiveTour from '../components/onboarding/InteractiveTour';
+import SmartRecommendations from '../components/SmartRecommendations';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -484,39 +485,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Personalized Recommendations - Enhanced with Journey Data */}
-      {(recommendations || shouldShowPersonalization) && (
-        <section className="py-16 px-6 bg-gradient-to-r from-int-navy/10 to-int-orange/10 border-y border-int-navy/30">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block px-4 py-1 bg-int-orange/20 border border-int-orange/30 rounded-full text-sm font-semibold text-int-orange mb-4">
-              {journey.currentStage === 'decision' ? '🎯 Ready to Move Forward?' : 'Recommended for Your Business'}
-            </div>
-            <h2 className="text-3xl font-bold mb-4">
-              {recommendations?.headline || `${journey.currentStage === 'decision' ? 'Let\'s Build Your Solution' : 'Continue Your Journey'}`}
-            </h2>
-            <p className="text-lg text-signal-white/80 mb-6">
-              {journey.topInterests.length > 0 && (
-                <>Based on your interest in <strong className="text-int-orange">{journey.topInterests.join(', ')}</strong></>
-              )}
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              {contentRecs.map((rec, i) => (
-                <Link
-                  key={i}
-                  to={createPageUrl(rec.type === 'case-study' ? 'CaseStudies' : rec.type === 'consultation' ? 'Contact' : 'Services')}
-                  className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                    rec.priority === 'critical'
-                      ? 'bg-gradient-to-r from-int-orange to-int-navy hover:shadow-glow'
-                      : 'bg-void border-2 border-int-navy hover:bg-int-navy/10'
-                  }`}
-                >
-                  {rec.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Smart AI Recommendations */}
+      <section className="py-16 px-6 bg-gradient-to-r from-int-navy/10 to-int-orange/10 border-y border-int-navy/30">
+        <div className="max-w-5xl mx-auto">
+          <SmartRecommendations limit={3} />
+        </div>
+      </section>
 
       {/* Dynamic FAQ */}
       <DynamicFAQ />
