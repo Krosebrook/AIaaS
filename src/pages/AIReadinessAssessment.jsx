@@ -16,7 +16,10 @@ import {
   Users,
   TrendingUp,
   Target,
-  Settings
+  Settings,
+  Sparkles,
+  Lightbulb,
+  AlertCircle
 } from 'lucide-react';
 
 export default function AIReadinessAssessment() {
@@ -27,6 +30,9 @@ export default function AIReadinessAssessment() {
   const [results, setResults] = useState(null);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [systemLinks, setSystemLinks] = useState('');
+  const [stepInsights, setStepInsights] = useState({});
+  const [loadingInsight, setLoadingInsight] = useState(false);
+  const [showInsight, setShowInsight] = useState(false);
 
   const questions = [
     {
@@ -117,14 +123,60 @@ export default function AIReadinessAssessment() {
     }
   ];
 
-  const handleAnswer = (questionId, answer) => {
+  const handleAnswer = async (questionId, answer) => {
     setAnswers(prev => ({
       ...prev,
       [questionId]: answer
     }));
+    
+    // Generate real-time insight for this answer
+    if (!stepInsights[questionId]) {
+      await generateStepInsight(questionId, answer);
+    }
+  };
+
+  const generateStepInsight = async (questionId, answer) => {
+    setLoadingInsight(true);
+    try {
+      const allAnswers = { ...answers, [questionId]: answer };
+      const insight = await base44.integrations.Core.InvokeLLM({
+        prompt: `You're an AI implementation consultant. A user just answered a question in an AI readiness assessment.
+
+Question ID: ${questionId}
+Their answer: ${answer}
+Previous answers: ${JSON.stringify(allAnswers)}
+
+Provide a brief, encouraging insight that:
+1. Acknowledges their answer positively
+2. Gives 1-2 specific implications for their AI journey
+3. Hints at what comes next
+4. Stays under 60 words
+
+Be conversational, specific, and actionable.`,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            insight: { type: 'string' },
+            icon: { type: 'string', enum: ['positive', 'neutral', 'important'] }
+          }
+        }
+      });
+      
+      setStepInsights(prev => ({
+        ...prev,
+        [questionId]: insight
+      }));
+      setShowInsight(true);
+      setTimeout(() => setShowInsight(false), 5000);
+    } catch (error) {
+      console.error('Failed to generate insight:', error);
+    } finally {
+      setLoadingInsight(false);
+    }
   };
 
   const handleNext = () => {
+    setShowInsight(false);
     if (currentStep < questions.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
@@ -624,36 +676,88 @@ Visit intinc.com to schedule a consultation`;
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-block p-4 bg-gradient-to-br from-int-orange/20 to-int-navy/20 rounded-full mb-6">
+          <div className="inline-block p-4 bg-gradient-to-br from-int-orange/20 to-int-navy/20 rounded-full mb-6 animate-pulse">
             <Brain className="w-12 h-12 text-int-orange" />
           </div>
           <h1 className="text-4xl font-bold mb-4">AI Readiness Assessment</h1>
-          <p className="text-xl text-slate-400">
-            Answer {questions.length} questions to get personalized recommendations
+          <p className="text-xl text-slate-400 mb-3">
+            Interactive wizard with real-time AI insights
           </p>
+          <div className="flex items-center justify-center gap-4 text-sm text-slate-500">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
+              <span>{questions.length} questions</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Lightbulb className="w-4 h-4" />
+              <span>Live analysis</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Target className="w-4 h-4" />
+              <span>Custom roadmap</span>
+            </div>
+          </div>
         </div>
 
-        {/* Progress Bar */}
+        {/* Progress Bar with Steps */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-slate-400">
-              Question {currentStep + 1} of {questions.length}
-            </span>
-            <span className="text-sm font-semibold text-slate-400">
-              {Math.round(progress)}% Complete
-            </span>
+          <div className="flex items-center justify-between mb-4">
+            {questions.map((q, idx) => (
+              <div key={idx} className="flex items-center">
+                <div className={`relative flex flex-col items-center ${idx < questions.length - 1 ? 'flex-1' : ''}`}>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
+                    idx < currentStep 
+                      ? 'bg-green-500 text-white' 
+                      : idx === currentStep 
+                      ? 'bg-int-orange text-white ring-4 ring-int-orange/30' 
+                      : 'bg-slate-700 text-slate-400'
+                  }`}>
+                    {idx < currentStep ? <CheckCircle className="w-5 h-5" /> : idx + 1}
+                  </div>
+                  <div className={`hidden md:block text-xs mt-2 max-w-[80px] text-center ${
+                    idx === currentStep ? 'text-int-orange font-semibold' : 'text-slate-500'
+                  }`}>
+                    {q.title.split(' ').slice(0, 2).join(' ')}
+                  </div>
+                </div>
+                {idx < questions.length - 1 && (
+                  <div className={`h-1 flex-1 mx-2 rounded transition-all ${
+                    idx < currentStep ? 'bg-green-500' : 'bg-slate-700'
+                  }`} />
+                )}
+              </div>
+            ))}
           </div>
-          <div className="w-full bg-slate-800 rounded-full h-2">
-            <div
-              className="bg-gradient-to-r from-int-orange to-int-navy h-full rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
+          <div className="text-center text-sm text-slate-400">
+            {Math.round(progress)}% Complete
           </div>
         </div>
+
+        {/* Real-time Insight Banner */}
+        {showInsight && stepInsights[questions[currentStep - 1]?.id] && (
+          <div className="mb-6 p-4 bg-gradient-to-r from-int-orange/20 to-int-navy/20 border border-int-orange/30 rounded-xl animate-fadeIn">
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-8 h-8 bg-int-orange/30 rounded-full flex items-center justify-center">
+                <Sparkles className="w-4 h-4 text-int-orange" />
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-int-orange mb-1">AI Insight</div>
+                <p className="text-sm text-signal-white/90">
+                  {stepInsights[questions[currentStep - 1]?.id]?.insight}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Question Card */}
-        <div className="p-8 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-xl mb-8">
-          <h2 className="text-2xl font-bold mb-3">{currentQuestion.title}</h2>
+        <div className="p-8 bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-xl mb-8 transition-all duration-500">
+          <div className="flex items-start justify-between mb-4">
+            <h2 className="text-2xl font-bold">{currentQuestion.title}</h2>
+            {loadingInsight && (
+              <Loader2 className="w-5 h-5 text-int-orange animate-spin" />
+            )}
+          </div>
           <p className="text-slate-400 mb-6">{currentQuestion.description}</p>
 
           {currentQuestion.type === 'upload' ? (
@@ -698,27 +802,31 @@ Visit intinc.com to schedule a consultation`;
             </div>
           ) : (
             <div className="space-y-3">
-              {currentQuestion.options.map((option) => (
+              {currentQuestion.options.map((option, idx) => (
                 <button
                   key={option}
                   onClick={() => handleAnswer(currentQuestion.id, option)}
-                  className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
+                  className={`w-full p-4 text-left rounded-lg border-2 transition-all animate-slideIn group ${
                     answers[currentQuestion.id] === option
-                      ? 'bg-int-orange/20 border-int-orange text-white font-semibold'
-                      : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:border-int-orange/50'
+                      ? 'bg-int-orange/20 border-int-orange text-white font-semibold scale-[1.02]'
+                      : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:border-int-orange/50 hover:bg-slate-800/80'
                   }`}
+                  style={{ animationDelay: `${idx * 0.1}s` }}
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                       answers[currentQuestion.id] === option
                         ? 'border-int-orange bg-int-orange'
-                        : 'border-slate-500'
+                        : 'border-slate-500 group-hover:border-int-orange/50'
                     }`}>
                       {answers[currentQuestion.id] === option && (
-                        <CheckCircle className="w-4 h-4 text-void" />
+                        <div className="w-3 h-3 bg-white rounded-full" />
                       )}
                     </div>
-                    <span>{option}</span>
+                    <span className="flex-1">{option}</span>
+                    {answers[currentQuestion.id] === option && (
+                      <CheckCircle className="w-5 h-5 text-int-orange" />
+                    )}
                   </div>
                 </button>
               ))}
@@ -764,6 +872,36 @@ Visit intinc.com to schedule a consultation`;
       <style jsx>{`
         .shadow-glow {
           box-shadow: 0 0 30px rgba(242,101,34,0.6);
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fadeIn {
+          animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        
+        .animate-slideIn {
+          animation: slideIn 0.4s ease-out;
         }
       `}</style>
     </div>
