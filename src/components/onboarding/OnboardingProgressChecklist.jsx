@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../../utils';
-import { CheckCircle, Circle, ChevronRight, Trophy, X } from 'lucide-react';
+import { CheckCircle, Circle, ChevronRight, Trophy, X, Loader2 } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 /**
  * Onboarding Progress Checklist
@@ -15,8 +16,10 @@ export default function OnboardingProgressChecklist() {
     completedSteps: [],
     onboardingComplete: false
   });
+  const [personalizedTasks, setPersonalizedTasks] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const tasks = [
+  const defaultTasks = [
     {
       id: 'view_home',
       title: 'Explore the Homepage',
@@ -57,8 +60,8 @@ export default function OnboardingProgressChecklist() {
   ];
 
   useEffect(() => {
-    // Load progress
-    const loadProgress = () => {
+    const initialize = async () => {
+      // Load progress
       const completed = JSON.parse(localStorage.getItem('onboarding_progress') || '[]');
       const onboardingComplete = localStorage.getItem('onboarding_completed') === 'true';
       const checklistDismissed = localStorage.getItem('checklist_dismissed') === 'true';
@@ -74,9 +77,12 @@ export default function OnboardingProgressChecklist() {
       } else {
         setIsMinimized(true);
       }
+
+      // Personalize tasks
+      await personalizeTasks();
     };
 
-    loadProgress();
+    initialize();
 
     // Auto-track page visits
     const visitedPages = JSON.parse(localStorage.getItem('visited_pages') || '[]');
@@ -97,10 +103,81 @@ export default function OnboardingProgressChecklist() {
     });
 
     // Listen for storage changes
-    window.addEventListener('storage', loadProgress);
-    return () => window.removeEventListener('storage', loadProgress);
+    window.addEventListener('storage', initialize);
+    return () => window.removeEventListener('storage', initialize);
   }, []);
 
+  const personalizeTasks = async () => {
+    try {
+      const assessmentData = localStorage.getItem('ai_assessment_results');
+      const userProfile = localStorage.getItem('user_profile');
+      
+      if (!assessmentData && !userProfile) {
+        setPersonalizedTasks(defaultTasks);
+        setLoading(false);
+        return;
+      }
+
+      let context = {};
+      if (assessmentData) {
+        const data = JSON.parse(assessmentData);
+        context.readinessLevel = data.readinessLevel;
+        context.recommendedServices = data.recommendedServices;
+      }
+      if (userProfile) {
+        const profile = JSON.parse(userProfile);
+        context.role = profile.role;
+        context.interests = profile.interests;
+      }
+
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Create 5-6 personalized onboarding tasks for an INTinc.com user.
+
+User Context: ${JSON.stringify(context)}
+
+Available pages: Home, ContentGenerator, ContentStrategy, Workshops, PersonalizedDashboard, AIReadinessAssessment, AIUseCaseExplorer, RoadmapGenerator
+
+Create tasks that:
+1. Match their readiness level and role
+2. Build progressively from basic to advanced
+3. Focus on their recommended services/interests
+4. Have clear value propositions
+
+Each task needs: id, title (action-oriented), description (why it matters to them), page`,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            tasks: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                  title: { type: 'string' },
+                  description: { type: 'string' },
+                  page: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      });
+
+      setPersonalizedTasks(result.tasks);
+      
+      base44.analytics.track({
+        eventName: 'checklist_personalized',
+        properties: { taskCount: result.tasks.length }
+      });
+    } catch (error) {
+      console.error('Task personalization failed:', error);
+      setPersonalizedTasks(defaultTasks);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const tasks = personalizedTasks || defaultTasks;
   const completedCount = progress.completedSteps.length;
   const totalCount = tasks.length;
   const percentComplete = Math.round((completedCount / totalCount) * 100);
@@ -125,19 +202,40 @@ export default function OnboardingProgressChecklist() {
     window.location.reload();
   };
 
+  if (loading) {
+    return (
+      <div className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg flex items-center justify-center z-50">
+        <Loader2 className="w-6 h-6 text-white animate-spin" />
+      </div>
+    );
+  }
+
   if (!isOpen) {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg hover:shadow-glow transition-all flex items-center justify-center z-50 group"
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg hover:shadow-glow transition-all flex items-center justify-center z-50 group"
+        style={{
+          width: `${Math.max(56, 56 + percentComplete * 0.3)}px`,
+          height: `${Math.max(56, 56 + percentComplete * 0.3)}px`
+        }}
         title="Show onboarding checklist"
       >
         <div className="relative">
           <Trophy className="w-6 h-6 text-white" />
           {completedCount > 0 && completedCount < totalCount && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full text-xs font-bold flex items-center justify-center text-black">
+            <span className="absolute -top-2 -right-2 bg-green-400 rounded-full text-xs font-bold flex items-center justify-center text-black animate-pulse"
+              style={{
+                width: `${16 + percentComplete * 0.1}px`,
+                height: `${16 + percentComplete * 0.1}px`,
+                fontSize: `${10 + percentComplete * 0.05}px`
+              }}
+            >
               {completedCount}
             </span>
+          )}
+          {isComplete && (
+            <span className="absolute inset-0 bg-green-400/20 rounded-full animate-ping" />
           )}
         </div>
       </button>

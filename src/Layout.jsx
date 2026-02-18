@@ -5,6 +5,7 @@ import LiveChat from './components/LiveChat';
 import AppShell from './components/shell/AppShell';
 import InteractiveOnboarding from './components/onboarding/InteractiveOnboarding';
 import OnboardingProgressChecklist from './components/onboarding/OnboardingProgressChecklist';
+import OnboardingStatusIndicator from './components/onboarding/OnboardingStatusIndicator';
 import { Menu, X } from 'lucide-react';
 
 export default function Layout({ children, currentPageName }) {
@@ -351,6 +352,9 @@ export default function Layout({ children, currentPageName }) {
 
       {/* Progress Checklist */}
       <OnboardingProgressChecklist />
+
+      {/* Subtle Status Indicator */}
+      <OnboardingStatusIndicator />
 
       {/* Footer */}
       <footer className="bg-carbon-night border-t border-int-navy/30 py-12 px-6" role="contentinfo">

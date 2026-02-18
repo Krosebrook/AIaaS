@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../../utils';
-import { X, ChevronRight, ChevronLeft, CheckCircle, Play, Sparkles } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, CheckCircle, Play, Sparkles, Loader2 } from 'lucide-react';
+import { base44 } from '@/api/base44Client';
 
 /**
  * Interactive Onboarding Flow
@@ -13,8 +14,10 @@ export default function InteractiveOnboarding({ onComplete }) {
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [completedSteps, setCompletedSteps] = useState([]);
   const [playingVideo, setPlayingVideo] = useState(null);
+  const [personalizedSteps, setPersonalizedSteps] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const steps = [
+  const defaultSteps = [
     {
       id: 'welcome',
       title: 'Welcome to INTinc.com! 🎉',
@@ -71,21 +74,118 @@ export default function InteractiveOnboarding({ onComplete }) {
   ];
 
   useEffect(() => {
-    const onboardingComplete = localStorage.getItem('onboarding_completed');
-    const onboardingDismissed = localStorage.getItem('onboarding_dismissed');
-    
-    // Only show if user explicitly hasn't completed or dismissed
-    if (!onboardingComplete && !onboardingDismissed) {
-      // Don't auto-show, wait for user action
-      setShowOnboarding(false);
-    }
+    const initializeOnboarding = async () => {
+      const onboardingComplete = localStorage.getItem('onboarding_completed');
+      const onboardingDismissed = localStorage.getItem('onboarding_dismissed');
+      
+      // Only show if user explicitly hasn't completed or dismissed
+      if (!onboardingComplete && !onboardingDismissed) {
+        setShowOnboarding(false);
+      }
 
-    // Load completed steps
-    const saved = localStorage.getItem('onboarding_progress');
-    if (saved) {
-      setCompletedSteps(JSON.parse(saved));
-    }
+      // Load completed steps
+      const saved = localStorage.getItem('onboarding_progress');
+      if (saved) {
+        setCompletedSteps(JSON.parse(saved));
+      }
+
+      // Personalize steps based on user data
+      await personalizeSteps();
+    };
+
+    initializeOnboarding();
   }, []);
+
+  const personalizeSteps = async () => {
+    try {
+      // Get user context from assessment or profile
+      const assessmentData = localStorage.getItem('ai_assessment_results');
+      const userProfile = localStorage.getItem('user_profile');
+      
+      let context = {};
+      if (assessmentData) {
+        const data = JSON.parse(assessmentData);
+        context.readinessLevel = data.readinessLevel;
+        context.challenges = data.gaps;
+        context.services = data.recommendedServices;
+      }
+      if (userProfile) {
+        const profile = JSON.parse(userProfile);
+        context.industry = profile.industry;
+        context.role = profile.role;
+        context.interests = profile.interests;
+      }
+
+      // If no context, use default steps
+      if (Object.keys(context).length === 0) {
+        setPersonalizedSteps(defaultSteps);
+        setLoading(false);
+        return;
+      }
+
+      // Generate personalized onboarding with AI
+      const result = await base44.integrations.Core.InvokeLLM({
+        prompt: `Create a personalized onboarding flow for an INTinc.com user based on their profile.
+
+User Context:
+${JSON.stringify(context, null, 2)}
+
+Available pages/features to highlight:
+- ContentGenerator: AI content creation
+- ContentStrategy: Content gap analysis
+- Workshops: Training programs
+- PersonalizedDashboard: Personalized insights
+- AIReadinessAssessment: AI readiness evaluation
+- AIUseCaseExplorer: Discover use cases
+- RoadmapGenerator: Implementation planning
+
+Create 4-5 onboarding steps that:
+1. Are relevant to their industry/role/readiness level
+2. Prioritize features that solve their specific challenges
+3. Have a logical progression from beginner to advanced
+4. Include personalized descriptions that speak to their needs
+
+Each step should have: id, title (personalized to user), description (explain why it matters to THEM), targetPage, and 2-3 highlights.`,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            steps: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string' },
+                  title: { type: 'string' },
+                  description: { type: 'string' },
+                  targetPage: { type: 'string' },
+                  highlights: { type: 'array', items: { type: 'string' } }
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // Add welcome and completion steps
+      const fullSteps = [
+        defaultSteps[0], // Welcome
+        ...result.steps.map(s => ({ ...s, action: `Explore ${s.targetPage}`, position: 'center' })),
+        defaultSteps[defaultSteps.length - 1] // Complete
+      ];
+
+      setPersonalizedSteps(fullSteps);
+      
+      base44.analytics.track({
+        eventName: 'onboarding_personalized',
+        properties: { stepCount: result.steps.length }
+      });
+    } catch (error) {
+      console.error('Personalization failed:', error);
+      setPersonalizedSteps(defaultSteps);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const markStepComplete = (stepId) => {
     if (!completedSteps.includes(stepId)) {
@@ -145,8 +245,17 @@ export default function InteractiveOnboarding({ onComplete }) {
     );
   }
 
+  const steps = personalizedSteps || defaultSteps;
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
+
+  if (loading) {
+    return (
+      <div className="fixed bottom-24 right-6 w-12 h-12 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg flex items-center justify-center z-40">
+        <Loader2 className="w-5 h-5 text-white animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <>

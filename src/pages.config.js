@@ -49,6 +49,7 @@
  */
 import AIConsultingServices from './pages/AIConsultingServices';
 import AIReadinessAssessment from './pages/AIReadinessAssessment';
+import AIUseCaseExplorer from './pages/AIUseCaseExplorer';
 import About from './pages/About';
 import CaseStudies from './pages/CaseStudies';
 import CaseStudy1 from './pages/CaseStudy1';
@@ -68,20 +69,20 @@ import PersonalizedDashboard from './pages/PersonalizedDashboard';
 import Projects from './pages/Projects';
 import ResourceView from './pages/ResourceView';
 import Resources from './pages/Resources';
+import RoadmapGenerator from './pages/RoadmapGenerator';
 import SEODashboard from './pages/SEODashboard';
 import Services from './pages/Services';
 import Solutions from './pages/Solutions';
 import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
-import AIUseCaseExplorer from './pages/AIUseCaseExplorer';
-import RoadmapGenerator from './pages/RoadmapGenerator';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AIConsultingServices": AIConsultingServices,
     "AIReadinessAssessment": AIReadinessAssessment,
+    "AIUseCaseExplorer": AIUseCaseExplorer,
     "About": About,
     "CaseStudies": CaseStudies,
     "CaseStudy1": CaseStudy1,
@@ -101,14 +102,13 @@ export const PAGES = {
     "Projects": Projects,
     "ResourceView": ResourceView,
     "Resources": Resources,
+    "RoadmapGenerator": RoadmapGenerator,
     "SEODashboard": SEODashboard,
     "Services": Services,
     "Solutions": Solutions,
     "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
-    "AIUseCaseExplorer": AIUseCaseExplorer,
-    "RoadmapGenerator": RoadmapGenerator,
 }
 
 export const pagesConfig = {
