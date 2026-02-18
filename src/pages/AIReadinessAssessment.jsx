@@ -312,10 +312,25 @@ Provide a DEEPLY SPECIFIC JSON response with:
                   reasoning: { type: 'string' }
                 }
               }
-            }
+            },
+            dashboardMockupPrompt: { type: 'string' }
           }
         }
       });
+
+      // Generate AI dashboard mockup
+      let mockupUrl = null;
+      if (analysis.dashboardMockupPrompt) {
+        try {
+          const mockup = await base44.integrations.Core.GenerateImage({
+            prompt: analysis.dashboardMockupPrompt
+          });
+          mockupUrl = mockup.url;
+          analysis.mockupUrl = mockupUrl;
+        } catch (err) {
+          console.error('Mockup generation failed:', err);
+        }
+      }
 
       setResults(analysis);
       base44.analytics.track({
@@ -546,6 +561,26 @@ Visit intinc.com to schedule a consultation`;
             </div>
           )}
 
+          {/* AI-Generated Dashboard Mockup */}
+          {results.mockupUrl && (
+            <div className="p-6 bg-gradient-to-br from-slate-900 to-slate-800 border border-int-teal/30 rounded-xl">
+              <div className="flex items-center gap-3 mb-4">
+                <Sparkles className="w-6 h-6 text-int-teal" />
+                <h3 className="text-lg font-bold text-white">Your AI Dashboard Concept</h3>
+              </div>
+              <p className="text-signal-white/70 mb-4 text-sm">
+                AI-generated visualization of your potential dashboard based on your industry and challenges
+              </p>
+              <div className="rounded-lg overflow-hidden border border-slate-700">
+                <img 
+                  src={results.mockupUrl} 
+                  alt="AI-generated dashboard mockup" 
+                  className="w-full"
+                />
+              </div>
+            </div>
+          )}
+
           {/* Technical Requirements */}
           {results.technicalRequirements && (
             <div className="p-6 bg-slate-900/50 border border-slate-700 rounded-xl">
@@ -635,11 +670,20 @@ Visit intinc.com to schedule a consultation`;
             </p>
             <div className="flex flex-wrap gap-4">
               <button
-                onClick={() => navigate(createPageUrl('Contact'))}
+                onClick={() => {
+                  localStorage.setItem('assessment_for_roadmap', JSON.stringify(results));
+                  navigate(createPageUrl('RoadmapGenerator'));
+                }}
                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all"
               >
-                Schedule Consultation
+                Generate Implementation Roadmap
                 <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => navigate(createPageUrl('Contact'))}
+                className="flex items-center gap-2 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg font-semibold transition-all"
+              >
+                Schedule Consultation
               </button>
               <button
                 onClick={downloadReport}

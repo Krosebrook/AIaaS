@@ -75,6 +75,7 @@ import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
 import AIUseCaseExplorer from './pages/AIUseCaseExplorer';
+import RoadmapGenerator from './pages/RoadmapGenerator';
 import __Layout from './Layout.jsx';
 
 
@@ -107,6 +108,7 @@ export const PAGES = {
     "UserSettings": UserSettings,
     "Workshops": Workshops,
     "AIUseCaseExplorer": AIUseCaseExplorer,
+    "RoadmapGenerator": RoadmapGenerator,
 }
 
 export const pagesConfig = {

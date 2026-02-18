@@ -15,7 +15,9 @@ import {
   DollarSign,
   Clock,
   Users,
-  Calendar
+  Calendar,
+  Download,
+  FileJson
 } from 'lucide-react';
 
 export default function AIUseCaseExplorer() {
@@ -27,6 +29,7 @@ export default function AIUseCaseExplorer() {
   const [useCases, setUseCases] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [generatingSample, setGeneratingSample] = useState(null);
 
   const industries = [
     'Healthcare',
@@ -117,7 +120,8 @@ Base recommendations on current industry best practices and proven ROI.`,
                   suggestedWorkshops: {
                     type: 'array',
                     items: { type: 'string' }
-                  }
+                  },
+                  sampleDataStructure: { type: 'string' }
                 }
               }
             },
@@ -152,6 +156,50 @@ Base recommendations on current industry best practices and proven ROI.`,
     if (complexity === 'Low') return 'text-green-400 bg-green-500/10 border-green-500/30';
     if (complexity === 'Medium') return 'text-yellow-400 bg-yellow-500/10 border-yellow-500/30';
     return 'text-orange-400 bg-orange-500/10 border-orange-500/30';
+  };
+
+  const generateSampleData = async (useCase, index) => {
+    setGeneratingSample(index);
+    try {
+      const sampleData = await base44.integrations.Core.InvokeLLM({
+        prompt: `Generate realistic sample data for this AI use case implementation:
+
+Title: ${useCase.title}
+Description: ${useCase.description}
+Industry: ${formData.industry}
+Data Structure Hint: ${useCase.sampleDataStructure}
+
+Generate a JSON array with 10-15 realistic sample records that demonstrate this use case in action.
+Include relevant fields, realistic values, and ensure data quality represents the expected output of this AI solution.
+
+Return ONLY valid JSON array with no additional text.`,
+        response_json_schema: {
+          type: 'object',
+          properties: {
+            sampleData: { type: 'array' },
+            description: { type: 'string' }
+          }
+        }
+      });
+
+      const dataStr = JSON.stringify(sampleData.sampleData, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${useCase.title.replace(/\s+/g, '_')}_sample_data.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+
+      base44.analytics.track({
+        eventName: 'sample_data_generated',
+        properties: { useCase: useCase.title }
+      });
+    } catch (err) {
+      console.error('Sample data generation error:', err);
+    } finally {
+      setGeneratingSample(null);
+    }
   };
 
   const isFormValid = formData.industry && formData.challenge && formData.outcome;
@@ -369,7 +417,7 @@ Base recommendations on current industry best practices and proven ROI.`,
 
                     {/* Recommended Workshops */}
                     {useCase.suggestedWorkshops && useCase.suggestedWorkshops.length > 0 && (
-                      <div>
+                      <div className="mb-4">
                         <div className="flex items-center gap-2 mb-3">
                           <Users className="w-5 h-5 text-int-navy" />
                           <h4 className="font-semibold text-white">Recommended Workshops</h4>
@@ -387,6 +435,30 @@ Base recommendations on current industry best practices and proven ROI.`,
                         </div>
                       </div>
                     )}
+
+                    {/* Generate Sample Data */}
+                    <div className="pt-4 border-t border-slate-700">
+                      <button
+                        onClick={() => generateSampleData(useCase, idx)}
+                        disabled={generatingSample === idx}
+                        className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg font-semibold transition-all disabled:opacity-50"
+                      >
+                        {generatingSample === idx ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Generating Sample Data...
+                          </>
+                        ) : (
+                          <>
+                            <FileJson className="w-4 h-4" />
+                            Generate Sample Data (JSON)
+                          </>
+                        )}
+                      </button>
+                      <p className="text-xs text-signal-white/60 mt-2 text-center">
+                        Get realistic sample data to visualize this use case
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
