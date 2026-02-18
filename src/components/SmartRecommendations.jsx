@@ -21,6 +21,7 @@ export function useSmartRecommendations() {
       const assessmentResults = JSON.parse(localStorage.getItem('ai_assessment_results') || 'null');
       const downloadedResources = JSON.parse(localStorage.getItem('downloaded_resources') || '[]');
       const exploreHistory = JSON.parse(localStorage.getItem('explored_solutions') || '[]');
+      const userSegment = JSON.parse(localStorage.getItem('user_segment') || 'null');
 
       // Analyze current industry trends using web search
       const trendAnalysis = await base44.integrations.Core.InvokeLLM({
@@ -51,9 +52,12 @@ Provide 3-5 key trends with business impact.`,
         }
       });
 
-      // Call AI to generate recommendations with trend context
+      // Call AI to generate recommendations with trend context and segmentation
       const recs = await base44.integrations.Core.InvokeLLM({
         prompt: `You are an AI content recommendation engine for INTinc.com, an AI consulting company.
+
+User Segment: ${userSegment?.segment || 'Unknown'}
+Segment Pain Points: ${userSegment?.painPoints?.join(', ') || 'Unknown'}
 
 User Behavior Data:
 - Visited Pages: ${visitedPages.slice(-10).join(', ')}

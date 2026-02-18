@@ -14,6 +14,10 @@ export default function ContentGapAnalyzer() {
   const analyzeMarket = async () => {
     setAnalyzing(true);
     try {
+      // Get user segment data for targeted analysis
+      const userSegment = JSON.parse(localStorage.getItem('user_segment') || 'null');
+      const allVisitors = JSON.parse(localStorage.getItem('visitor_segments') || '[]');
+      
       // Step 1: Analyze competitor content strategies
       const competitorAnalysis = await base44.integrations.Core.InvokeLLM({
         prompt: `Analyze current AI consulting and implementation market content landscape.
@@ -76,9 +80,14 @@ Focus on: Enterprise AI implementation, AI security, AI governance, practical AI
         }, {})
       };
 
-      // Step 3: Generate strategic content recommendations
+      // Step 3: Generate strategic content recommendations with segment insights
       const recommendations = await base44.integrations.Core.InvokeLLM({
         prompt: `You are a content strategy consultant for INTinc.com, an enterprise AI consulting firm.
+
+USER SEGMENT INSIGHTS:
+Current User Segment: ${userSegment?.segment || 'Unknown'}
+Segment Pain Points: ${userSegment?.painPoints?.join('; ') || 'Unknown'}
+All Visitor Segments Detected: ${allVisitors.map(s => s.segment).join(', ') || 'Building data...'}
 
 Competitor Analysis:
 - Over-covered topics: ${competitorAnalysis.overCoveredTopics.join(', ')}
@@ -161,16 +170,28 @@ For each recommendation provide:
             strategicInsights: {
               type: 'array',
               items: { type: 'string' }
+            },
+            segmentInsights: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  segment: { type: 'string' },
+                  contentNeeds: { type: 'string' },
+                  priority: { type: 'string' }
+                }
+              }
             }
-          }
-        }
-      });
+            }
+            }
+            });
 
-      setAnalysis({
-        competitorAnalysis,
-        recommendations,
-        timestamp: new Date().toISOString()
-      });
+            setAnalysis({
+            competitorAnalysis,
+            recommendations,
+            userSegment,
+            timestamp: new Date().toISOString()
+            });
 
       base44.analytics.track({
         eventName: 'content_gap_analysis_completed'
@@ -251,6 +272,26 @@ For each recommendation provide:
         {/* Results */}
         {analysis && (
           <div className="space-y-8">
+            {/* Current User Segment */}
+            {analysis.userSegment && (
+              <div className="p-6 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/30 rounded-xl">
+                <h3 className="text-xl font-bold mb-4 text-blue-400">Your User Segment</h3>
+                <div className="flex items-start gap-4">
+                  <div className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-lg font-bold text-blue-400">
+                    {analysis.userSegment.segment}
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm text-signal-white/80 mb-2">
+                      Confidence: {analysis.userSegment.confidence}%
+                    </div>
+                    <div className="text-xs text-signal-white/60">
+                      Content tailored for: {analysis.userSegment.recommendedContentTypes?.join(', ')}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Strategic Insights */}
             <div className="p-8 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-xl">
               <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
@@ -266,6 +307,28 @@ For each recommendation provide:
                 ))}
               </div>
             </div>
+
+            {/* Segment-Specific Insights */}
+            {analysis.recommendations.segmentInsights && analysis.recommendations.segmentInsights.length > 0 && (
+              <div className="p-8 bg-gradient-to-br from-int-orange/10 to-int-teal/10 border border-int-orange/30 rounded-xl">
+                <h2 className="text-2xl font-bold mb-6">Segment-Specific Content Strategy</h2>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {analysis.recommendations.segmentInsights.map((insight, i) => (
+                    <div key={i} className="p-5 bg-void rounded-lg border border-slate-700">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="font-bold text-lg">{insight.segment}</div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          insight.priority === 'High' ? 'bg-red-500/20 text-red-400' : 'bg-yellow-500/20 text-yellow-400'
+                        }`}>
+                          {insight.priority} Priority
+                        </span>
+                      </div>
+                      <p className="text-sm text-signal-white/80">{insight.contentNeeds}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Market Gaps */}
             <div className="p-8 bg-gradient-to-br from-int-orange/10 to-int-navy/10 border border-int-orange/30 rounded-xl">
