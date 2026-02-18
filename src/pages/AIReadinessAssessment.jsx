@@ -339,7 +339,7 @@ Visit intinc.com to schedule a consultation`;
   };
 
   const currentQuestion = questions[currentStep];
-  const isAnswered = answers[currentQuestion?.id];
+  const isAnswered = currentQuestion?.optional || answers[currentQuestion?.id] || (currentQuestion?.type === 'upload' && (uploadedFiles.length > 0 || systemLinks.trim()));
   const progress = ((currentStep + 1) / questions.length) * 100;
 
   if (results) {
@@ -498,28 +498,32 @@ Visit intinc.com to schedule a consultation`;
               <h2 className="text-2xl font-bold text-white">Recommended Workshops</h2>
             </div>
             <div className="space-y-4">
-              {results.recommendedWorkshops.map((workshop, i) => (
-                <div key={i} className="p-4 bg-slate-800/50 border border-int-navy/30 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-semibold text-white">{workshop.name || workshop.split(' (')[0]}</div>
-                    {workshop.includes('$') && (
-                      <div className="text-sm text-slate-400">
-                        {workshop.match(/\$[\d,]+/)?.[0]}
-                      </div>
+              {(results.prioritizedWorkshops || results.recommendedWorkshops).map((workshop, i) => {
+                const workshopName = workshop.name || workshop.split(' (')[0];
+                const workshopReasoning = workshop.reasoning || '';
+                
+                return (
+                  <div key={i} className="p-4 bg-slate-800/50 border border-int-navy/30 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="font-semibold text-white">{workshopName}</div>
+                      {(typeof workshop === 'string' && workshop.includes('$')) && (
+                        <div className="text-sm text-slate-400">
+                          {workshop.match(/\$[\d,]+/)?.[0]}
+                        </div>
+                      )}
+                    </div>
+                    {workshopReasoning && (
+                      <p className="text-sm text-signal-white/70 mt-2 mb-3">{workshopReasoning}</p>
                     )}
+                    <button
+                      onClick={() => navigate(createPageUrl('Workshops'))}
+                      className="px-4 py-2 bg-int-navy hover:bg-int-navy/80 rounded-lg font-semibold text-sm transition-all"
+                    >
+                      View Details
+                    </button>
                   </div>
-                  {workshop.reasoning && (
-                    <p className="text-sm text-signal-white/70 mt-2">{workshop.reasoning}</p>
-                  )}
-                  <div>
-                  <button
-                    onClick={() => navigate(createPageUrl('Workshops'))}
-                    className="px-4 py-2 bg-int-navy hover:bg-int-navy/80 rounded-lg font-semibold text-sm transition-all"
-                  >
-                    View Details
-                  </button>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -638,32 +642,74 @@ Visit intinc.com to schedule a consultation`;
           <h2 className="text-2xl font-bold mb-3">{currentQuestion.title}</h2>
           <p className="text-slate-400 mb-6">{currentQuestion.description}</p>
 
-          <div className="space-y-3">
-            {currentQuestion.options.map((option) => (
-              <button
-                key={option}
-                onClick={() => handleAnswer(currentQuestion.id, option)}
-                className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
-                  answers[currentQuestion.id] === option
-                    ? 'bg-int-orange/20 border-int-orange text-white font-semibold'
-                    : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:border-int-orange/50'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                    answers[currentQuestion.id] === option
-                      ? 'border-int-orange bg-int-orange'
-                      : 'border-slate-500'
-                  }`}>
-                    {answers[currentQuestion.id] === option && (
-                      <CheckCircle className="w-4 h-4 text-void" />
-                    )}
+          {currentQuestion.type === 'upload' ? (
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold mb-3">Upload Sample Data (CSV, Excel, PDF)</label>
+                <input
+                  type="file"
+                  multiple
+                  accept=".csv,.xlsx,.xls,.pdf,.txt"
+                  onChange={handleFileUpload}
+                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-signal-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-int-orange file:text-white hover:file:bg-int-orange/80"
+                />
+                {uploadedFiles.length > 0 && (
+                  <div className="mt-3 space-y-2">
+                    {uploadedFiles.map((file, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm text-green-400">
+                        <CheckCircle className="w-4 h-4" />
+                        {file.name}
+                      </div>
+                    ))}
                   </div>
-                  <span>{option}</span>
-                </div>
-              </button>
-            ))}
-          </div>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold mb-3">
+                  Or Provide Links to Your Systems/Tools
+                </label>
+                <textarea
+                  value={systemLinks}
+                  onChange={(e) => setSystemLinks(e.target.value)}
+                  rows="4"
+                  className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-signal-white resize-none"
+                  placeholder="e.g., Salesforce CRM, HubSpot, Google Workspace, custom ERP system, etc."
+                />
+              </div>
+
+              <p className="text-xs text-signal-white/60">
+                This helps us analyze your specific environment and provide tailored ROI projections
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {currentQuestion.options.map((option) => (
+                <button
+                  key={option}
+                  onClick={() => handleAnswer(currentQuestion.id, option)}
+                  className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
+                    answers[currentQuestion.id] === option
+                      ? 'bg-int-orange/20 border-int-orange text-white font-semibold'
+                      : 'bg-slate-800/50 border-slate-700 text-slate-300 hover:border-int-orange/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      answers[currentQuestion.id] === option
+                        ? 'border-int-orange bg-int-orange'
+                        : 'border-slate-500'
+                    }`}>
+                      {answers[currentQuestion.id] === option && (
+                        <CheckCircle className="w-4 h-4 text-void" />
+                      )}
+                    </div>
+                    <span>{option}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Navigation */}
@@ -678,7 +724,7 @@ Visit intinc.com to schedule a consultation`;
           </button>
           <button
             onClick={handleNext}
-            disabled={!isAnswered || analyzing}
+            disabled={(!isAnswered && !currentQuestion.optional) || analyzing}
             className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-int-orange to-int-navy rounded-lg font-semibold hover:shadow-glow transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {analyzing ? (
