@@ -26,9 +26,14 @@ export default function ProactiveContentSuggestions() {
   }, []);
 
   const loadCachedSuggestions = () => {
-    const cached = localStorage.getItem('content_suggestions');
-    if (cached) {
-      setSuggestions(JSON.parse(cached));
+    try {
+      const cached = localStorage.getItem('content_suggestions');
+      if (cached && cached !== 'undefined' && cached !== 'null') {
+        setSuggestions(JSON.parse(cached));
+      }
+    } catch (error) {
+      console.error('Failed to load cached suggestions:', error);
+      localStorage.removeItem('content_suggestions');
     }
   };
 
