@@ -73,6 +73,7 @@ import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
 import OnboardingDashboard from './pages/OnboardingDashboard';
+import ContentStrategy from './pages/ContentStrategy';
 import __Layout from './Layout.jsx';
 
 
@@ -103,6 +104,7 @@ export const PAGES = {
     "UserSettings": UserSettings,
     "Workshops": Workshops,
     "OnboardingDashboard": OnboardingDashboard,
+    "ContentStrategy": ContentStrategy,
 }
 
 export const pagesConfig = {
