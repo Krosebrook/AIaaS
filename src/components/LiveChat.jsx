@@ -6,6 +6,7 @@ import { createPageUrl } from '../utils';
 
 export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const [messages, setMessages] = useState([
     { role: 'assistant', content: "Hi! I'm the INTinc AI assistant. How can I help you with enterprise AI implementation today?" }
   ]);
@@ -13,6 +14,11 @@ export default function LiveChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [leadQualified, setLeadQualified] = useState(false);
   const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    const interacted = localStorage.getItem('chat_interacted');
+    if (interacted) setHasInteracted(true);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -93,17 +99,24 @@ Also determine:
       {/* Chat Button */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-r from-flash-purple to-fusion-pink rounded-full shadow-glow flex items-center justify-center hover:scale-110 transition-transform"
+          onClick={() => {
+            setIsOpen(true);
+            localStorage.setItem('chat_interacted', 'true');
+            setHasInteracted(true);
+          }}
+          className="fixed bottom-6 left-6 z-50 w-14 h-14 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg hover:shadow-glow flex items-center justify-center hover:scale-110 transition-all group"
           aria-label="Open chat"
         >
-          <MessageSquare className="w-7 h-7 text-signal-white" />
+          <MessageSquare className="w-6 h-6 text-signal-white" />
+          {!hasInteracted && (
+            <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+          )}
         </button>
       )}
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-96 h-[600px] bg-carbon-night border-2 border-flash-purple/50 rounded-2xl shadow-glow flex flex-col">
+        <div className="fixed bottom-6 left-6 z-50 w-96 h-[600px] bg-carbon-night border-2 border-int-orange/50 rounded-2xl shadow-lg flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-flash-purple/30 bg-gradient-to-r from-flash-purple/20 to-fusion-pink/20">
             <div className="flex items-center gap-3">

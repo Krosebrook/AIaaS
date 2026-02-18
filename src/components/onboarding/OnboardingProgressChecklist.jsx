@@ -68,8 +68,11 @@ export default function OnboardingProgressChecklist() {
         onboardingComplete
       });
 
-      if (checklistDismissed) {
+      // Start minimized by default
+      if (checklistDismissed || onboardingComplete) {
         setIsOpen(false);
+      } else {
+        setIsMinimized(true);
       }
     };
 

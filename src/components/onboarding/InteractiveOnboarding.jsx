@@ -72,12 +72,12 @@ export default function InteractiveOnboarding({ onComplete }) {
 
   useEffect(() => {
     const onboardingComplete = localStorage.getItem('onboarding_completed');
-    const hasSeenOnboarding = localStorage.getItem('onboarding_seen');
+    const onboardingDismissed = localStorage.getItem('onboarding_dismissed');
     
-    if (!onboardingComplete && !hasSeenOnboarding) {
-      // Show onboarding after a short delay
-      setTimeout(() => setShowOnboarding(true), 1000);
-      localStorage.setItem('onboarding_seen', 'true');
+    // Only show if user explicitly hasn't completed or dismissed
+    if (!onboardingComplete && !onboardingDismissed) {
+      // Don't auto-show, wait for user action
+      setShowOnboarding(false);
     }
 
     // Load completed steps
@@ -121,12 +121,29 @@ export default function InteractiveOnboarding({ onComplete }) {
   };
 
   const handleSkip = () => {
-    localStorage.setItem('onboarding_completed', 'true');
+    localStorage.setItem('onboarding_dismissed', 'true');
     setShowOnboarding(false);
     if (onComplete) onComplete();
   };
 
-  if (!showOnboarding) return null;
+  // Add floating button to re-open onboarding
+  if (!showOnboarding) {
+    const onboardingComplete = localStorage.getItem('onboarding_completed');
+    const onboardingDismissed = localStorage.getItem('onboarding_dismissed');
+    
+    // Don't show button if completed
+    if (onboardingComplete) return null;
+    
+    return (
+      <button
+        onClick={() => setShowOnboarding(true)}
+        className="fixed bottom-24 right-6 w-12 h-12 bg-gradient-to-r from-int-orange to-int-navy rounded-full shadow-lg hover:shadow-glow transition-all flex items-center justify-center z-40 group"
+        title="Start guided tour"
+      >
+        <Sparkles className="w-5 h-5 text-white" />
+      </button>
+    );
+  }
 
   const currentStepData = steps[currentStep];
   const progress = ((currentStep + 1) / steps.length) * 100;
