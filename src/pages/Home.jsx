@@ -222,6 +222,7 @@ export default function Home() {
             We implement AI solutions tailored to YOUR business needs with enterprise-grade security and measurable ROI. From discovery to deployment, we bring technical expertise and proven methodology to transform your operations with production-ready AI systems.
           </p>
         </div>
+        </div>
       </section>
 
       {/* Who We Are */}
