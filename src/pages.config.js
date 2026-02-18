@@ -74,6 +74,7 @@ import Solutions from './pages/Solutions';
 import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
+import AIUseCaseExplorer from './pages/AIUseCaseExplorer';
 import __Layout from './Layout.jsx';
 
 
@@ -105,6 +106,7 @@ export const PAGES = {
     "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
+    "AIUseCaseExplorer": AIUseCaseExplorer,
 }
 
 export const pagesConfig = {
