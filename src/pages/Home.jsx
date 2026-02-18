@@ -14,6 +14,7 @@ import InteractiveTour from '../components/onboarding/InteractiveTour';
 import SmartRecommendations from '../components/SmartRecommendations';
 import ProactiveContentSuggestions from '../components/content/ProactiveContentSuggestions';
 import PersonalizedSummary from '../components/content/PersonalizedSummary';
+import { useAIBackground } from '../components/utils/useAIBackground';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -38,6 +39,11 @@ export default function Home() {
   const [pageStartTime] = useState(Date.now());
   const adaptiveHero = AdaptiveHero();
   useScrollRestoration('home');
+
+  // AI-generated backgrounds for different sections
+  const heroBackground = useAIBackground('futuristic technology, neural networks, data streams', 'hero');
+  const processBackground = useAIBackground('abstract geometric patterns, technology flow', 'process');
+  const statsBackground = useAIBackground('data visualization, tech analytics, modern interface', 'stats');
 
   useEffect(() => {
     trackPageVisit('Home');
@@ -80,6 +86,12 @@ export default function Home() {
       <GuidedTour />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {heroBackground.backgroundUrl && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20"
+            style={{ backgroundImage: `url(${heroBackground.backgroundUrl})` }}
+          />
+        )}
         <div className="absolute inset-0 hero-gradient opacity-30"></div>
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-int-navy/20 rounded-full blur-3xl animate-pulse"></div>
@@ -172,7 +184,14 @@ export default function Home() {
       </section>
 
       {/* Process Overview */}
-      <section id="process" className="py-24 px-6 bg-carbon-night" aria-labelledby="process-heading">
+      <section id="process" className="relative py-24 px-6 bg-carbon-night overflow-hidden" aria-labelledby="process-heading">
+        {processBackground.backgroundUrl && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-10"
+            style={{ backgroundImage: `url(${processBackground.backgroundUrl})` }}
+          />
+        )}
+        <div className="relative z-10">
         <div className="max-w-6xl mx-auto text-center">
           <h2 id="process-heading" className="sr-only">Our Three-Step Process</h2>
           <div className="flex justify-center items-center gap-8 mb-16 flex-wrap">
@@ -421,7 +440,14 @@ export default function Home() {
       </section>
 
       {/* Key Trends */}
-      <section className="py-24 px-6 bg-void">
+      <section className="relative py-24 px-6 bg-void overflow-hidden">
+        {statsBackground.backgroundUrl && (
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-5"
+            style={{ backgroundImage: `url(${statsBackground.backgroundUrl})` }}
+          />
+        )}
+        <div className="relative z-10">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-int-navy to-int-orange bg-clip-text text-transparent">
             AI INSIGHTS FOR YOUR BUSINESS
