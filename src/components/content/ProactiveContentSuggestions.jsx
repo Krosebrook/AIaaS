@@ -119,7 +119,7 @@ Each suggestion should:
     });
   };
 
-  const activeSuggestions = suggestions.filter((_, i) => !dismissed.includes(i));
+  const activeSuggestions = Array.isArray(suggestions) ? suggestions.filter((_, i) => !dismissed.includes(i)) : [];
 
   if (!showWidget || activeSuggestions.length === 0) return null;
 
