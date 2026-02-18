@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useLocation } from 'react-router-dom';
 import SEOMetadata from '../components/SEOMetadata';
+import { OnboardingWorkflow } from '../components/onboarding/OnboardingWorkflow';
 import { Mail, MessageSquare, Send, Loader2 } from 'lucide-react';
 
 export default function Contact() {
@@ -76,6 +77,9 @@ Also provide a brief, friendly auto-response message acknowledging their specifi
 
       setInquiryCategory(categorization);
       setSubmitted(true);
+
+      // Trigger onboarding workflow
+      await OnboardingWorkflow.triggerFromContact(formData, categorization);
       
       // Reset form after 5 seconds
       setTimeout(() => {

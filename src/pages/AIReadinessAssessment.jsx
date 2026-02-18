@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '../utils';
+import { OnboardingWorkflow } from '../components/onboarding/OnboardingWorkflow';
 import { 
   Brain, 
   CheckCircle, 
@@ -272,6 +273,12 @@ Provide a DEEPLY SPECIFIC JSON response with:
           level: analysis.readinessLevel
         }
       });
+
+      // Prompt for email to trigger onboarding
+      const userEmail = prompt('Enter your email to receive detailed results and personalized recommendations:');
+      if (userEmail && userEmail.includes('@')) {
+        await OnboardingWorkflow.triggerFromAssessment(analysis, userEmail);
+      }
     } catch (error) {
       console.error('Analysis failed:', error);
     } finally {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { OnboardingWorkflow } from '../onboarding/OnboardingWorkflow';
 import { Calendar, Users, Clock, DollarSign, CheckCircle, Loader2 } from 'lucide-react';
 
 export default function WorkshopBooking({ workshop, onClose }) {
@@ -43,6 +44,12 @@ export default function WorkshopBooking({ workshop, onClose }) {
           attendees: formData.attendees
         }
       });
+
+      // Trigger onboarding workflow
+      await OnboardingWorkflow.triggerFromWorkshop({
+        ...formData,
+        preferredDate: formData.selectedDate
+      }, workshop);
     } catch (error) {
       console.error('Booking failed:', error);
     } finally {
