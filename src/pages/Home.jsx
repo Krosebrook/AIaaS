@@ -12,6 +12,8 @@ import { useScrollRestoration } from '../components/utils/useScrollRestoration';
 import OnboardingChecklist from '../components/onboarding/OnboardingChecklist';
 import InteractiveTour from '../components/onboarding/InteractiveTour';
 import SmartRecommendations from '../components/SmartRecommendations';
+import ProactiveContentSuggestions from '../components/content/ProactiveContentSuggestions';
+import PersonalizedSummary from '../components/content/PersonalizedSummary';
 import { 
   ChevronDown, 
   Sparkles, 
@@ -488,9 +490,19 @@ export default function Home() {
       {/* Smart AI Recommendations */}
       <section className="py-16 px-6 bg-gradient-to-r from-int-navy/10 to-int-orange/10 border-y border-int-navy/30">
         <div className="max-w-5xl mx-auto">
-          <SmartRecommendations limit={3} />
+          <SmartRecommendations limit={4} />
+          
+          <div className="mt-12">
+            <PersonalizedSummary 
+              content="INTinc.com helps enterprises implement AI solutions through a proven three-step methodology: Discover opportunities through assessments and workshops, Harden infrastructure with security-first architecture, and Ship production-ready AI systems with full training and support. Our services include AI strategy development, custom solution engineering, governance frameworks, and team enablement programs."
+              segment="auto"
+            />
+          </div>
         </div>
       </section>
+
+      {/* Proactive Content Suggestions Widget */}
+      <ProactiveContentSuggestions />
 
       {/* Dynamic FAQ */}
       <DynamicFAQ />
