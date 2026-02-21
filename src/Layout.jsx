@@ -40,8 +40,7 @@ export default function Layout({ children, currentPageName }) {
   const navLinks = [
     { name: 'HOME', page: 'Home' },
     { name: 'SERVICES', page: 'Services' },
-    { name: 'CONSULTING', page: 'AIConsultingServices' },
-    { name: 'RESOURCES', page: 'Resources' },
+    { name: 'CATALYST BUILDS', page: 'AIConsultingServices' },
     { name: 'CASE STUDIES', page: 'CaseStudies' },
     { name: 'WORKSHOPS', page: 'Workshops' },
     { name: 'ABOUT', page: 'About' },
@@ -49,36 +48,22 @@ export default function Layout({ children, currentPageName }) {
   ];
 
   return (
-    <div className="min-h-screen bg-void text-signal-white font-inter">
+    <div className="min-h-screen bg-cream text-black">
       <style>{`
-        /* No custom fonts needed - using system fonts */
-        
+        @import url('https://fonts.googleapis.com/css2?family=Calibri:wght@400;600;700&display=swap');
+
         :root {
           /* InVelo Brand Colors (INT Sunrise Palette) */
-          --int-charcoal: #36454F;
-          --int-orange: #E87722;
-          --int-cream: #F5F0EB;
-          --int-white: #FFFFFF;
-          --int-black: #000000;
-          --void-black: #36454F;
-          --carbon-night: #36454F;
-          --signal-white: #FFFFFF;
+          --charcoal: #36454F;
+          --orange: #E87722;
+          --cream: #F5F0EB;
+          --white: #FFFFFF;
+          --black: #000000;
 
-          /* Legacy compat */
-          --int-navy: #36454F;
-          --int-teal: #E87722;
-          --flash-purple: #E87722;
-          --fusion-pink: #E87722;
-          
-          /* Neutral Colors */
-          --slate-200: #E5E7EB;
-          --slate-400: #9CA3AF;
-          --slate-700: #374151;
-          
           /* Typography */
-          --font-primary: 'Calibri', Arial, sans-serif;
-          --font-display: 'Georgia', serif;
-          
+          --font-body: 'Calibri', Arial, sans-serif;
+          --font-heading: Georgia, serif;
+
           /* Spacing Scale */
           --spacing-xs: 0.25rem;
           --spacing-sm: 0.5rem;
@@ -87,7 +72,7 @@ export default function Layout({ children, currentPageName }) {
           --spacing-xl: 2rem;
           --spacing-2xl: 3rem;
           --spacing-3xl: 4rem;
-          
+
           /* Border Radius */
           --radius-sm: 0.375rem;
           --radius-md: 0.5rem;
@@ -95,55 +80,51 @@ export default function Layout({ children, currentPageName }) {
           --radius-xl: 1rem;
           --radius-2xl: 1.5rem;
           --radius-full: 9999px;
-          
-          /* Motion (Official FlashFusion Spec) */
+
+          /* Motion */
           --duration-fast: 180ms;
           --easing: cubic-bezier(0.16, 1, 0.3, 1);
           --transition-fast: var(--duration-fast) var(--easing);
           --transition-base: 300ms var(--easing);
           --transition-slow: 500ms var(--easing);
         }
-        
+
         * {
           margin: 0;
           padding: 0;
           box-sizing: border-box;
         }
-        
+
         body {
-          font-family: var(--font-primary);
-          background-color: var(--void-black);
-          color: var(--signal-white);
+          font-family: var(--font-body);
+          background-color: var(--cream);
+          color: var(--black);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
         }
-        
-        /* Display Font for Heroes and Section Headers */
-        h1, h2, .font-display {
-          font-family: var(--font-display);
+
+        /* Headings use Georgia */
+        h1, h2, h3, .font-heading {
+          font-family: var(--font-heading);
         }
-        
-        .bg-void { background-color: var(--void-black); }
-        .bg-carbon-night { background-color: var(--carbon-night); }
-        .text-signal-white { color: var(--signal-white); }
-        .text-flash-purple { color: var(--int-navy); }
-        .text-fusion-pink { color: var(--int-orange); }
-        .text-int-orange { color: var(--int-orange); }
-        .text-int-navy { color: var(--int-navy); }
-        .text-int-teal { color: var(--int-teal); }
-        .border-flash-purple { border-color: var(--int-navy); }
-        .border-fusion-pink { border-color: var(--int-orange); }
-        
-        .font-inter { font-family: var(--font-primary); }
-        .font-display { font-family: var(--font-display); }
-        
+
+        .bg-charcoal { background-color: var(--charcoal); }
+        .bg-cream { background-color: var(--cream); }
+        .bg-white { background-color: var(--white); }
+        .text-white { color: var(--white); }
+        .text-black { color: var(--black); }
+        .text-orange { color: var(--orange); }
+        .text-charcoal { color: var(--charcoal); }
+        .border-orange { border-color: var(--orange); }
+        .border-charcoal { border-color: var(--charcoal); }
+
         /* Button Styles */
         .btn-primary {
-          background: linear-gradient(135deg, var(--int-orange) 0%, var(--int-navy) 100%);
-          color: var(--signal-white);
+          background: var(--orange);
+          color: var(--white);
           padding: 0.75rem 1.5rem;
-          border-radius: var(--radius-full);
+          border-radius: var(--radius-md);
           font-weight: 600;
           transition: all var(--transition-base);
           border: none;
@@ -151,32 +132,25 @@ export default function Layout({ children, currentPageName }) {
         }
 
         .btn-primary:hover {
-          transform: scale(1.05);
-          box-shadow: 0 0 30px rgba(242,101,34,0.6);
+          background: #D06519;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(232,119,34,0.3);
         }
 
         .btn-secondary {
           background: transparent;
-          color: var(--int-navy);
-          border: 2px solid var(--int-navy);
+          color: var(--charcoal);
+          border: 2px solid var(--charcoal);
           padding: 0.75rem 1.5rem;
-          border-radius: var(--radius-full);
+          border-radius: var(--radius-md);
           font-weight: 600;
           transition: all var(--transition-base);
           cursor: pointer;
         }
 
         .btn-secondary:hover {
-          background: var(--int-navy);
-          color: var(--signal-white);
-        }
-
-        /* Gradient Text */
-        .gradient-text {
-          background: linear-gradient(135deg, var(--int-navy) 0%, var(--int-teal) 50%, var(--int-orange) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          background: var(--charcoal);
+          color: var(--white);
         }
         
         /* Accessibility */
@@ -250,17 +224,20 @@ export default function Layout({ children, currentPageName }) {
       {/* Header */}
       <header 
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-void/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+          isScrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white'
         }`}
         role="banner"
       >
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
                   <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="InVelo home">
-                      <div className="flex flex-col">
-                        <div className="text-2xl font-bold text-int-orange" style={{fontFamily: 'Georgia, serif'}}>InVelo</div>
-                        <div className="text-xs text-int-charcoal/70" style={{fontFamily: 'Calibri, Arial, sans-serif'}}>by INT Inc.</div>
+                    <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="InVelo by INT Inc.">
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl font-bold text-orange" style={{ fontFamily: 'Georgia, serif' }}>InVelo</span>
+                        <div className="border-l-2 border-charcoal/30 pl-3">
+                          <div className="text-xs font-semibold text-charcoal leading-tight">by INT Inc.</div>
+                          <div className="text-xs text-orange leading-tight">Build it. Use it. Retire it.</div>
+                        </div>
                       </div>
                     </Link>
 
@@ -270,8 +247,8 @@ export default function Layout({ children, currentPageName }) {
                         <Link
                           key={link.page}
                           to={createPageUrl(link.page)}
-                          className={`text-sm font-medium transition-colors hover:text-fusion-pink focus:outline-none focus:ring-2 focus:ring-int-orange focus:ring-offset-2 focus:ring-offset-void rounded px-2 py-1 ${
-                            currentPageName === link.page ? 'text-int-orange font-bold' : 'text-signal-white/80'
+                          className={`text-sm font-medium transition-colors hover:text-orange focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2 focus:ring-offset-white rounded px-2 py-1 ${
+                            currentPageName === link.page ? 'text-orange font-bold' : 'text-charcoal'
                           }`}
                         >
                           {link.name}
@@ -352,61 +329,28 @@ export default function Layout({ children, currentPageName }) {
       <OnboardingStatusIndicator />
 
       {/* Footer */}
-      <footer className="bg-int-charcoal border-t border-int-orange/30 py-12 px-6" role="contentinfo">
+      <footer className="bg-charcoal border-t border-white/10 py-12 px-6" role="contentinfo">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="text-2xl font-bold text-int-orange mb-2" style={{fontFamily: 'Georgia, serif'}}>InVelo</div>
-              <p className="text-sm text-signal-white mb-2" style={{fontFamily: 'Calibri, Arial, sans-serif'}}>
-                Mission-Complete AI Services
-              </p>
-              <p className="text-sm font-semibold text-int-orange mb-4">"Build it. Use it. Retire it."</p>
-              <p className="text-xs text-signal-white/80">
-                A service line of INT Inc.
-              </p>
-              <p className="text-xs text-signal-white/60 mt-2">
-                175 Olde Half Day Rd, Suite 240<br/>
-                Lincolnshire, IL 60069<br/>
-                (847) 215-4900 | intinc.com
-              </p>
-            </div>
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-bold text-orange mb-2" style={{ fontFamily: 'Georgia, serif' }}>InVelo</h3>
+            <p className="text-white text-lg mb-4">Mission-Complete AI Services</p>
+            <p className="text-orange font-semibold mb-6">"Build it. Use it. Retire it."</p>
 
-            <div>
-              <h4 className="font-semibold mb-4 text-int-navy">Quick Links</h4>
-              <div className="flex flex-col gap-2 text-sm">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.page}
-                    to={createPageUrl(link.page)}
-                    className="text-signal-white/60 hover:text-fusion-pink transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4 text-int-navy">Get in Touch</h4>
-              <p className="text-sm text-signal-white/60 mb-4">
-                Ready to transform YOUR business with AI? Let's connect.
-              </p>
-              <Link
-                to={createPageUrl('Contact')}
-                className="inline-block px-6 py-2 bg-gradient-to-r from-int-orange to-int-navy rounded-full text-sm font-semibold hover:shadow-glow transition-all"
-              >
-                Contact Us
-              </Link>
+            <div className="text-white/80 text-sm space-y-1">
+              <p>A service line of INT Inc.</p>
+              <p>175 Olde Half Day Rd, Suite 240 | Lincolnshire, IL 60069</p>
+              <p>(847) 215-4900 | <a href="https://intinc.com" target="_blank" rel="noopener noreferrer" className="text-orange hover:underline">intinc.com</a></p>
             </div>
           </div>
-          
-          <div className="pt-8 border-t border-int-orange/30">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-signal-white/60">
+
+          <div className="pt-8 border-t border-white/10">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/60">
               <div>
                 © 2026 INT Inc. All rights reserved.
               </div>
               <div className="flex gap-4">
                 <span>SOC 2 Type II Certified</span>
+                <span>•</span>
                 <span>Women-Owned Business</span>
               </div>
             </div>
