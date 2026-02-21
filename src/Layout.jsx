@@ -51,23 +51,24 @@ export default function Layout({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-void text-signal-white font-inter">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+        /* No custom fonts needed - using system fonts */
         
         :root {
-          /* INTinc Brand Colors */
-          --int-navy: #1E3A5F;
-          --int-orange: #F26522;
-          --int-teal: #4A90A4;
-          --int-light-blue: #7AB8CC;
-          --void-black: #0A0F1A;
-          --carbon-night: #151D2C;
-          --signal-white: #F8F9FA;
+          /* InVelo Brand Colors (INT Sunrise Palette) */
+          --int-charcoal: #36454F;
+          --int-orange: #E87722;
+          --int-cream: #F5F0EB;
+          --int-white: #FFFFFF;
+          --int-black: #000000;
+          --void-black: #36454F;
+          --carbon-night: #36454F;
+          --signal-white: #FFFFFF;
 
-          /* Accent Colors */
-          --electric-blue: #4A90A4;
-          --neon-mint: #7AB8CC;
-          --ember-red: #F26522;
-          --solar-amber: #F79E44;
+          /* Legacy compat */
+          --int-navy: #36454F;
+          --int-teal: #E87722;
+          --flash-purple: #E87722;
+          --fusion-pink: #E87722;
           
           /* Neutral Colors */
           --slate-200: #E5E7EB;
@@ -75,8 +76,8 @@ export default function Layout({ children, currentPageName }) {
           --slate-700: #374151;
           
           /* Typography */
-          --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-          --font-display: 'Space Grotesk', var(--font-primary);
+          --font-primary: 'Calibri', Arial, sans-serif;
+          --font-display: 'Georgia', serif;
           
           /* Spacing Scale */
           --spacing-xs: 0.25rem;
@@ -256,16 +257,10 @@ export default function Layout({ children, currentPageName }) {
         <nav className="max-w-7xl mx-auto px-6 py-4" aria-label="Main navigation">
                   <div className="flex items-center justify-between">
                     {/* Logo */}
-                    <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="INTinc home">
-                      <div className="flex items-center gap-1" aria-hidden="true">
-                        <span className="text-2xl font-bold text-int-navy">i</span>
-                        <span className="text-2xl font-bold text-int-navy">N</span>
-                        <span className="text-2xl font-bold text-int-navy">T</span>
-                        <span className="text-sm font-light text-int-navy align-top">™</span>
-                      </div>
-                      <div className="border-l-2 border-int-navy/30 pl-3">
-                        <div className="text-xs font-semibold text-int-navy leading-tight">Our Purpose is</div>
-                        <div className="text-xs font-bold text-int-orange leading-tight">YOUR Business</div>
+                    <Link to={createPageUrl('Home')} className="flex items-center gap-3" aria-label="InVelo home">
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-int-orange" style={{fontFamily: 'Georgia, serif'}}>InVelo</div>
+                        <div className="text-xs text-int-charcoal/70" style={{fontFamily: 'Calibri, Arial, sans-serif'}}>by INT Inc.</div>
                       </div>
                     </Link>
 
@@ -357,21 +352,22 @@ export default function Layout({ children, currentPageName }) {
       <OnboardingStatusIndicator />
 
       {/* Footer */}
-      <footer className="bg-carbon-night border-t border-int-navy/30 py-12 px-6" role="contentinfo">
+      <footer className="bg-int-charcoal border-t border-int-orange/30 py-12 px-6" role="contentinfo">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="flex items-center gap-1">
-                  <span className="text-xl font-bold text-int-navy">i</span>
-                  <span className="text-xl font-bold text-int-navy">N</span>
-                  <span className="text-xl font-bold text-int-navy">T</span>
-                  <span className="text-xs font-light text-int-navy align-top">™</span>
-                </div>
-                <span className="text-sm font-semibold text-int-navy">INTinc.com</span>
-              </div>
-              <p className="text-sm text-signal-white/60">
-                Enterprise AI solutions built for YOUR business. Secure, measurable, production-ready.
+              <div className="text-2xl font-bold text-int-orange mb-2" style={{fontFamily: 'Georgia, serif'}}>InVelo</div>
+              <p className="text-sm text-signal-white mb-2" style={{fontFamily: 'Calibri, Arial, sans-serif'}}>
+                Mission-Complete AI Services
+              </p>
+              <p className="text-sm font-semibold text-int-orange mb-4">"Build it. Use it. Retire it."</p>
+              <p className="text-xs text-signal-white/80">
+                A service line of INT Inc.
+              </p>
+              <p className="text-xs text-signal-white/60 mt-2">
+                175 Olde Half Day Rd, Suite 240<br/>
+                Lincolnshire, IL 60069<br/>
+                (847) 215-4900 | intinc.com
               </p>
             </div>
 
@@ -404,20 +400,14 @@ export default function Layout({ children, currentPageName }) {
             </div>
           </div>
           
-          <div className="pt-8 border-t border-int-navy/30">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-signal-white/60">
+          <div className="pt-8 border-t border-int-orange/30">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-signal-white/60">
               <div>
-                © {new Date().getFullYear()} INTinc.com. All rights reserved.
+                © 2026 INT Inc. All rights reserved.
               </div>
-              <div>
-                <a 
-                  href="https://intinc.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-int-orange hover:text-int-teal transition-colors font-semibold"
-                >
-                  INTinc.com
-                </a>
+              <div className="flex gap-4">
+                <span>SOC 2 Type II Certified</span>
+                <span>Women-Owned Business</span>
               </div>
             </div>
           </div>
