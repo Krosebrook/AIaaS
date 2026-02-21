@@ -20,55 +20,44 @@ export default function InteractiveOnboarding({ onComplete }) {
   const defaultSteps = [
     {
       id: 'welcome',
-      title: 'Welcome to INTinc.com! 🎉',
-      description: 'Let\'s take a quick tour of the powerful AI tools we\'ve built for you. This will only take 2 minutes.',
+      title: 'Welcome to InVelo 🎉',
+      description: 'Mission-Complete AI Services by INT Inc. We build custom AI tools for specific business missions, then hand you the keys. Let\'s show you how.',
       action: 'Start Tour',
       videoUrl: null,
       position: 'center'
     },
     {
-      id: 'content_generator',
-      title: 'AI Content Generator',
-      description: 'Create high-quality blog posts, whitepapers, and case studies with AI assistance. Just provide a topic and let our AI do the heavy lifting.',
-      action: 'Try Content Generator',
-      targetPage: 'ContentGenerator',
-      videoUrl: 'https://example.com/demo-content-gen.mp4',
+      id: 'catalyst_builds',
+      title: 'Explore Our Catalyst Builds',
+      description: 'See real use cases: SOC 2 audit sprints, onboarding accelerators, crisis response toolkits, and more—all built in 4 weeks.',
+      action: 'View Catalyst Builds',
+      targetPage: 'Services',
       position: 'center',
-      highlights: ['Generate SEO-optimized content', 'Multiple formats supported', 'Customizable tone and style']
+      highlights: ['Purpose-built tools', 'Fixed timelines and pricing', 'You own everything']
     },
     {
-      id: 'content_strategy',
-      title: 'Content Gap Analyzer',
-      description: 'Analyze competitor strategies and discover untapped market opportunities. Get AI-powered recommendations for thought leadership content.',
-      action: 'Explore Content Strategy',
-      targetPage: 'ContentStrategy',
-      videoUrl: 'https://example.com/demo-gap-analyzer.mp4',
+      id: 'delivery_model',
+      title: 'See How We Work',
+      description: 'Our 4-week delivery model: Scope → Build → Operate → Retire. You own everything we create.',
+      action: 'Learn Our Approach',
+      targetPage: 'About',
       position: 'center',
-      highlights: ['Competitor analysis', 'Market gap identification', 'Strategic content recommendations']
+      highlights: ['4-week build cycle', 'SOC 2 compliance built-in', 'Zero vendor lock-in']
     },
     {
-      id: 'workshops',
-      title: 'Workshop Booking System',
-      description: 'Book AI workshops with personalized pre-materials and follow-up content. Multi-date selection and team management included.',
-      action: 'View Workshops',
-      targetPage: 'Workshops',
-      videoUrl: 'https://example.com/demo-workshops.mp4',
+      id: 'assessment',
+      title: 'Try the AI Readiness Assessment',
+      description: 'Answer 7 questions to find out where AI can drive immediate ROI for your business.',
+      action: 'Take Assessment',
+      targetPage: 'AIReadinessAssessment',
       position: 'center',
-      highlights: ['Personalized workshop content', 'Multi-attendee support', 'AI-powered follow-up']
-    },
-    {
-      id: 'dashboard',
-      title: 'Your Personalized Dashboard',
-      description: 'Track your AI journey, view recommendations, and access all your resources in one place.',
-      action: 'Go to Dashboard',
-      targetPage: 'PersonalizedDashboard',
-      position: 'center'
+      highlights: ['7 questions, 5 minutes', 'Personalized recommendations', '12-month AI roadmap']
     },
     {
       id: 'complete',
-      title: 'You\'re All Set! 🚀',
-      description: 'You\'ve completed the tour! Your progress is saved and you can access these features anytime from the navigation menu.',
-      action: 'Start Exploring',
+      title: 'Ready to Start a Mission? 🚀',
+      description: 'Schedule a discovery call. No pitch deck. No 6-month engagement. Just a plan.',
+      action: 'Get Started',
       position: 'center'
     }
   ];
@@ -125,24 +114,24 @@ export default function InteractiveOnboarding({ onComplete }) {
 
       // Generate personalized onboarding with AI
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Create a personalized onboarding flow for an INTinc.com user based on their profile.
+        prompt: `Create a personalized onboarding flow for an InVelo user based on their profile.
 
 User Context:
 ${JSON.stringify(context, null, 2)}
 
 Available pages/features to highlight:
-- ContentGenerator: AI content creation
-- ContentStrategy: Content gap analysis
+- Services: Catalyst Builds and pricing
+- About: Delivery model and approach
 - Workshops: Training programs
-- PersonalizedDashboard: Personalized insights
+- CaseStudies: SOC 2 audit sprint and success stories
 - AIReadinessAssessment: AI readiness evaluation
 - AIUseCaseExplorer: Discover use cases
 - RoadmapGenerator: Implementation planning
 
-Create 4-5 onboarding steps that:
+Create 3-4 onboarding steps that:
 1. Are relevant to their industry/role/readiness level
-2. Prioritize features that solve their specific challenges
-3. Have a logical progression from beginner to advanced
+2. Focus on mission-complete AI services and catalyst builds
+3. Emphasize 4-week delivery, SOC 2 compliance, and zero lock-in
 4. Include personalized descriptions that speak to their needs
 
 Each step should have: id, title (personalized to user), description (explain why it matters to THEM), targetPage, and 2-3 highlights.`,

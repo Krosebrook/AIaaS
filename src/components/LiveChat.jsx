@@ -8,7 +8,7 @@ export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: "Hi! I'm the INTinc AI assistant. How can I help you with enterprise AI implementation today?" }
+    { role: 'assistant', content: "Hi! I'm the InVelo AI assistant. I can help you understand our catalyst build model, explore use cases, or figure out which mission-complete tool fits your business challenge. What problem are you trying to solve?" }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,25 +38,26 @@ export default function LiveChat() {
       const conversationHistory = messages.map(m => `${m.role}: ${m.content}`).join('\n');
       
       const response = await base44.integrations.Core.InvokeLLM({
-        prompt: `You are an AI assistant for INTinc Technology, an enterprise AI implementation firm.
+        prompt: `You are the InVelo AI assistant for INT Inc., a mission-complete AI services firm.
 
 Conversation history:
 ${conversationHistory}
 user: ${userMessage}
 
 Your role:
-1. Answer questions about INTinc's services (AI implementation, security-first architecture, workshops, consulting)
-2. Qualify leads by understanding their needs (security, ROI, training, custom solutions)
-3. Recommend relevant case studies or services
-4. For complex inquiries, suggest booking a consultation via contact form
+1. Answer questions about InVelo's catalyst builds and mission-complete AI services
+2. Explain the "Build it. Use it. Retire it." model
+3. Qualify leads by understanding their time-bound business problems
+4. Recommend relevant catalyst builds or the SOC 2 case study
 
 Knowledge base:
-- Services: Security-first AI, rapid prototyping, custom engineering, training, infrastructure management
-- Workshops: AI Demystification ($3,500), Implementation Bootcamp ($12,500), Ideation Workshop ($7,500)
-- Approach: Discover → Harden → Ship
-- Focus: MSP discipline + AI expertise, measurable outcomes, knowledge transfer
+- Services: Catalyst Builds from $5K–$250K, 4-week delivery, SOC 2 compliance built-in
+- Hero Use Case: SOC 2 Audit Sprint ($25K vs $150K Big 4 consultant)
+- Workshops: AI Discovery ($5K), Readiness Assessment ($7.5K–$15K), Governance & Compliance ($5K)
+- Approach: Scope → Build → Operate → Retire (4-week cycle)
+- Focus: Purpose-built tools for time-bound problems, client owns everything, zero vendor lock-in
 
-Respond professionally, concisely (2-3 sentences), and helpfully. If the inquiry requires detailed consultation, recommend visiting the contact page.
+Respond professionally, concisely (2-3 sentences), and helpfully. Emphasize 4-week delivery and client ownership.
 
 Also determine:
 - isLeadQualified: true if user shows serious interest (wants consultation, pricing, specific implementation help)
@@ -124,8 +125,8 @@ Also determine:
                 <MessageSquare className="w-5 h-5 text-signal-white" />
               </div>
               <div>
-                <div className="font-semibold text-signal-white">INTinc AI Assistant</div>
-                <div className="text-xs text-signal-white/60">Powered by FlashFusion</div>
+                <div className="font-semibold text-signal-white">InVelo AI Assistant</div>
+                <div className="text-xs text-signal-white/60">INT Inc. Mission-Complete AI</div>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-signal-white/60 hover:text-signal-white" aria-label="Close chat">

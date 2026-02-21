@@ -20,21 +20,22 @@ export default function DynamicFAQ() {
   const generateFAQs = async () => {
     try {
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Generate a comprehensive FAQ list for INTinc Technology, an enterprise AI implementation firm.
+        prompt: `Generate a comprehensive FAQ list for InVelo by INT Inc., a mission-complete AI services firm.
 
 Context:
-- Services: Security-first AI architecture, rapid prototyping, custom engineering, training, managed services
-- Pricing: Projects from $15K, Retainers from $10K/mo, Managed services custom
-- Approach: Discover → Harden → Ship methodology
-- Focus: MSP discipline, enterprise security, measurable ROI, knowledge transfer
-- Workshops: AI Demystification ($3.5K), Implementation Bootcamp ($12.5K), Ideation ($7.5K)
+- Services: Catalyst Builds ($5K–$250K), 4-week delivery, SOC 2 compliance built-in
+- Hero Use Case: SOC 2 Audit Sprint ($25K vs $150K consultant)
+- Pricing: Project-based $5K–$250K, Managed Operations $2K–$5K/month
+- Approach: Scope → Build → Operate → Retire (4-week cycle)
+- Focus: Purpose-built tools for time-bound problems, client owns everything, zero vendor lock-in
+- Workshops: AI Discovery ($5K), Readiness Assessment ($7.5K–$15K), Governance & Compliance ($5K)
 
 Generate 12 FAQ entries covering:
-- Security and compliance (4 questions)
-- Pricing and engagement models (2 questions)
-- Implementation process and timeline (3 questions)
-- Workshops and training (2 questions)
-- Technical capabilities (1 question)
+- The catalyst build model and delivery timeline (3 questions)
+- Pricing and ownership (3 questions)
+- Security and SOC 2 compliance (3 questions)
+- How this differs from traditional consulting and SaaS (2 questions)
+- Workshops and assessments (1 question)
 
 Each FAQ should have: question (concise, user-focused), answer (2-3 sentences, professional), and category.`,
         response_json_schema: {
@@ -60,9 +61,9 @@ Each FAQ should have: question (concise, user-focused), answer (2-3 sentences, p
       console.error('Failed to generate FAQs:', error);
       setFaqs([
         {
-          question: "How does INTinc ensure security in AI implementations?",
-          answer: "We design every AI solution with security-first architecture, including encryption, access controls, audit trails, and compliance documentation from day one. Our MSP background ensures enterprise-grade security without shortcuts.",
-          category: "security"
+          question: "What is a catalyst build?",
+          answer: "A catalyst build is a purpose-built AI tool designed for a specific time-bound business mission (like SOC 2 audits or onboarding). Built in 4 weeks, with SOC 2 compliance, flat pricing, and full client ownership—no vendor lock-in.",
+          category: "pricing"
         }
       ]);
     } finally {
@@ -85,7 +86,7 @@ Available FAQs:
 ${faqs.map((faq, i) => `${i + 1}. ${faq.question}\n${faq.answer}`).join('\n\n')}
 
 Find the most relevant FAQ(s) that answer this query. Return the indices (1-based) of relevant FAQs, ranked by relevance.
-If no FAQs match well, generate a brief answer based on INTinc's services.`,
+If no FAQs match well, generate a brief answer based on InVelo's catalyst build model.`,
         response_json_schema: {
           type: "object",
           properties: {

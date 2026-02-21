@@ -21,41 +21,40 @@ export default function OnboardingProgressChecklist() {
 
   const defaultTasks = [
     {
-      id: 'view_home',
-      title: 'Explore the Homepage',
-      description: 'Learn about our AI services',
-      page: 'Home',
-      auto: true
+      id: 'explore_services',
+      title: 'Explore Our Services',
+      description: 'See what InVelo builds',
+      page: 'Services'
     },
     {
-      id: 'try_content_generator',
-      title: 'Try Content Generator',
-      description: 'Create AI-powered content',
-      page: 'ContentGenerator'
-    },
-    {
-      id: 'run_gap_analysis',
-      title: 'Run Gap Analysis',
-      description: 'Discover content opportunities',
-      page: 'ContentStrategy'
-    },
-    {
-      id: 'view_workshops',
-      title: 'Explore Workshops',
-      description: 'See our training programs',
-      page: 'Workshops'
-    },
-    {
-      id: 'check_dashboard',
-      title: 'Visit Your Dashboard',
-      description: 'View personalized recommendations',
-      page: 'PersonalizedDashboard'
+      id: 'read_case_study',
+      title: 'Read the SOC 2 Case Study',
+      description: 'Our hero use case: $25K vs $150K',
+      page: 'CaseStudies'
     },
     {
       id: 'take_assessment',
-      title: 'Take AI Readiness Assessment',
-      description: 'Get personalized insights',
+      title: 'Take the AI Readiness Assessment',
+      description: '7 questions, 5 minutes, personalized recommendations',
       page: 'AIReadinessAssessment'
+    },
+    {
+      id: 'try_demo',
+      title: 'Try the Live AI Demo',
+      description: 'Describe your challenge, get instant AI-powered analysis',
+      page: 'InteractiveDemo'
+    },
+    {
+      id: 'review_catalyst_builds',
+      title: 'Review Our Catalyst Builds',
+      description: 'See pricing, timelines, and ROI for each use case',
+      page: 'Services'
+    },
+    {
+      id: 'schedule_call',
+      title: 'Schedule a Discovery Call',
+      description: 'Tell us your problem. We\'ll tell you what we\'d build.',
+      page: 'Contact'
     }
   ];
 
@@ -131,15 +130,15 @@ export default function OnboardingProgressChecklist() {
       }
 
       const result = await base44.integrations.Core.InvokeLLM({
-        prompt: `Create 5-6 personalized onboarding tasks for an INTinc.com user.
+        prompt: `Create 5-6 personalized onboarding tasks for an InVelo user.
 
 User Context: ${JSON.stringify(context)}
 
-Available pages: Home, ContentGenerator, ContentStrategy, Workshops, PersonalizedDashboard, AIReadinessAssessment, AIUseCaseExplorer, RoadmapGenerator
+Available pages: Home, Services, About, Workshops, CaseStudies, AIReadinessAssessment, AIUseCaseExplorer, RoadmapGenerator, InteractiveDemo, Contact
 
 Create tasks that:
 1. Match their readiness level and role
-2. Build progressively from basic to advanced
+2. Emphasize mission-complete AI services and catalyst builds
 3. Focus on their recommended services/interests
 4. Have clear value propositions
 
