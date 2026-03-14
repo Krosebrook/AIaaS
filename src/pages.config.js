@@ -76,6 +76,7 @@ import Solutions from './pages/Solutions';
 import StrategyWizard from './pages/StrategyWizard';
 import UserSettings from './pages/UserSettings';
 import Workshops from './pages/Workshops';
+import ComponentLibrary from './pages/ComponentLibrary';
 import __Layout from './Layout.jsx';
 
 
@@ -109,6 +110,7 @@ export const PAGES = {
     "StrategyWizard": StrategyWizard,
     "UserSettings": UserSettings,
     "Workshops": Workshops,
+    "ComponentLibrary": ComponentLibrary,
 }
 
 export const pagesConfig = {
