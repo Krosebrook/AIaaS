@@ -6,7 +6,7 @@ export default function Tooltip({
   content, 
   position = 'top',
   persistent = false,
-  id = null
+  id = null,
 }) {
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
